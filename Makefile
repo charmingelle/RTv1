@@ -6,7 +6,7 @@
 #    By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/01 19:56:59 by grevenko          #+#    #+#              #
-#    Updated: 2018/02/07 18:26:07 by grevenko         ###   ########.fr        #
+#    Updated: 2018/02/21 14:36:43 by grevenko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCDIR		=	source
 
 INCDIR		=	includes
 
-SRC			=	event.c main.c vector.c
+SRC			=	color.c event.c light.c main.c vector.c
 
 HEADERS		=	$(addprefix $(INCDIR)/, header.h)
 

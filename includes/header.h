@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:05 by grevenko          #+#    #+#             */
-/*   Updated: 2018/02/07 18:40:13 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/02/21 16:50:38 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ typedef struct	s_sphere
 	int		color;
 }				t_sphere;
 
+typedef struct s_light
+{
+	double	intensity;
+	t_point	pos;
+	t_point	dir;
+}				t_light;
+
 typedef struct	s_env
 {
 	void		*mlx;
@@ -54,12 +61,27 @@ typedef struct	s_env
 	double		distance;
 	int			color;
 	t_sphere	sphere;
+	t_light		ambient_light;
+	t_light		point_light;
+	t_light		dir_light;
 }				t_env;
 
-int	handle_keypress(int keycode, t_env *env);
+int		handle_keypress(int keycode, t_env *env);
 
 t_point	get_vector(t_point start, t_point end);
 
 double	get_scalar_product(t_point v1, t_point v2);
+
+double	get_len(t_point vector);
+
+double	get_ambient_light(t_env *env);
+
+double	get_point_light(t_point point, t_point normal, t_env *env);
+
+double	get_dir_light(t_point normal, t_env *env);
+
+double	get_light(t_point point, t_point normal, t_env *env);
+
+int		change_brightness(int color, double coef);
 
 #endif

@@ -1,33 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector.c                                           :+:      :+:    :+:   */
+/*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/07 18:24:54 by grevenko          #+#    #+#             */
-/*   Updated: 2018/02/21 14:15:17 by grevenko         ###   ########.fr       */
+/*   Created: 2018/02/21 14:32:20 by grevenko          #+#    #+#             */
+/*   Updated: 2018/02/21 14:35:22 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-t_point	get_vector(t_point start, t_point end)
+static int	get_r(int color)
 {
-	t_point	vector;
-
-	vector.x = end.x - start.x;
-	vector.y = end.y - start.y;
-	vector.z = end.z - start.z;
-	return (vector);
+	return (color / 0x10000);
 }
 
-double	get_scalar_product(t_point v1, t_point v2)
+static int	get_g(int color)
 {
-	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
+	return ((color - (color / 0x10000) * 0x10000) / 0x100);
 }
 
-double	get_len(t_point vector)
+static int	get_b(int color)
 {
-	return (sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z));
+	return (color % 0x100);
+}
+
+int			change_brightness(int color, double coef)
+{
+	int		r;
+	int		g;
+	int		b;
+
+	r = (int)(get_r(color) * coef) % 256;
+	g = (int)(get_g(color) * coef) % 256;
+	b = (int)(get_b(color) * coef) % 256;
+	return (r * 0x10000 + g * 0x100 + b);
 }

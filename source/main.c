@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/02/07 19:27:10 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/02/21 16:55:10 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,40 @@ t_2point	*get_intersections(t_env *env, t_point point)
 	return (intersection);
 }
 
+// int		trace_ray(t_env *env, t_point point)
+// {
+// 	t_2point	*intersection;
+
+// 	intersection = get_intersections(env, point);
+// 	if (intersection)
+// 	{
+// 		free(intersection);
+// 		return (env->sphere.color);
+// 	}
+// 	else
+// 		return (env->color);
+// }
+
 int		trace_ray(t_env *env, t_point point)
 {
 	t_2point	*intersection;
+	t_point		normal;
+	double		normal_len;
 
 	intersection = get_intersections(env, point);
 	if (intersection)
 	{
 		free(intersection);
-		return (env->sphere.color);
+		normal = get_vector(env->sphere.center, point);
+		normal_len = get_len(normal);
+		normal.x /= normal_len;
+		normal.y /= normal_len; 
+		normal.z /= normal_len;
+		// return (change_brightness(env->sphere.color, get_ambient_light(env)));
+		// return (change_brightness(env->sphere.color, get_point_light(point, normal, env)));
+		// return (change_brightness(env->sphere.color, get_dir_light(normal, env)));
+		return (change_brightness(env->sphere.color, get_light(point, normal, env)));
+		// return (env->sphere.color);
 	}
 	else
 		return (env->color);
@@ -87,15 +112,30 @@ t_env	*init_env()
 	env = (t_env *)malloc(sizeof(t_env));
 	env->mlx = mlx_init();
 	env->window = mlx_new_window(env->mlx, WIDTH, HEIGHT, "RTv1");
+
 	env->camera.x = 0.0;
 	env->camera.y = 0.0;
 	env->camera.z = 0.0;
 	env->distance = 100.0;
+	env->color = 0;
+	
 	env->sphere.center.x = 0;
 	env->sphere.center.y = 0;
 	env->sphere.center.z = 100;
 	env->sphere.rad = 90;
 	env->sphere.color = RED;
+
+	env->ambient_light.intensity = 0.2;
+
+	env->point_light.intensity = 0.6;
+	env->point_light.pos.x = 100;
+	env->point_light.pos.y = 100;
+	env->point_light.pos.z = 0;
+
+	env->dir_light.intensity = 0.2;
+	env->dir_light.dir.x = 1;
+	env->dir_light.dir.y = 1;
+	env->dir_light.dir.z = 1;
 	return (env);
 }
 
