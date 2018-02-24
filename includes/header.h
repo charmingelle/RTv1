@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:05 by grevenko          #+#    #+#             */
-/*   Updated: 2018/02/24 18:22:27 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/02/24 20:32:52 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 # define WHITE 0xFFFFFF
 # define RED 0xFF0000;
+# define GREEN 0x00FF00;
 
 typedef struct	s_2point
 {
@@ -47,6 +48,14 @@ typedef struct	s_sphere
 	int		color;
 }				t_sphere;
 
+typedef struct	s_cyl
+{
+	t_point	axis1;
+	t_point	axis2;
+	double	rad;
+	int		color;
+}				t_cyl;
+
 typedef struct s_light
 {
 	double	intensity;
@@ -62,6 +71,7 @@ typedef struct	s_env
 	int			distance;
 	int			color;
 	t_sphere	sphere;
+	t_cyl		cyl;
 	t_light		ambient_light;
 	t_light		point_light;
 	t_light		dir_light;
@@ -70,6 +80,8 @@ typedef struct	s_env
 int		handle_keypress(int keycode, t_env *env);
 
 t_point	get_vector(t_point start, t_point end);
+
+t_point	get_vect_sum(t_point v1, t_point v2);
 
 double	get_scalar_product(t_point v1, t_point v2);
 

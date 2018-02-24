@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 18:24:54 by grevenko          #+#    #+#             */
-/*   Updated: 2018/02/24 18:22:11 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/02/24 20:32:45 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@ t_point	get_vector(t_point start, t_point end)
 	vector.y = end.y - start.y;
 	vector.z = end.z - start.z;
 	return (vector);
+}
+
+t_point	get_vect_sum(t_point v1, t_point v2)
+{
+	t_point	sum;
+
+	sum.x = v1.x + v2.x;
+	sum.y = v1.y + v2.y;
+	sum.z = v1.z + v2.z;
+	return (sum);
 }
 
 double	get_scalar_product(t_point v1, t_point v2)
