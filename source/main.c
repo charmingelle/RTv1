@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/02/21 16:55:10 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/02/24 19:48:13 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_point	get_centered_coords(t_env *env, int x, int y)
 	t_point	c;
 
 	c.x = x - WIDTH / 2;
-	c.y = y - HEIGHT / 2;
+	c.y = HEIGHT / 2 - y;
 	c.z = env->distance;
 	return (c);
 }
@@ -62,17 +62,12 @@ int		trace_ray(t_env *env, t_point point)
 {
 	t_2point	*intersection;
 	t_point		normal;
-	double		normal_len;
 
 	intersection = get_intersections(env, point);
 	if (intersection)
 	{
 		free(intersection);
-		normal = get_vector(env->sphere.center, point);
-		normal_len = get_len(normal);
-		normal.x /= normal_len;
-		normal.y /= normal_len; 
-		normal.z /= normal_len;
+		normal = get_ort(get_vector(point, env->sphere.center));
 		// return (change_brightness(env->sphere.color, get_ambient_light(env)));
 		// return (change_brightness(env->sphere.color, get_point_light(point, normal, env)));
 		// return (change_brightness(env->sphere.color, get_dir_light(normal, env)));
@@ -116,26 +111,26 @@ t_env	*init_env()
 	env->camera.x = 0.0;
 	env->camera.y = 0.0;
 	env->camera.z = 0.0;
-	env->distance = 100.0;
+	env->distance = DISTANCE;
 	env->color = 0;
 	
 	env->sphere.center.x = 0;
 	env->sphere.center.y = 0;
-	env->sphere.center.z = 100;
-	env->sphere.rad = 90;
+	env->sphere.center.z = DISTANCE + 150;
+	env->sphere.rad = 300;
 	env->sphere.color = RED;
 
 	env->ambient_light.intensity = 0.2;
 
-	env->point_light.intensity = 0.6;
-	env->point_light.pos.x = 100;
-	env->point_light.pos.y = 100;
-	env->point_light.pos.z = 0;
+	env->point_light.intensity = 0.4;
+	env->point_light.pos.x = 500;
+	env->point_light.pos.y = 500;
+	env->point_light.pos.z = 1000;
 
-	env->dir_light.intensity = 0.2;
-	env->dir_light.dir.x = 1;
-	env->dir_light.dir.y = 1;
-	env->dir_light.dir.z = 1;
+	env->dir_light.intensity = 0.4;
+	env->dir_light.dir.x = -2;
+	env->dir_light.dir.y = -1;
+	env->dir_light.dir.z = 0;
 	return (env);
 }
 

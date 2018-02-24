@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:05 by grevenko          #+#    #+#             */
-/*   Updated: 2018/02/21 16:50:38 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/02/24 18:22:27 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define WIDTH 1200
+# define WIDTH 1000
 # define HEIGHT 1000
+# define DISTANCE 1000
 # define ESC 53
 
 # define WHITE 0xFFFFFF
@@ -58,7 +59,7 @@ typedef struct	s_env
 	void		*mlx;
 	void		*window;
 	t_point		camera;
-	double		distance;
+	int			distance;
 	int			color;
 	t_sphere	sphere;
 	t_light		ambient_light;
@@ -73,6 +74,8 @@ t_point	get_vector(t_point start, t_point end);
 double	get_scalar_product(t_point v1, t_point v2);
 
 double	get_len(t_point vector);
+
+t_point	get_ort(t_point vector);
 
 double	get_ambient_light(t_env *env);
 

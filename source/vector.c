@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 18:24:54 by grevenko          #+#    #+#             */
-/*   Updated: 2018/02/21 14:15:17 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/02/24 18:22:11 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,16 @@ double	get_scalar_product(t_point v1, t_point v2)
 double	get_len(t_point vector)
 {
 	return (sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z));
+}
+
+t_point	get_ort(t_point vector)
+{
+	t_point	ort;
+	double	len;
+
+	len = get_len(vector);
+	ort.x = vector.x / len;
+	ort.y = vector.y / len;
+	ort.z = vector.z / len;
+	return (ort);
 }

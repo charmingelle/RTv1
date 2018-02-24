@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 13:38:52 by grevenko          #+#    #+#             */
-/*   Updated: 2018/02/21 16:51:35 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/02/24 19:45:05 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,22 @@ double	get_point_light(t_point point, t_point normal, t_env *env)
 	t_point	ray;
 	double	scal_prod;
 
-	ray = get_vector(point, env->point_light.pos);
+	ray = get_ort(get_vector(point, env->point_light.pos));
 	scal_prod = get_scalar_product(normal, ray);
-	if (scal_prod > 0)
-		return (env->point_light.intensity * scal_prod / get_len(normal) * get_len(ray));
+	if (scal_prod > 0.0)
+		return (env->point_light.intensity * scal_prod);
 	return (0.0);
 }
 
 double	get_dir_light(t_point normal, t_env *env)
 {
+	t_point	ray;
 	double	scal_prod;
 
-	scal_prod = get_scalar_product(normal, env->dir_light.dir);
-	if (scal_prod > 0)
-		return (env->dir_light.intensity * scal_prod / get_len(normal) * get_len(env->dir_light.dir));
+	ray = get_ort(env->dir_light.dir);
+	scal_prod = get_scalar_product(normal, ray);
+	if (scal_prod > 0.0)
+		return (env->dir_light.intensity * scal_prod);
 	return (0.0);
 }
 
