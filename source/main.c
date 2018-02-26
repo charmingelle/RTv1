@@ -34,7 +34,8 @@ t_t1t2	*get_cyl_intersections(t_env *env, t_fig cyl, t_point point)
 	double		c;
 
 	p_a = cyl.axis1;
-	v_a = get_vect(cyl.axis1, cyl.axis2);
+	v_a = get_ort(get_vect(cyl.axis1, cyl.axis2));
+	// v_a = get_vect(cyl.axis1, cyl.axis2);
 	delta = get_diff(env->camera, p_a);
 	scal_prod_v_v_a = get_scal_prod(point, v_a);
 	scal_prod_delta_v_a = get_scal_prod(delta, v_a);
@@ -147,8 +148,8 @@ t_env	*init_env()
 
 	env->figs[1].type = "cylinder";
 	env->figs[1].axis1 = (t_point){0, 0, DISTANCE + 150};
-	env->figs[1].axis2 = (t_point){100, 100, DISTANCE + 200};
-	env->figs[1].rad = 500;
+	env->figs[1].axis2 = (t_point){100, 100, DISTANCE + 160};
+	env->figs[1].rad = 150;
 	env->figs[1].color = GREEN;
 
 	env->ambient_light.intensity = 0.2;
