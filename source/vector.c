@@ -57,6 +57,11 @@ double	get_scal_prod(t_point v1, t_point v2)
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
+double	get_scal_square(t_point vector)
+{
+	return (get_scal_prod(vector, vector));
+}
+
 double	get_len(t_point vector)
 {
 	return (sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z));

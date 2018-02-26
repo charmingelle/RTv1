@@ -22,20 +22,33 @@ t_point	get_centered_coords(t_env *env, int x, int y)
 	return (c);
 }
 
+t_t1t2	*get_sphere_intersections(t_env *env, t_fig sphere, t_point point)
+{
+	t_point	vector;
+	double	a;
+	double	b;
+	double	c;
+
+	vector = get_vect(sphere.center, env->camera);
+	a = get_scal_prod(point, point);
+	b = 2 * get_scal_prod(vector, point);
+	c = get_scal_prod(vector, vector) - sphere.rad * sphere.rad;
+	return (get_quadratic_solution(a, b, c));
+}
+
 t_t1t2	*get_cyl_intersections(t_env *env, t_fig cyl, t_point point)
 {
-	t_point		p_a;
-	t_point		v_a;
-	t_point		delta;
-	double		scal_prod_v_v_a;
-	double		scal_prod_delta_v_a;
-	double		a;
-	double		b;
-	double		c;
+	t_point	p_a;
+	t_point	v_a;
+	t_point	delta;
+	double	scal_prod_v_v_a;
+	double	scal_prod_delta_v_a;
+	double	a;
+	double	b;
+	double	c;
 
 	p_a = cyl.axis1;
 	v_a = get_ort(get_vect(cyl.axis1, cyl.axis2));
-	// v_a = get_vect(cyl.axis1, cyl.axis2);
 	delta = get_diff(env->camera, p_a);
 	scal_prod_v_v_a = get_scal_prod(point, v_a);
 	scal_prod_delta_v_a = get_scal_prod(delta, v_a);
@@ -48,17 +61,32 @@ t_t1t2	*get_cyl_intersections(t_env *env, t_fig cyl, t_point point)
 	return (get_quadratic_solution(a, b, c));
 }
 
-t_t1t2	*get_sphere_intersections(t_env *env, t_fig sphere, t_point point)
+t_t1t2	*get_cone_intersections(t_env *env, t_fig cone, t_point point)
 {
-	t_point		vector;
-	double		a;
-	double		b;
-	double		c;
+	t_point	p_a;
+	t_point	v_a;
+	t_point	delta;
+	double	alpha;
+	double	scal_prod_v_v_a;
+	double	scal_prod_delta_v_a;
+	double	a;
+	double	b;
+	double	c;
 
-	vector = get_vect(sphere.center, env->camera);
-	a = get_scal_prod(point, point);
-	b = 2 * get_scal_prod(vector, point);
-	c = get_scal_prod(vector, vector) - sphere.rad * sphere.rad;
+	p_a = get_sum(cone.axis1, get_num_prod(cone.rad / (cone.rad - cone.rad2),
+		get_vect(cone.axis1, cone.axis2)));
+	v_a = get_ort(get_vect(cone.axis1, cone.axis2));
+	alpha = atan((cone.rad - cone.rad2) / (get_len(get_vect(cone.axis1, cone.axis2))));
+	delta = get_diff(env->camera, p_a);
+	scal_prod_v_v_a = get_scal_prod(point, v_a);
+	scal_prod_delta_v_a = get_scal_prod(delta, v_a);
+	a = pow(cos(alpha * get_scal_square(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)))), 2)
+		- pow(sin(alpha * pow(scal_prod_v_v_a, 2)), 2);
+	b = 2 * pow(cos(alpha * get_scal_prod(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)),
+		get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a)))), 2)
+		- 2 * pow(sin(alpha * scal_prod_v_v_a * scal_prod_delta_v_a), 2);
+	c = pow(cos(alpha * get_scal_square(get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a)))), 2)
+		- pow(sin(alpha * pow(scal_prod_delta_v_a, 2)), 2);
 	return (get_quadratic_solution(a, b, c));
 }
 
@@ -68,6 +96,8 @@ t_t1t2	*get_intersections(t_env *env, t_fig fig, t_point point)
 		return (get_sphere_intersections(env, fig, point));
 	if (ft_strcmp(fig.type, "cylinder") == 0)
 		return (get_cyl_intersections(env, fig, point));
+	if (ft_strcmp(fig.type, "cone") == 0)
+		return (get_cone_intersections(env, fig, point));
 	return (NULL);
 }
 
@@ -138,7 +168,7 @@ t_env	*init_env()
 	env->distance = DISTANCE;
 	env->color = 0;
 
-	env->fig_amount = 2;
+	env->fig_amount = 3;
 	env->figs = (t_fig *)malloc(sizeof(t_fig) * env->fig_amount);
 
 	env->figs[0].type = "sphere";
@@ -151,6 +181,13 @@ t_env	*init_env()
 	env->figs[1].axis2 = (t_point){100, 100, DISTANCE + 160};
 	env->figs[1].rad = 150;
 	env->figs[1].color = GREEN;
+
+	env->figs[2].type = "cone";
+	env->figs[2].axis1 = (t_point){-100, -100, DISTANCE + 150};
+	env->figs[2].axis2 = (t_point){-200, -200, DISTANCE + 160};
+	env->figs[2].rad = 100;
+	env->figs[2].rad2 = 150;
+	env->figs[2].color = BLUE;
 
 	env->ambient_light.intensity = 0.2;
 

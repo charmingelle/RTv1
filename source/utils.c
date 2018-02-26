@@ -25,3 +25,8 @@ t_t1t2	*get_quadratic_solution(double a, double b, double c)
 	intersections->t2 = (-b - sqrt(discrim)) / (2 * a);
 	return (intersections);
 }
+
+double	get_rad(int degree)
+{
+	return ((degree * M_PI) / 180);
+}
