@@ -22,7 +22,7 @@ t_point	get_centered_coords(t_env *env, int x, int y)
 	return (c);
 }
 
-t_2point	*get_cyl_intersections(t_env *env, t_point point)
+t_t1t2	*get_cyl_intersections(t_env *env, t_fig cyl, t_point point)
 {
 	t_point		p_a;
 	t_point		v_a;
@@ -32,11 +32,9 @@ t_2point	*get_cyl_intersections(t_env *env, t_point point)
 	double		a;
 	double		b;
 	double		c;
-	double		discrim;
-	t_2point	*intersection;
 
-	p_a = env->cyl.axis1;
-	v_a = get_vect(env->cyl.axis1, env->cyl.axis2);
+	p_a = cyl.axis1;
+	v_a = get_vect(cyl.axis1, cyl.axis2);
 	delta = get_diff(env->camera, p_a);
 	scal_prod_v_v_a = get_scal_prod(point, v_a);
 	scal_prod_delta_v_a = get_scal_prod(delta, v_a);
@@ -45,90 +43,64 @@ t_2point	*get_cyl_intersections(t_env *env, t_point point)
 	b = 2 * get_scal_prod(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)),
 		get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a)));
 	c = get_scal_prod(get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a)),
-		get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a))) - pow(env->cyl.rad, 2);
-	discrim = b * b - 4 * a * c;
-	if (discrim < 0)
-		return (NULL);
-	intersection = (t_2point *)malloc(sizeof(t_2point));
-	intersection->x = (-b + sqrt(discrim)) / (2 * a);
-	intersection->y = (-b - sqrt(discrim)) / (2 * a);
-	return (intersection);
+		get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a))) - pow(cyl.rad, 2);
+	return (get_quadratic_solution(a, b, c));
 }
 
-t_2point	*get_intersections(t_env *env, t_point point)
+t_t1t2	*get_sphere_intersections(t_env *env, t_fig sphere, t_point point)
 {
 	t_point		vector;
-	double		k1;
-	double		k2;
-	double		k3;
-	double		discrim;
-	t_2point	*intersection;
+	double		a;
+	double		b;
+	double		c;
 
-	vector = get_vect(env->sphere.center, env->camera);
-	k1 = get_scal_prod(point, point);
-	k2 = 2 * get_scal_prod(vector, point);
-	k3 = get_scal_prod(vector, vector) - env->sphere.rad * env->sphere.rad;
-	discrim = k2 * k2 - 4 * k1 * k3;
-	if (discrim < 0)
-		return (NULL);
-	intersection = (t_2point *)malloc(sizeof(t_2point));
-	intersection->x = (-k2 + sqrt(discrim)) / (2 * k1);
-	intersection->y = (-k2 - sqrt(discrim)) / (2 * k1);
-	return (intersection);
+	vector = get_vect(sphere.center, env->camera);
+	a = get_scal_prod(point, point);
+	b = 2 * get_scal_prod(vector, point);
+	c = get_scal_prod(vector, vector) - sphere.rad * sphere.rad;
+	return (get_quadratic_solution(a, b, c));
 }
 
-// int		trace_ray(t_env *env, t_point point)
-// {
-// 	t_2point	*intersection;
-
-// 	intersection = get_intersections(env, point);
-// 	if (intersection)
-// 	{
-// 		free(intersection);
-// 		return (env->sphere.color);
-// 	}
-// 	else
-// 		return (env->color);
-// }
-
-int		trace_cyl_ray(t_env *env, t_point point)
+t_t1t2	*get_intersections(t_env *env, t_fig fig, t_point point)
 {
-	t_2point	*intersection;
-	// t_point		normal;
-
-	intersection = get_cyl_intersections(env, point);
-	if (intersection)
-	{
-		free(intersection);
-		// normal = get_ort(get_vect(point, env->sphere.center));
-		// return (change_brightness(env->sphere.color, get_ambient_light(env)));
-		// return (change_brightness(env->sphere.color, get_point_light(point, normal, env)));
-		// return (change_brightness(env->sphere.color, get_dir_light(normal, env)));
-		// return (change_brightness(env->sphere.color, get_light(point, normal, env)));
-		return (env->cyl.color);
-	}
-	else
-		return (env->color);
+	if (ft_strcmp(fig.type, "sphere") == 0)
+		return (get_sphere_intersections(env, fig, point));
+	if (ft_strcmp(fig.type, "cylinder") == 0)
+		return (get_cyl_intersections(env, fig, point));
+	return (NULL);
 }
 
 int		trace_ray(t_env *env, t_point point)
 {
-	t_2point	*intersection;
-	t_point		normal;
+	t_t1t2	*intersections;
+	double		closest_t;
+	int			closest_fig_num;
+	int			fig_num;
 
-	intersection = get_intersections(env, point);
-	if (intersection)
+	closest_t = INFINITY;
+	closest_fig_num = -1;
+	fig_num = -1;
+	while (++fig_num < env->fig_amount)
 	{
-		free(intersection);
-		normal = get_ort(get_vect(point, env->sphere.center));
-		// return (change_brightness(env->sphere.color, get_ambient_light(env)));
-		// return (change_brightness(env->sphere.color, get_point_light(point, normal, env)));
-		// return (change_brightness(env->sphere.color, get_dir_light(normal, env)));
-		return (change_brightness(env->sphere.color, get_light(point, normal, env)));
-		// return (env->sphere.color);
+		intersections = get_intersections(env, env->figs[fig_num], point);
+		if (intersections)
+		{
+			if (closest_t == INFINITY || intersections->t1 < closest_t)
+			{
+				closest_t = intersections->t1;
+				closest_fig_num = fig_num;
+			}
+			if (closest_t == INFINITY || intersections->t2 < closest_t)
+			{
+				closest_t = intersections->t2;
+				closest_fig_num = fig_num;
+			}
+			free(intersections);
+		}
 	}
-	else
+	if (closest_fig_num == -1)
 		return (env->color);
+	return (get_fig_point_color(env, env->figs[closest_fig_num], point));
 }
 
 void	draw_scene(t_env *env)
@@ -145,8 +117,7 @@ void	draw_scene(t_env *env)
 		while (y < HEIGHT)
 		{
 			point = get_centered_coords(env, x, y);
-			// color = trace_ray(env, point);
-			color = trace_cyl_ray(env, point);
+			color = trace_ray(env, point);
 			mlx_pixel_put(env->mlx, env->window, x, y, color);
 			y++;
 		}
@@ -166,14 +137,19 @@ t_env	*init_env()
 	env->distance = DISTANCE;
 	env->color = 0;
 
-	env->sphere.center = (t_point){0, 0, DISTANCE + 150};
-	env->sphere.rad = 300;
-	env->sphere.color = RED;
+	env->fig_amount = 2;
+	env->figs = (t_fig *)malloc(sizeof(t_fig) * env->fig_amount);
 
-	env->cyl.axis1 = (t_point){0, 0, DISTANCE + 150};
-	env->cyl.axis2 = (t_point){100, 100, DISTANCE + 150};
-	env->cyl.rad = 100;
-	env->cyl.color = GREEN;
+	env->figs[0].type = "sphere";
+	env->figs[0].center = (t_point){0, 0, DISTANCE + 150};
+	env->figs[0].rad = 300;
+	env->figs[0].color = RED;
+
+	env->figs[1].type = "cylinder";
+	env->figs[1].axis1 = (t_point){0, 0, DISTANCE + 150};
+	env->figs[1].axis2 = (t_point){100, 100, DISTANCE + 200};
+	env->figs[1].rad = 500;
+	env->figs[1].color = GREEN;
 
 	env->ambient_light.intensity = 0.2;
 
@@ -182,6 +158,7 @@ t_env	*init_env()
 
 	env->dir_light.intensity = 0.4;
 	env->dir_light.dir = (t_point){-2, -1, 0};
+
 	return (env);
 }
 

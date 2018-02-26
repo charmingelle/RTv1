@@ -28,11 +28,11 @@
 # define RED 0xFF0000;
 # define GREEN 0x00FF00;
 
-typedef struct	s_2point
+typedef struct	s_t1t2
 {
-	double	x;
-	double	y;
-}				t_2point;
+	double	t1;
+	double	t2;
+}				t_t1t2;
 
 typedef struct	s_pount
 {
@@ -41,20 +41,15 @@ typedef struct	s_pount
 	double	z;
 }				t_point;
 
-typedef struct	s_sphere
+typedef struct	s_fig
 {
+	char	*type;
 	t_point	center;
-	double	rad;
-	int		color;
-}				t_sphere;
-
-typedef struct	s_cyl
-{
 	t_point	axis1;
 	t_point	axis2;
 	double	rad;
 	int		color;
-}				t_cyl;
+}				t_fig;
 
 typedef struct s_light
 {
@@ -70,8 +65,8 @@ typedef struct	s_env
 	t_point		camera;
 	int			distance;
 	int			color;
-	t_sphere	sphere;
-	t_cyl		cyl;
+	int			fig_amount;
+	t_fig		*figs;
 	t_light		ambient_light;
 	t_light		point_light;
 	t_light		dir_light;
@@ -102,5 +97,9 @@ double	get_dir_light(t_point normal, t_env *env);
 double	get_light(t_point point, t_point normal, t_env *env);
 
 int		change_brightness(int color, double coef);
+
+int		get_fig_point_color(t_env *env, t_fig fig, t_point point);
+
+t_t1t2	*get_quadratic_solution(double a, double b, double c);
 
 #endif
