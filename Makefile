@@ -16,7 +16,7 @@ CC			=	gcc
 
 CFLAGS		=	-Wall -Wextra -Werror
 
-INCFLAGS	=	$(addprefix -I, includes libft)
+INCFLAGS	=	$(addprefix -I, includes libft minilibx_macos)
 
 SRCDIR		=	source
 
@@ -26,7 +26,7 @@ SRC			=	color.c event.c light.c main.c vector.c
 
 HEADERS		=	$(addprefix $(INCDIR)/, header.h)
 
-LIBS		=	libft/libft.a
+LIBS		=	libft/libft.a minilibx_macos/libmlx.a
 
 OBJDIR		=	obj
 
@@ -36,7 +36,8 @@ all: $(OBJDIR) $(NAME)
 
 $(NAME): $(OBJ)
 	make -C libft
-	$(CC) -O3 -o $(NAME) $(OBJ) ${LIBS} -lmlx -framework OpenGL -framework AppKit $(INCFLAGS)
+	make -C minilibx_macos
+	$(CC) -O3 -o $(NAME) $(OBJ) ${LIBS} -framework OpenGL -framework AppKit $(INCFLAGS)
 
 $(OBJ): $(OBJDIR)/%.o : $(SRCDIR)/%.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@ $(INCFLAGS)

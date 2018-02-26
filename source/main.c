@@ -24,23 +24,34 @@ t_point	get_centered_coords(t_env *env, int x, int y)
 
 t_2point	*get_cyl_intersections(t_env *env, t_point point)
 {
-	double		k1;
-	double		k2;
-	double		k3;
+	t_point		p_a;
+	t_point		v_a;
+	t_point		delta;
+	double		scal_prod_v_v_a;
+	double		scal_prod_delta_v_a;
+	double		a;
+	double		b;
+	double		c;
 	double		discrim;
 	t_2point	*intersection;
-	t_point		axis_point;
 
-	axis_point = get_vect_sum(get_vector(env->cyl.axis2, env->cyl.axis1), point);
-	k1 = get_scalar_product(axis_point, axis_point);
-	k2 = 2 * get_scalar_product(axis_point, env->camera);
-	k3 = get_scalar_product(env->camera, env->camera) - env->cyl.rad * env->cyl.rad;
-	discrim = k2 * k2 - 4 * k1 * k3;
+	p_a = env->cyl.axis1;
+	v_a = get_vect(env->cyl.axis1, env->cyl.axis2);
+	delta = get_diff(env->camera, p_a);
+	scal_prod_v_v_a = get_scal_prod(point, v_a);
+	scal_prod_delta_v_a = get_scal_prod(delta, v_a);
+	a = get_scal_prod(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)),
+		get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)));
+	b = 2 * get_scal_prod(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)),
+		get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a)));
+	c = get_scal_prod(get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a)),
+		get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a))) - pow(env->cyl.rad, 2);
+	discrim = b * b - 4 * a * c;
 	if (discrim < 0)
 		return (NULL);
 	intersection = (t_2point *)malloc(sizeof(t_2point));
-	intersection->x = (-k2 + sqrt(discrim)) / (2 * k1);
-	intersection->y = (-k2 - sqrt(discrim)) / (2 * k1);
+	intersection->x = (-b + sqrt(discrim)) / (2 * a);
+	intersection->y = (-b - sqrt(discrim)) / (2 * a);
 	return (intersection);
 }
 
@@ -53,10 +64,10 @@ t_2point	*get_intersections(t_env *env, t_point point)
 	double		discrim;
 	t_2point	*intersection;
 
-	vector = get_vector(env->sphere.center, env->camera);
-	k1 = get_scalar_product(point, point);
-	k2 = 2 * get_scalar_product(vector, point);
-	k3 = get_scalar_product(vector, vector) - env->sphere.rad * env->sphere.rad;
+	vector = get_vect(env->sphere.center, env->camera);
+	k1 = get_scal_prod(point, point);
+	k2 = 2 * get_scal_prod(vector, point);
+	k3 = get_scal_prod(vector, vector) - env->sphere.rad * env->sphere.rad;
 	discrim = k2 * k2 - 4 * k1 * k3;
 	if (discrim < 0)
 		return (NULL);
@@ -89,7 +100,7 @@ int		trace_cyl_ray(t_env *env, t_point point)
 	if (intersection)
 	{
 		free(intersection);
-		// normal = get_ort(get_vector(point, env->sphere.center));
+		// normal = get_ort(get_vect(point, env->sphere.center));
 		// return (change_brightness(env->sphere.color, get_ambient_light(env)));
 		// return (change_brightness(env->sphere.color, get_point_light(point, normal, env)));
 		// return (change_brightness(env->sphere.color, get_dir_light(normal, env)));
@@ -109,7 +120,7 @@ int		trace_ray(t_env *env, t_point point)
 	if (intersection)
 	{
 		free(intersection);
-		normal = get_ort(get_vector(point, env->sphere.center));
+		normal = get_ort(get_vect(point, env->sphere.center));
 		// return (change_brightness(env->sphere.color, get_ambient_light(env)));
 		// return (change_brightness(env->sphere.color, get_point_light(point, normal, env)));
 		// return (change_brightness(env->sphere.color, get_dir_light(normal, env)));

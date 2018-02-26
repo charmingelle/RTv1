@@ -22,8 +22,8 @@ double	get_point_light(t_point point, t_point normal, t_env *env)
 	t_point	ray;
 	double	scal_prod;
 
-	ray = get_ort(get_vector(point, env->point_light.pos));
-	scal_prod = get_scalar_product(normal, ray);
+	ray = get_ort(get_vect(point, env->point_light.pos));
+	scal_prod = get_scal_prod(normal, ray);
 	if (scal_prod > 0.0)
 		return (env->point_light.intensity * scal_prod);
 	return (0.0);
@@ -35,7 +35,7 @@ double	get_dir_light(t_point normal, t_env *env)
 	double	scal_prod;
 
 	ray = get_ort(env->dir_light.dir);
-	scal_prod = get_scalar_product(normal, ray);
+	scal_prod = get_scal_prod(normal, ray);
 	if (scal_prod > 0.0)
 		return (env->dir_light.intensity * scal_prod);
 	return (0.0);

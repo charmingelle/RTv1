@@ -14,14 +14,14 @@
 # define HEADER_H
 
 # include "libft.h"
-# include <mlx.h>
+# include "mlx.h"
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
 
-# define WIDTH 1000
-# define HEIGHT 1000
-# define DISTANCE 1000
+# define WIDTH 600
+# define HEIGHT 600
+# define DISTANCE 600
 # define ESC 53
 
 # define WHITE 0xFFFFFF
@@ -79,11 +79,15 @@ typedef struct	s_env
 
 int		handle_keypress(int keycode, t_env *env);
 
-t_point	get_vector(t_point start, t_point end);
+t_point	get_vect(t_point start, t_point end);
 
-t_point	get_vect_sum(t_point v1, t_point v2);
+t_point	get_sum(t_point v1, t_point v2);
 
-double	get_scalar_product(t_point v1, t_point v2);
+t_point	get_diff(t_point v1, t_point v2);
+
+t_point	get_num_prod(double num, t_point v);
+
+double	get_scal_prod(t_point v1, t_point v2);
 
 double	get_len(t_point vector);
 
