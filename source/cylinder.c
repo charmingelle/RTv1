@@ -36,8 +36,8 @@ t_t1t2			*get_cyl_intersections(t_env *env, t_fig cyl, t_vector point)
 	t_vector	p_a;
 	t_vector	v_a;
 	t_vector	delta;
-	double	scal_prod_v_v_a;
-	double	scal_prod_delta_v_a;
+	double		scal_prod_v_v_a;
+	double		scal_prod_delta_v_a;
 
 	p_a = cyl.center;
 	v_a = get_ort(get_vect(cyl.center, cyl.center2));

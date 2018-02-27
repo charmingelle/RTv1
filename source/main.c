@@ -152,7 +152,7 @@ t_env	*init_env()
 
 	env->figs[3].type = "cone";
 	env->figs[3].center = (t_vector){0, 0, DISTANCE};
-	env->figs[3].center2 = (t_vector){-50, -50, DISTANCE};
+	env->figs[3].center2 = (t_vector){0, -50, DISTANCE};
 	env->figs[3].rad = 50;
 	env->figs[3].rad2 = 100;
 	env->figs[3].color = BLUE;
