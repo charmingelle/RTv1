@@ -12,9 +12,9 @@
 
 #include "header.h"
 
-t_point	get_vect(t_point start, t_point end)
+t_vector	get_vect(t_vector start, t_vector end)
 {
-	t_point	res;
+	t_vector	res;
 
 	res.x = end.x - start.x;
 	res.y = end.y - start.y;
@@ -22,9 +22,9 @@ t_point	get_vect(t_point start, t_point end)
 	return (res);
 }
 
-t_point	get_sum(t_point v1, t_point v2)
+t_vector	get_sum(t_vector v1, t_vector v2)
 {
-	t_point	res;
+	t_vector	res;
 
 	res.x = v1.x + v2.x;
 	res.y = v1.y + v2.y;
@@ -32,9 +32,9 @@ t_point	get_sum(t_point v1, t_point v2)
 	return (res);
 }
 
-t_point	get_diff(t_point v1, t_point v2)
+t_vector	get_diff(t_vector v1, t_vector v2)
 {
-	t_point	res;
+	t_vector	res;
 
 	res.x = v1.x - v2.x;
 	res.y = v1.y - v2.y;
@@ -42,9 +42,9 @@ t_point	get_diff(t_point v1, t_point v2)
 	return (res);
 }
 
-t_point	get_num_prod(double num, t_point v)
+t_vector	get_num_prod(double num, t_vector v)
 {
-	t_point	res;
+	t_vector	res;
 
 	res.x = num * v.x;
 	res.y = num * v.y;
@@ -52,24 +52,24 @@ t_point	get_num_prod(double num, t_point v)
 	return (res);
 }
 
-double	get_scal_prod(t_point v1, t_point v2)
+double	get_scal_prod(t_vector v1, t_vector v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
-double	get_scal_square(t_point vector)
+double	get_scal_square(t_vector vector)
 {
 	return (get_scal_prod(vector, vector));
 }
 
-double	get_len(t_point vector)
+double	get_len(t_vector vector)
 {
 	return (sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z));
 }
 
-t_point	get_ort(t_point vector)
+t_vector	get_ort(t_vector vector)
 {
-	t_point	res;
+	t_vector	res;
 	double	len;
 
 	len = get_len(vector);

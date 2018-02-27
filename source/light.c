@@ -17,9 +17,9 @@ double	get_ambient_light(t_env *env)
 	return (env->ambient_light.intensity);
 }
 
-double	get_point_light(t_point point, t_point normal, t_env *env)
+double	get_vector_light(t_vector point, t_vector normal, t_env *env)
 {
-	t_point	ray;
+	t_vector	ray;
 	double	scal_prod;
 
 	ray = get_ort(get_vect(point, env->point_light.pos));
@@ -29,9 +29,9 @@ double	get_point_light(t_point point, t_point normal, t_env *env)
 	return (0.0);
 }
 
-double	get_dir_light(t_point normal, t_env *env)
+double	get_dir_light(t_vector normal, t_env *env)
 {
-	t_point	ray;
+	t_vector	ray;
 	double	scal_prod;
 
 	ray = get_ort(env->dir_light.dir);
@@ -41,11 +41,11 @@ double	get_dir_light(t_point normal, t_env *env)
 	return (0.0);
 }
 
-double	get_light(t_point point, t_point normal, t_env *env)
+double	get_light(t_vector point, t_vector normal, t_env *env)
 {
 	double	light;
 
-	light = get_ambient_light(env) + get_point_light(point, normal, env) + get_dir_light(normal, env);
+	light = get_ambient_light(env) + get_vector_light(point, normal, env) + get_dir_light(normal, env);
 	if (light < 1.0)
 		return (light);
 	return (1.0);

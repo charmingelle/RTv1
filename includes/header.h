@@ -41,31 +41,31 @@ typedef struct	s_pount
 	double	x;
 	double	y;
 	double	z;
-}				t_point;
+}				t_vector;
 
 typedef struct	s_fig
 {
 	char	*type;
-	t_point	center;
-	t_point	center2;
+	t_vector	center;
+	t_vector	center2;
 	double	rad;
 	double	rad2;
-	t_point	normal;
+	t_vector	normal;
 	int		color;
 }				t_fig;
 
 typedef struct s_light
 {
 	double	intensity;
-	t_point	pos;
-	t_point	dir;
+	t_vector	pos;
+	t_vector	dir;
 }				t_light;
 
 typedef struct	s_env
 {
 	void		*mlx;
 	void		*window;
-	t_point		camera;
+	t_vector		camera;
 	int			distance;
 	int			color;
 	int			fig_amount;
@@ -77,33 +77,33 @@ typedef struct	s_env
 
 int		handle_keypress(int keycode, t_env *env);
 
-t_point	get_vect(t_point start, t_point end);
+t_vector	get_vect(t_vector start, t_vector end);
 
-t_point	get_sum(t_point v1, t_point v2);
+t_vector	get_sum(t_vector v1, t_vector v2);
 
-t_point	get_diff(t_point v1, t_point v2);
+t_vector	get_diff(t_vector v1, t_vector v2);
 
-t_point	get_num_prod(double num, t_point v);
+t_vector	get_num_prod(double num, t_vector v);
 
-double	get_scal_prod(t_point v1, t_point v2);
+double	get_scal_prod(t_vector v1, t_vector v2);
 
-double	get_scal_square(t_point vector);
+double	get_scal_square(t_vector vector);
 
-double	get_len(t_point vector);
+double	get_len(t_vector vector);
 
-t_point	get_ort(t_point vector);
+t_vector	get_ort(t_vector vector);
 
 double	get_ambient_light(t_env *env);
 
-double	get_point_light(t_point point, t_point normal, t_env *env);
+double	get_vector_light(t_vector point, t_vector normal, t_env *env);
 
-double	get_dir_light(t_point normal, t_env *env);
+double	get_dir_light(t_vector normal, t_env *env);
 
-double	get_light(t_point point, t_point normal, t_env *env);
+double	get_light(t_vector point, t_vector normal, t_env *env);
 
 int		change_brightness(int color, double coef);
 
-int		get_fig_point_color(t_env *env, t_fig fig, t_point point);
+int		get_fig_point_color(t_env *env, t_fig fig, t_vector point);
 
 t_t1t2	*get_quadratic_solution(double a, double b, double c);
 

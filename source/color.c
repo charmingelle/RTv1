@@ -39,15 +39,15 @@ int			change_brightness(int color, double coef)
 	return (r * 0x10000 + g * 0x100 + b);
 }
 
-int			get_fig_point_color(t_env *env, t_fig fig, t_point point)
+int			get_fig_point_color(t_env *env, t_fig fig, t_vector point)
 {
-	t_point		normal;
+	t_vector		normal;
 
 	if (ft_strcmp(fig.type, "sphere") == 0)
 	{
 		normal = get_ort(get_vect(point, fig.center));
 		// return (change_brightness(env->sphere.color, get_ambient_light(env)));
-		// return (change_brightness(env->sphere.color, get_point_light(point, normal, env)));
+		// return (change_brightness(env->sphere.color, get_vector_light(point, normal, env)));
 		// return (change_brightness(env->sphere.color, get_dir_light(normal, env)));
 		return (change_brightness(fig.color, get_light(point, normal, env)));
 	}
