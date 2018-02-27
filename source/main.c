@@ -63,8 +63,8 @@ t_t1t2	*get_cyl_intersections(t_env *env, t_fig cyl, t_point point)
 	double	scal_prod_v_v_a;
 	double	scal_prod_delta_v_a;
 
-	p_a = cyl.axis1;
-	v_a = get_ort(get_vect(cyl.axis1, cyl.axis2));
+	p_a = cyl.center;
+	v_a = get_ort(get_vect(cyl.center, cyl.center2));
 	delta = get_diff(env->camera, p_a);
 	scal_prod_v_v_a = get_scal_prod(point, v_a);
 	scal_prod_delta_v_a = get_scal_prod(delta, v_a);
@@ -102,16 +102,27 @@ t_t1t2	*get_cone_intersections(t_env *env, t_fig cone, t_point point)
 	double	scal_prod_v_v_a;
 	double	scal_prod_delta_v_a;
 
-	p_a = get_sum(cone.axis1, get_num_prod(cone.rad / (cone.rad - cone.rad2),
-		get_vect(cone.axis1, cone.axis2)));
-	v_a = get_ort(get_vect(cone.axis1, cone.axis2));
-	alpha = atan((cone.rad - cone.rad2) / (get_len(get_vect(cone.axis1, cone.axis2))));
+	p_a = get_sum(cone.center, get_num_prod(cone.rad / (cone.rad - cone.rad2),
+		get_vect(cone.center, cone.center2)));
+	v_a = get_ort(get_vect(cone.center, cone.center2));
+	alpha = atan((cone.rad - cone.rad2) / (get_len(get_vect(cone.center, cone.center2))));
 	delta = get_diff(env->camera, p_a);
 	scal_prod_v_v_a = get_scal_prod(point, v_a);
 	scal_prod_delta_v_a = get_scal_prod(delta, v_a);
 	return (get_quadratic_solution(get_cone_a(alpha, point, scal_prod_v_v_a, v_a),
 		get_cone_b(alpha, point, scal_prod_v_v_a, v_a, delta, scal_prod_delta_v_a),
 		get_cone_c(alpha, delta, scal_prod_delta_v_a, v_a)));
+}
+
+t_t1t2	*get_plane_intersections(t_env *env, t_fig fig, t_point point)
+{
+	t_t1t2	*intersections;
+
+	intersections = (t_t1t2 *)malloc(sizeof(t_t1t2));
+	intersections->t1 = get_scal_prod(get_diff(fig.center, env->camera), fig.normal)
+		/ get_scal_prod(point, fig.normal);
+	intersections->t2 = intersections->t1;
+	return (intersections);
 }
 
 t_t1t2	*get_intersections(t_env *env, t_fig fig, t_point point)
@@ -122,6 +133,8 @@ t_t1t2	*get_intersections(t_env *env, t_fig fig, t_point point)
 		return (get_cyl_intersections(env, fig, point));
 	if (ft_strcmp(fig.type, "cone") == 0)
 		return (get_cone_intersections(env, fig, point));
+	if (ft_strcmp(fig.type, "plane") == 0)
+		return (get_plane_intersections(env, fig, point));
 	return (NULL);
 }
 
@@ -201,17 +214,22 @@ t_env	*init_env()
 	env->figs[0].color = RED;
 
 	env->figs[1].type = "cylinder";
-	env->figs[1].axis1 = (t_point){0, 0, DISTANCE + 150};
-	env->figs[1].axis2 = (t_point){100, 100, DISTANCE + 160};
+	env->figs[1].center = (t_point){0, 0, DISTANCE + 150};
+	env->figs[1].center2 = (t_point){100, 100, DISTANCE + 160};
 	env->figs[1].rad = 150;
 	env->figs[1].color = GREEN;
 
-	env->figs[2].type = "cone";
-	env->figs[2].axis1 = (t_point){-100, -100, DISTANCE + 150};
-	env->figs[2].axis2 = (t_point){-200, -200, DISTANCE + 160};
-	env->figs[2].rad = 100;
-	env->figs[2].rad2 = 150;
-	env->figs[2].color = BLUE;
+	env->figs[2].type = "plane";
+	env->figs[2].center = (t_point){0, 0, DISTANCE};
+	env->figs[2].normal = (t_point){1, 1, 1};
+	env->figs[2].color = YELLOW;
+
+	// env->figs[3].type = "cone";
+	// env->figs[3].center = (t_point){-100, -100, DISTANCE + 150};
+	// env->figs[3].center2 = (t_point){-200, -200, DISTANCE + 160};
+	// env->figs[3].rad = 100;
+	// env->figs[3].rad2 = 150;
+	// env->figs[3].color = BLUE;
 
 	env->ambient_light.intensity = 0.2;
 
@@ -227,7 +245,7 @@ t_env	*init_env()
 int	main(void)
 {
 	t_env	*env;
-
+ 
 	env = init_env();
 	draw_scene(env);
 	mlx_key_hook(env->window, &handle_keypress, env);

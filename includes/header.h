@@ -28,6 +28,7 @@
 # define RED 0xFF0000
 # define GREEN 0x00FF00
 # define BLUE 0x0000FF
+# define YELLOW 0xFFFF00
 
 typedef struct	s_t1t2
 {
@@ -46,10 +47,10 @@ typedef struct	s_fig
 {
 	char	*type;
 	t_point	center;
-	t_point	axis1;
-	t_point	axis2;
+	t_point	center2;
 	double	rad;
 	double	rad2;
+	t_point	normal;
 	int		color;
 }				t_fig;
 
