@@ -22,7 +22,7 @@ SRCDIR		=	source
 
 INCDIR		=	includes
 
-SRC			=	color.c cone.c event.c light.c main.c utils.c vector.c
+SRC			=	color.c cone.c cylinder.c event.c light.c main.c utils.c vector.c
 
 HEADERS		=	$(addprefix $(INCDIR)/, header.h)
 

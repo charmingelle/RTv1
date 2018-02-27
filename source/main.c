@@ -36,43 +36,6 @@ t_t1t2	*get_sphere_intersections(t_env *env, t_fig sphere, t_vector point)
 	return (get_quadratic_solution(a, b, c));
 }
 
-double	get_cyl_a(t_vector point, double scal_prod_v_v_a, t_vector v_a)
-{
-	return (get_scal_prod(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)),
-		get_diff(point, get_num_prod(scal_prod_v_v_a, v_a))));
-}
-
-double	get_cyl_b(t_vector point, t_vector delta,
-	double scal_prod_v_v_a, t_vector v_a, double scal_prod_delta_v_a)
-{
-	return (2 * get_scal_prod(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)),
-		get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a))));
-}
-
-double	get_cyl_c(t_vector delta, double scal_prod_delta_v_a, t_vector v_a, double rad)
-{
-	return (get_scal_prod(get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a)),
-		get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a))) - pow(rad, 2));
-}
-
-t_t1t2	*get_cyl_intersections(t_env *env, t_fig cyl, t_vector point)
-{
-	t_vector	p_a;
-	t_vector	v_a;
-	t_vector	delta;
-	double	scal_prod_v_v_a;
-	double	scal_prod_delta_v_a;
-
-	p_a = cyl.center;
-	v_a = get_ort(get_vect(cyl.center, cyl.center2));
-	delta = get_diff(env->camera, p_a);
-	scal_prod_v_v_a = get_scal_prod(point, v_a);
-	scal_prod_delta_v_a = get_scal_prod(delta, v_a);
-	return (get_quadratic_solution(get_cyl_a(point, scal_prod_v_v_a, v_a),
-		get_cyl_b(point, delta, scal_prod_v_v_a, v_a, scal_prod_delta_v_a),
-		get_cyl_c(delta, scal_prod_delta_v_a, v_a, cyl.rad)));
-}
-
 t_t1t2	*get_plane_intersections(t_env *env, t_fig fig, t_vector point)
 {
 	double	denom;

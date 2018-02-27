@@ -32,7 +32,7 @@ static double	get_cone_c(double alpha, t_vector delta, double scal_prod_delta_v_
 		- pow(sin(alpha * pow(scal_prod_delta_v_a, 2)), 2));
 }
 
-t_t1t2	*get_cone_intersections(t_env *env, t_fig cone, t_vector point)
+t_t1t2			*get_cone_intersections(t_env *env, t_fig cone, t_vector point)
 {
 	t_vector	p_a;
 	t_vector	v_a;

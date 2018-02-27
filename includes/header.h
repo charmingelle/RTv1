@@ -111,4 +111,6 @@ double	get_rad(int degree);
 
 t_t1t2	*get_cone_intersections(t_env *env, t_fig cone, t_vector point);
 
+t_t1t2	*get_cyl_intersections(t_env *env, t_fig cyl, t_vector point);
+
 #endif
