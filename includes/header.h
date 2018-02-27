@@ -109,4 +109,6 @@ t_t1t2	*get_quadratic_solution(double a, double b, double c);
 
 double	get_rad(int degree);
 
+t_t1t2	*get_cone_intersections(t_env *env, t_fig cone, t_vector point);
+
 #endif

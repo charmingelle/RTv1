@@ -73,51 +73,14 @@ t_t1t2	*get_cyl_intersections(t_env *env, t_fig cyl, t_vector point)
 		get_cyl_c(delta, scal_prod_delta_v_a, v_a, cyl.rad)));
 }
 
-double	get_cone_a(double alpha, t_vector point, double scal_prod_v_v_a, t_vector v_a)
-{
-	return (pow(cos(alpha * get_scal_square(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)))), 2)
-		- pow(sin(alpha * pow(scal_prod_v_v_a, 2)), 2));
-}
-
-double	get_cone_b(double alpha, t_vector point, double scal_prod_v_v_a,
-	t_vector v_a, t_vector delta, double scal_prod_delta_v_a)
-{
-	return (2 * pow(cos(alpha * get_scal_prod(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)),
-		get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a)))), 2)
-		- 2 * pow(sin(alpha * scal_prod_v_v_a * scal_prod_delta_v_a), 2));
-}
-
-double	get_cone_c(double alpha, t_vector delta, double scal_prod_delta_v_a, t_vector v_a)
-{
-	return (pow(cos(alpha * get_scal_square(get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a)))), 2)
-		- pow(sin(alpha * pow(scal_prod_delta_v_a, 2)), 2));
-}
-
-t_t1t2	*get_cone_intersections(t_env *env, t_fig cone, t_vector point)
-{
-	t_vector	p_a;
-	t_vector	v_a;
-	t_vector	delta;
-	double	alpha;
-	double	scal_prod_v_v_a;
-	double	scal_prod_delta_v_a;
-
-	p_a = get_sum(cone.center, get_num_prod(cone.rad / (cone.rad - cone.rad2),
-		get_vect(cone.center, cone.center2)));
-	v_a = get_ort(get_vect(cone.center, cone.center2));
-	alpha = atan((cone.rad - cone.rad2) / (get_len(get_vect(cone.center, cone.center2))));
-	delta = get_diff(env->camera, p_a);
-	scal_prod_v_v_a = get_scal_prod(point, v_a);
-	scal_prod_delta_v_a = get_scal_prod(delta, v_a);
-	return (get_quadratic_solution(get_cone_a(alpha, point, scal_prod_v_v_a, v_a),
-		get_cone_b(alpha, point, scal_prod_v_v_a, v_a, delta, scal_prod_delta_v_a),
-		get_cone_c(alpha, delta, scal_prod_delta_v_a, v_a)));
-}
-
 t_t1t2	*get_plane_intersections(t_env *env, t_fig fig, t_vector point)
 {
+	double	denom;
 	t_t1t2	*intersections;
 
+	denom = get_scal_prod(point, fig.normal);
+	if (denom == 0.0)
+		return (NULL);
 	intersections = (t_t1t2 *)malloc(sizeof(t_t1t2));
 	intersections->t1 = get_scal_prod(get_diff(fig.center, env->camera), fig.normal)
 		/ get_scal_prod(point, fig.normal);
@@ -205,7 +168,7 @@ t_env	*init_env()
 	env->distance = DISTANCE;
 	env->color = 0;
 
-	env->fig_amount = 3;
+	env->fig_amount = 4;
 	env->figs = (t_fig *)malloc(sizeof(t_fig) * env->fig_amount);
 
 	env->figs[0].type = "sphere";
@@ -224,12 +187,12 @@ t_env	*init_env()
 	env->figs[2].normal = (t_vector){1, 1, 1};
 	env->figs[2].color = YELLOW;
 
-	// env->figs[3].type = "cone";
-	// env->figs[3].center = (t_vector){-100, -100, DISTANCE + 150};
-	// env->figs[3].center2 = (t_vector){-200, -200, DISTANCE + 160};
-	// env->figs[3].rad = 100;
-	// env->figs[3].rad2 = 150;
-	// env->figs[3].color = BLUE;
+	env->figs[3].type = "cone";
+	env->figs[3].center = (t_vector){0, 0, DISTANCE};
+	env->figs[3].center2 = (t_vector){-50, -50, DISTANCE};
+	env->figs[3].rad = 50;
+	env->figs[3].rad2 = 100;
+	env->figs[3].color = BLUE;
 
 	env->ambient_light.intensity = 0.2;
 
