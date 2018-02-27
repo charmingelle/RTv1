@@ -36,6 +36,25 @@ t_t1t2	*get_sphere_intersections(t_env *env, t_fig sphere, t_point point)
 	return (get_quadratic_solution(a, b, c));
 }
 
+double	get_cyl_a(t_point point, double scal_prod_v_v_a, t_point v_a)
+{
+	return (get_scal_prod(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)),
+		get_diff(point, get_num_prod(scal_prod_v_v_a, v_a))));
+}
+
+double	get_cyl_b(t_point point, t_point delta,
+	double scal_prod_v_v_a, t_point v_a, double scal_prod_delta_v_a)
+{
+	return (2 * get_scal_prod(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)),
+		get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a))));
+}
+
+double	get_cyl_c(t_point delta, double scal_prod_delta_v_a, t_point v_a, double rad)
+{
+	return (get_scal_prod(get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a)),
+		get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a))) - pow(rad, 2));
+}
+
 t_t1t2	*get_cyl_intersections(t_env *env, t_fig cyl, t_point point)
 {
 	t_point	p_a;
@@ -43,22 +62,35 @@ t_t1t2	*get_cyl_intersections(t_env *env, t_fig cyl, t_point point)
 	t_point	delta;
 	double	scal_prod_v_v_a;
 	double	scal_prod_delta_v_a;
-	double	a;
-	double	b;
-	double	c;
 
 	p_a = cyl.axis1;
 	v_a = get_ort(get_vect(cyl.axis1, cyl.axis2));
 	delta = get_diff(env->camera, p_a);
 	scal_prod_v_v_a = get_scal_prod(point, v_a);
 	scal_prod_delta_v_a = get_scal_prod(delta, v_a);
-	a = get_scal_prod(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)),
-		get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)));
-	b = 2 * get_scal_prod(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)),
-		get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a)));
-	c = get_scal_prod(get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a)),
-		get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a))) - pow(cyl.rad, 2);
-	return (get_quadratic_solution(a, b, c));
+	return (get_quadratic_solution(get_cyl_a(point, scal_prod_v_v_a, v_a),
+		get_cyl_b(point, delta, scal_prod_v_v_a, v_a, scal_prod_delta_v_a),
+		get_cyl_c(delta, scal_prod_delta_v_a, v_a, cyl.rad)));
+}
+
+double	get_cone_a(double alpha, t_point point, double scal_prod_v_v_a, t_point v_a)
+{
+	return (pow(cos(alpha * get_scal_square(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)))), 2)
+		- pow(sin(alpha * pow(scal_prod_v_v_a, 2)), 2));
+}
+
+double	get_cone_b(double alpha, t_point point, double scal_prod_v_v_a,
+	t_point v_a, t_point delta, double scal_prod_delta_v_a)
+{
+	return (2 * pow(cos(alpha * get_scal_prod(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)),
+		get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a)))), 2)
+		- 2 * pow(sin(alpha * scal_prod_v_v_a * scal_prod_delta_v_a), 2));
+}
+
+double	get_cone_c(double alpha, t_point delta, double scal_prod_delta_v_a, t_point v_a)
+{
+	return (pow(cos(alpha * get_scal_square(get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a)))), 2)
+		- pow(sin(alpha * pow(scal_prod_delta_v_a, 2)), 2));
 }
 
 t_t1t2	*get_cone_intersections(t_env *env, t_fig cone, t_point point)
@@ -69,9 +101,6 @@ t_t1t2	*get_cone_intersections(t_env *env, t_fig cone, t_point point)
 	double	alpha;
 	double	scal_prod_v_v_a;
 	double	scal_prod_delta_v_a;
-	double	a;
-	double	b;
-	double	c;
 
 	p_a = get_sum(cone.axis1, get_num_prod(cone.rad / (cone.rad - cone.rad2),
 		get_vect(cone.axis1, cone.axis2)));
@@ -80,14 +109,9 @@ t_t1t2	*get_cone_intersections(t_env *env, t_fig cone, t_point point)
 	delta = get_diff(env->camera, p_a);
 	scal_prod_v_v_a = get_scal_prod(point, v_a);
 	scal_prod_delta_v_a = get_scal_prod(delta, v_a);
-	a = pow(cos(alpha * get_scal_square(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)))), 2)
-		- pow(sin(alpha * pow(scal_prod_v_v_a, 2)), 2);
-	b = 2 * pow(cos(alpha * get_scal_prod(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)),
-		get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a)))), 2)
-		- 2 * pow(sin(alpha * scal_prod_v_v_a * scal_prod_delta_v_a), 2);
-	c = pow(cos(alpha * get_scal_square(get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a)))), 2)
-		- pow(sin(alpha * pow(scal_prod_delta_v_a, 2)), 2);
-	return (get_quadratic_solution(a, b, c));
+	return (get_quadratic_solution(get_cone_a(alpha, point, scal_prod_v_v_a, v_a),
+		get_cone_b(alpha, point, scal_prod_v_v_a, v_a, delta, scal_prod_delta_v_a),
+		get_cone_c(alpha, delta, scal_prod_delta_v_a, v_a)));
 }
 
 t_t1t2	*get_intersections(t_env *env, t_fig fig, t_point point)
