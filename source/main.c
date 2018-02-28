@@ -64,14 +64,12 @@ t_t1t2	*get_intersections(t_fig fig, t_vector o, t_vector d)
 	return (NULL);
 }
 
-int		get_closest_fig_num(t_env *env, t_vector o, t_vector d)
+int		get_closest_fig_num(t_env *env, double *closest_t, t_vector o, t_vector d)
 {
 	t_t1t2	*intersections;	
-	double	closest_t;
 	int		closest_fig_num;
 	int		fig_num;
 
-	closest_t = INFINITY;
 	closest_fig_num = -1;
 	fig_num = -1;
 	while (++fig_num < env->fig_amount)
@@ -79,14 +77,14 @@ int		get_closest_fig_num(t_env *env, t_vector o, t_vector d)
 		intersections = get_intersections(env->figs[fig_num], o, d);
 		if (intersections)
 		{
-			if (closest_t == INFINITY || (intersections->t1 > 0 && intersections->t1 < closest_t) )
+			if (*closest_t == INFINITY || (intersections->t1 > 0 && intersections->t1 < *closest_t) )
 			{
-				closest_t = intersections->t1;
+				*closest_t = intersections->t1;
 				closest_fig_num = fig_num;
 			}
-			if (closest_t == INFINITY || (intersections->t2 > 0 && intersections->t2 < closest_t) )
+			if (*closest_t == INFINITY || (intersections->t2 > 0 && intersections->t2 < *closest_t) )
 			{
-				closest_t = intersections->t2;
+				*closest_t = intersections->t2;
 				closest_fig_num = fig_num;
 			}
 			free(intersections);
@@ -97,13 +95,16 @@ int		get_closest_fig_num(t_env *env, t_vector o, t_vector d)
 
 int		trace_ray(t_env *env, t_vector point)
 {
-	int	closest_fig_num;
-	
-	closest_fig_num = get_closest_fig_num(env, env->camera, point);
+	int		closest_fig_num;
+	double	closest_t;
+
+	closest_t = INFINITY;
+	closest_fig_num = get_closest_fig_num(env, &closest_t, env->camera, point);
 	if (closest_fig_num == -1)
 		return (env->color);
-	return (get_fig_point_color(env, env->figs[closest_fig_num], point));
-	// return (env->figs[closest_fig_num].color);
+	return (get_fig_point_color(env, env->figs[closest_fig_num],
+		get_sum(env->camera, get_num_prod(closest_t, point))));
+	// return (get_fig_point_color(env, env->figs[closest_fig_num], point));
 }
 
 void	draw_scene(t_env *env)
@@ -186,9 +187,9 @@ t_env	*init_env()
 	env->ambient_light.intensity = 0.2;
 
 	env->point_light.intensity = 0.5;
-	env->point_light.pos = (t_vector){-300, 100, DISTANCE};
+	env->point_light.pos = (t_vector){-350, 10, DISTANCE};
 
-	env->dir_light.intensity = 0.3;
+	env->dir_light.intensity = 0.0;
 	env->dir_light.dir = (t_vector){-2, -1, 0};
 
 	return (env);

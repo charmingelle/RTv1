@@ -97,7 +97,7 @@ double		get_ambient_light(t_env *env);
 
 double		get_vector_light(t_vector point, t_vector normal, t_env *env);
 
-double		get_dir_light(t_vector normal, t_env *env);
+double		get_dir_light(t_vector point, t_vector normal, t_env *env);
 
 double		get_light(t_vector point, t_vector normal, t_env *env);
 
@@ -108,6 +108,8 @@ int			get_fig_point_color(t_env *env, t_fig fig, t_vector point);
 t_t1t2		*get_quadratic_solution(double a, double b, double c);
 
 double		get_rad(int degree);
+
+int			get_closest_fig_num(t_env *env, double *closest_t, t_vector o, t_vector d);
 
 t_t1t2		*get_cone_intersections(t_fig cone, t_vector o, t_vector d);
 
