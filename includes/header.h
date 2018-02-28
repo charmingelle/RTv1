@@ -19,9 +19,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define WIDTH 600
-# define HEIGHT 600
-# define DISTANCE 600
+# define WIDTH 700
+# define HEIGHT 700
+# define DISTANCE 700
 # define ESC 53
 
 # define WHITE 0xFFFFFF
@@ -45,13 +45,13 @@ typedef struct	s_pount
 
 typedef struct	s_fig
 {
-	char	*type;
+	char		*type;
 	t_vector	center;
 	t_vector	center2;
-	double	rad;
-	double	rad2;
+	double		rad;
+	double		rad2;
 	t_vector	normal;
-	int		color;
+	int			color;
 }				t_fig;
 
 typedef struct s_light

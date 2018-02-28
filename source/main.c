@@ -42,7 +42,7 @@ t_t1t2	*get_plane_intersections(t_env *env, t_fig fig, t_vector point)
 	t_t1t2	*intersections;
 
 	denom = get_scal_prod(point, fig.normal);
-	if (denom == 0.0)
+	if (denom > 1e-6)
 		return (NULL);
 	intersections = (t_t1t2 *)malloc(sizeof(t_t1t2));
 	intersections->t1 = get_scal_prod(get_diff(fig.center, env->camera), fig.normal)
@@ -79,12 +79,12 @@ int		trace_ray(t_env *env, t_vector point)
 		intersections = get_intersections(env, env->figs[fig_num], point);
 		if (intersections)
 		{
-			if (closest_t == INFINITY || intersections->t1 < closest_t)
+			if (closest_t == INFINITY || (intersections->t1 > 0 && intersections->t1 < closest_t) )
 			{
 				closest_t = intersections->t1;
 				closest_fig_num = fig_num;
 			}
-			if (closest_t == INFINITY || intersections->t2 < closest_t)
+			if (closest_t == INFINITY || (intersections->t2 > 0 && intersections->t2 < closest_t) )
 			{
 				closest_t = intersections->t2;
 				closest_fig_num = fig_num;
@@ -131,38 +131,55 @@ t_env	*init_env()
 	env->distance = DISTANCE;
 	env->color = 0;
 
-	env->fig_amount = 4;
+	env->fig_amount = 6;
 	env->figs = (t_fig *)malloc(sizeof(t_fig) * env->fig_amount);
 
 	env->figs[0].type = "sphere";
-	env->figs[0].center = (t_vector){0, 0, DISTANCE + 150};
-	env->figs[0].rad = 300;
-	env->figs[0].color = RED;
+	env->figs[0].center = (t_vector){-150, -100, DISTANCE + 150};
+	env->figs[0].rad = 100;
+	env->figs[0].color = 0x679327;
 
-	env->figs[1].type = "cylinder";
-	env->figs[1].center = (t_vector){0, 0, DISTANCE + 150};
-	env->figs[1].center2 = (t_vector){100, 100, DISTANCE + 160};
+	env->figs[1].type = "sphere";
+	env->figs[1].center = (t_vector){150, -100, DISTANCE + 75};
 	env->figs[1].rad = 150;
-	env->figs[1].color = GREEN;
+	env->figs[1].color = 0xFFEF00;
 
-	env->figs[2].type = "plane";
-	env->figs[2].center = (t_vector){0, 0, DISTANCE};
-	env->figs[2].normal = (t_vector){1, 1, 1};
-	env->figs[2].color = YELLOW;
+	env->figs[2].type = "cylinder";
+	env->figs[2].center = (t_vector){-400, 0, DISTANCE + 600};
+	env->figs[2].center2 = (t_vector){-300, 300, DISTANCE + 600};
+	env->figs[2].rad = 50;
+	env->figs[2].color = 0xD8C077;
 
-	env->figs[3].type = "cone";
-	env->figs[3].center = (t_vector){0, 0, DISTANCE};
-	env->figs[3].center2 = (t_vector){0, -50, DISTANCE};
-	env->figs[3].rad = 50;
-	env->figs[3].rad2 = 100;
-	env->figs[3].color = BLUE;
+	env->figs[3].type = "cylinder";
+	env->figs[3].center = (t_vector){200, 400, DISTANCE + 900};
+	env->figs[3].center2 = (t_vector){300, 0, DISTANCE + 900};
+	env->figs[3].rad = 70;
+	env->figs[3].color = 0x3A1B0F;
 
-	env->ambient_light.intensity = 0.2;
+	env->figs[4].type = "cylinder";
+	env->figs[4].center = (t_vector){0, 400, DISTANCE + 1500};
+	env->figs[4].center2 = (t_vector){0, 0, DISTANCE + 1500};
+	env->figs[4].rad = 100;
+	env->figs[4].color = 0x3A1B0F;
 
-	env->point_light.intensity = 0.4;
-	env->point_light.pos = (t_vector){500, 500, 1000};
+	env->figs[5].type = "plane";
+	env->figs[5].center = (t_vector){0, -200, DISTANCE};
+	env->figs[5].normal = (t_vector){0, 5, -1};
+	env->figs[5].color = 0xAADA64;
 
-	env->dir_light.intensity = 0.4;
+	// env->figs[3].type = "cone";
+	// env->figs[3].center = (t_vector){0, 0, DISTANCE};
+	// env->figs[3].center2 = (t_vector){0, -50, DISTANCE};
+	// env->figs[3].rad = 50;
+	// env->figs[3].rad2 = 100;
+	// env->figs[3].color = BLUE;
+
+	env->ambient_light.intensity = 0.1;
+
+	env->point_light.intensity = 0.6;
+	env->point_light.pos = (t_vector){-300, 100, DISTANCE};
+
+	env->dir_light.intensity = 0.3;
 	env->dir_light.dir = (t_vector){-2, -1, 0};
 
 	return (env);
