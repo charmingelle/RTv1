@@ -31,7 +31,7 @@ static double	get_cyl_c(t_vector delta, double scal_prod_delta_v_a, t_vector v_a
 		get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a))) - pow(rad, 2));
 }
 
-t_t1t2			*get_cyl_intersections(t_env *env, t_fig cyl, t_vector point)
+t_t1t2			*get_cyl_intersections(t_fig cyl, t_vector o, t_vector d)
 {
 	t_vector	p_a;
 	t_vector	v_a;
@@ -41,10 +41,10 @@ t_t1t2			*get_cyl_intersections(t_env *env, t_fig cyl, t_vector point)
 
 	p_a = cyl.center;
 	v_a = get_ort(get_vect(cyl.center, cyl.center2));
-	delta = get_diff(env->camera, p_a);
-	scal_prod_v_v_a = get_scal_prod(point, v_a);
+	delta = get_diff(o, p_a);
+	scal_prod_v_v_a = get_scal_prod(d, v_a);
 	scal_prod_delta_v_a = get_scal_prod(delta, v_a);
-	return (get_quadratic_solution(get_cyl_a(point, scal_prod_v_v_a, v_a),
-		get_cyl_b(point, delta, scal_prod_v_v_a, v_a, scal_prod_delta_v_a),
+	return (get_quadratic_solution(get_cyl_a(d, scal_prod_v_v_a, v_a),
+		get_cyl_b(d, delta, scal_prod_v_v_a, v_a, scal_prod_delta_v_a),
 		get_cyl_c(delta, scal_prod_delta_v_a, v_a, cyl.rad)));
 }

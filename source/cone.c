@@ -32,7 +32,7 @@ static double	get_cone_c(double alpha, t_vector delta, double deltava, t_vector 
 		- pow(sin(alpha * pow(deltava, 2)), 2));
 }
 
-t_t1t2			*get_cone_intersections(t_env *env, t_fig cone, t_vector point)
+t_t1t2			*get_cone_intersections(t_fig cone, t_vector o, t_vector d)
 {
 	t_vector	p;
 	t_vector	v;
@@ -43,8 +43,8 @@ t_t1t2			*get_cone_intersections(t_env *env, t_fig cone, t_vector point)
 	double		vva;
 	double		deltava;
 
-	p = env->camera;
-	v = point;
+	p = o;
+	v = d;
 	pa = get_sum(cone.center,
 		get_num_prod(cone.rad / (cone.rad - cone.rad2), get_diff(cone.center2, cone.center)));
 	va = get_ort(get_diff(cone.center2, cone.center));
