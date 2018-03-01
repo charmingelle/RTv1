@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 13:38:52 by grevenko          #+#    #+#             */
-/*   Updated: 2018/02/24 19:45:05 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/01 17:55:59 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ double	get_vector_light(t_vector point, t_vector normal, t_env *env)
 	double		closest_t;
 	double		scal_prod;
 
-	ray = get_ort(get_vect(point, env->point_light.pos));
+	ray = get_ort(get_vect(env->point_light.pos, point));
 	closest_t = INFINITY;
-	if (get_closest_fig_num(env, &closest_t, point, get_vect(point, env->point_light.pos)) != -1 && closest_t > 0.001 && closest_t < 1.0)
+	if (get_closest_fig_num(env, &closest_t, point, ray) != -1 && closest_t < -1.0)
 		return (0.0);
 	scal_prod = get_scal_prod(normal, ray);
 	if (scal_prod > 0.0)
@@ -36,12 +36,13 @@ double	get_vector_light(t_vector point, t_vector normal, t_env *env)
 double	get_dir_light(t_vector point, t_vector normal, t_env *env)
 {
 	t_vector	ray;
+	double		closest_t;
 	double	scal_prod;
 
 	ray = get_ort(env->dir_light.dir);
 	point = (t_vector){0, 0, 0};
-	// if (get_closest_fig_num(env, point, ray) != -1)
-	// 	return (0.0);
+	if (get_closest_fig_num(env, &closest_t, point, ray) != -1 && closest_t < -1.0)
+		return (0.0);
 	scal_prod = get_scal_prod(normal, ray);
 	if (scal_prod > 0.0)
 		return (env->dir_light.intensity * scal_prod);

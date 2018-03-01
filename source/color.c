@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 14:32:20 by grevenko          #+#    #+#             */
-/*   Updated: 2018/02/21 14:35:22 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/01 17:36:07 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int			get_fig_point_color(t_env *env, t_fig fig, t_vector point)
 	if (ft_strcmp(fig.type, "sphere") == 0)
 	{
 		normal = get_ort(get_vect(point, fig.center));
+		printf("sphere light = %f\n", get_light(point, normal, env));
 		return (change_brightness(fig.color, get_light(point, normal, env)));
 	}
 	if (ft_strcmp(fig.type, "cylinder") == 0)
@@ -65,6 +66,6 @@ int			get_fig_point_color(t_env *env, t_fig fig, t_vector point)
 		return (change_brightness(fig.color, get_light(point, normal, env)));
 	}
 	if (ft_strcmp(fig.type, "plane") == 0)
-		return (change_brightness(fig.color, get_light(point, fig.normal, env)));
+		return (change_brightness(fig.color, get_light(point, get_num_prod(-1, fig.normal), env)));
 	return (fig.color);
 }
