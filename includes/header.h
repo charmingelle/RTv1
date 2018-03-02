@@ -116,7 +116,7 @@ int			show_usage_error();
 
 int			show_file_not_found_error();
 
-t_env		*init_env(int fd);
+t_env		*get_env(int fd);
 
 int			show_invalid_color_error();
 

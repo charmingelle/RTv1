@@ -135,7 +135,7 @@ int	main(int amount, char **args)
 	fd = open(args[1], O_RDONLY);
 	if (fd < 0)
 		exit(show_file_not_found_error());
-	env = init_env(fd);
+	env = get_env(fd);
 	draw_scene(env);
 	mlx_key_hook(env->window, &handle_keypress, env);
 	mlx_loop(env->mlx);
