@@ -12,6 +12,16 @@
 
 #include "header.h"
 
+int		is_in_shadow(t_env *env, t_vector point, t_vector ray)
+{
+	double	closest_t;
+
+	closest_t = INFINITY;
+	if (get_closest_fig_num(env, &closest_t, point, ray) != -1 && closest_t < -1.0)
+		return (1);
+	return (0);
+}
+
 double	get_ambient_light(t_env *env)
 {
 	return (env->ambient_light.intensity);
@@ -20,13 +30,11 @@ double	get_ambient_light(t_env *env)
 double	get_point_light(t_vector point, t_vector normal, t_env *env)
 {
 	t_vector	ray;
-	double		closest_t;
 	double		scal_prod;
 	double		point_light;
 
 	ray = get_ort(get_vect(env->point_light.pos, point));
-	closest_t = INFINITY;
-	if (get_closest_fig_num(env, &closest_t, point, ray) != -1 && closest_t < -1.0)
+	if (is_in_shadow(env, point, ray))
 		return (0.0);
 	scal_prod = get_scal_prod(normal, ray);
 	if (scal_prod > 0.0)
@@ -48,7 +56,7 @@ double	get_dir_light(t_vector point, t_vector normal, t_env *env)
 
 	ray = get_ort(env->dir_light.dir);
 	closest_t = INFINITY;
-	if (get_closest_fig_num(env, &closest_t, point, ray) != -1 && closest_t < -1.0)
+	if (is_in_shadow(env, point, ray))
 		return (0.0);
 	scal_prod = get_scal_prod(normal, ray);
 	if (scal_prod > 0.0)

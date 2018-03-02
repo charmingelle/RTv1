@@ -191,10 +191,10 @@ t_env	*init_env()
 
 	env->ambient_light.intensity = 0.2;
 
-	env->point_light.intensity = 0.4;
+	env->point_light.intensity = 0.5;
 	env->point_light.pos = (t_vector){-350, 350, DISTANCE};
 
-	env->dir_light.intensity = 0.4;
+	env->dir_light.intensity = 0.3;
 	env->dir_light.dir = (t_vector){-1, -2, 0};
 
 	return (env);
