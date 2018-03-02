@@ -32,7 +32,7 @@ static double	get_cone_c(double alpha, t_vector delta, double deltava, t_vector 
 		- pow(sin(alpha * pow(deltava, 2)), 2));
 }
 
-t_t1t2			*get_cone_intersections(t_fig cone, t_vector o, t_vector d)
+t_t1t2			*get_cone_intersections(t_fig *fig, t_vector o, t_vector d)
 {
 	t_vector	p;
 	t_vector	v;
@@ -45,10 +45,10 @@ t_t1t2			*get_cone_intersections(t_fig cone, t_vector o, t_vector d)
 
 	p = o;
 	v = d;
-	pa = get_sum(cone.center,
-		get_num_prod(cone.rad / (cone.rad - cone.rad2), get_diff(cone.center2, cone.center)));
-	va = get_ort(get_diff(cone.center2, cone.center));
-	alpha = atan((cone.rad - cone.rad2) / (get_len(get_diff(cone.center2, cone.center))));
+	pa = get_sum(fig->center,
+		get_num_prod(fig->rad / (fig->rad - fig->rad2), get_diff(fig->center2, fig->center)));
+	va = get_ort(get_diff(fig->center2, fig->center));
+	alpha = atan((fig->rad - fig->rad2) / (get_len(get_diff(fig->center2, fig->center))));
 	delta = get_diff(p, pa);
 	vva = get_scal_prod(v, va);
 	deltava = get_scal_prod(delta, va);

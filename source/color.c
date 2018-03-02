@@ -50,21 +50,22 @@ t_vector	get_cyl_normal(t_vector c1, t_vector c2, t_vector p)
 		get_num_prod(get_scal_prod(c1_minus_p, axis) / get_scal_square(axis), axis)));
 }
 
-int			get_fig_point_color(t_env *env, t_fig fig, t_vector point)
+int			get_fig_point_color(t_fig *fig, t_vector point, t_env *env)
 {
 	t_vector		normal;
 
-	if (ft_strcmp(fig.type, "sphere") == 0)
+	if (ft_strcmp(fig->type, "sphere") == 0)
 	{
-		normal = get_ort(get_vect(point, fig.center));
-		return (change_brightness(fig.color, get_light(point, normal, env)));
+		normal = get_ort(get_vect(point, fig->center));
+		return (change_brightness(fig->color, get_light(point, normal, env)));
 	}
-	if (ft_strcmp(fig.type, "cylinder") == 0)
+	if (ft_strcmp(fig->type, "cylinder") == 0)
 	{
-		normal = get_cyl_normal(fig.center, fig.center2, point);
-		return (change_brightness(fig.color, get_light(point, normal, env)));
+		normal = get_cyl_normal(fig->center, fig->center2, point);
+		return (change_brightness(fig->color, get_light(point, normal, env)));
 	}
-	if (ft_strcmp(fig.type, "plane") == 0)
-		return (change_brightness(fig.color, get_light(point, get_num_prod(-1, fig.normal), env)));
-	return (fig.color);
+	if (ft_strcmp(fig->type, "plane") == 0)
+		return (change_brightness(fig->color, get_light(point,
+			get_num_prod(-1, fig->normal), env)));
+	return (fig->color);
 }
