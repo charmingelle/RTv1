@@ -41,12 +41,11 @@ t_t1t2	*get_plane_intersections(t_fig fig, t_vector o, t_vector d)
 	double	denom;
 	t_t1t2	*intersections;
 
-	denom = get_scal_prod(d, fig.normal);
-	if (denom > 1e-6)
+	denom = get_scal_prod(fig.normal, d);
+	if (denom >= 0.0)
 		return (NULL);
 	intersections = (t_t1t2 *)malloc(sizeof(t_t1t2));
-	intersections->t1 = get_scal_prod(get_diff(fig.center, o), fig.normal)
-		/ get_scal_prod(d, fig.normal);
+	intersections->t1 = get_scal_prod(get_diff(fig.center, o), fig.normal) / denom;
 	intersections->t2 = intersections->t1;
 	return (intersections);
 }
