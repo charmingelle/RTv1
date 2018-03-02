@@ -105,7 +105,6 @@ int		trace_ray(t_env *env, t_vector point)
 		return (env->color);
 	fig_point = get_sum(env->camera, get_num_prod(closest_t, point));
 	return (get_fig_point_color(env, env->figs[closest_fig_num], fig_point));
-	// return (get_fig_point_color(env, env->figs[closest_fig_num], point));
 }
 
 void	draw_scene(t_env *env)
@@ -192,11 +191,11 @@ t_env	*init_env()
 
 	env->ambient_light.intensity = 0.2;
 
-	env->point_light.intensity = 0.5;
+	env->point_light.intensity = 0.4;
 	env->point_light.pos = (t_vector){-350, 350, DISTANCE};
 
-	env->dir_light.intensity = 0.3;
-	env->dir_light.dir = (t_vector){-2, -1, 0};
+	env->dir_light.intensity = 0.4;
+	env->dir_light.dir = (t_vector){-1, -2, 0};
 
 	return (env);
 }

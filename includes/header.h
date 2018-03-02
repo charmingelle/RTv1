@@ -95,7 +95,7 @@ t_vector	get_ort(t_vector vector);
 
 double		get_ambient_light(t_env *env);
 
-double		get_vector_light(t_vector point, t_vector normal, t_env *env);
+double		get_point_light(t_vector point, t_vector normal, t_env *env);
 
 double		get_dir_light(t_vector point, t_vector normal, t_env *env);
 
