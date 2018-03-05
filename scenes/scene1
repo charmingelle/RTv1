@@ -1,45 +1,45 @@
 size 700
 camera 0,0,0
-figure {
+fig {
     type sphere
     center -150,-100,850
     rad 100
     color 0x679327
 }
-figure {
+fig {
     type sphere 
     center 150,-100,950
     rad 150
     color 0xFFEF00
 }
-figure {
+fig {
     type sphere
     center 0,100,1300
     rad 150
     color 0x0B6623
 }
-figure {
+fig {
     type cylinder
     center -400,0,1300
     center2 -300,300,1300
     rad 50
     color 0xD8C077
 }
-figure {
+fig {
     type cylinder
     center 200,400,1600
     center2 300,0,1600
     rad 70
     color 0x3A1B0F
 }
-figure {
+fig {
     type cylinder
     center 0,400,2200
     center2 0,0,2200
     rad 50
     color 0xFFFCCC
 }
-figure {
+fig {
     type plane
     center 0,-200,700
     normal 0,5,-1

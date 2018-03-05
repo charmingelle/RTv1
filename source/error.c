@@ -29,3 +29,33 @@ int	show_invalid_color_error()
 	ft_putstr_fd("Invalid color in the scene\n", 2);
 	return (1);
 }
+
+int	show_invalid_property_error()
+{
+	ft_putstr_fd("The scene contains an invalid property\n", 2);
+	return (1);
+}
+
+int	show_invalid_vector_error()
+{
+	ft_putstr_fd("The scene contains an invalid vector\n", 2);
+	return (1);
+}
+
+int	show_invalid_property_value_error()
+{
+	ft_putstr_fd("The scene contains an invalid property-value pair\n", 2);
+	return (1);
+}
+
+int	show_invalid_light_error()
+{
+	ft_putstr_fd("The scene contains an invalid light type\n", 2);
+	return (1);
+}
+
+int	show_invalid_fig_error()
+{
+	ft_putstr_fd("The scene contains an invalid fig type\n", 2);
+	return (1);
+}

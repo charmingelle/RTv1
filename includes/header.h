@@ -73,9 +73,6 @@ typedef struct	s_env
 	int			fig_amount;
 	t_fig		*fig;
 	t_light		*light;
-	// t_light		ambient_light;
-	// t_light		point_light;
-	// t_light		dir_light;
 }				t_env;
 
 int			handle_keypress(int keycode, t_env *env);
@@ -112,12 +109,26 @@ t_t1t2		*get_cone_intersections(t_fig *fig, t_vector o, t_vector d);
 
 t_t1t2		*get_cyl_intersections(t_fig *fig, t_vector o, t_vector d);
 
+t_env		*get_env(int fd);
+
+int			show_invalid_color_error();
+
+int			read_color(char *s);
+
 int			show_usage_error();
 
 int			show_file_not_found_error();
 
-t_env		*get_env(int fd);
+int			show_invalid_property_error();
 
-int			show_invalid_color_error();
+int			show_invalid_vector_error();
+
+int			show_invalid_property_value_error();
+
+int			show_invalid_light_error();
+
+int			show_invalid_fig_error();
+
+int			count_elems(char **array);
 
 #endif
