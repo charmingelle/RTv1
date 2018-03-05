@@ -67,7 +67,7 @@ char	*get_fig_type(char *given)
 	exit(show_invalid_fig_error());
 }
 
-int		get_specularity(int given)
+int		read_shine(int given)
 {
 	if (given < 0)
 		return (-1);
@@ -90,8 +90,8 @@ void	add_prop_to_fig(char **split, t_fig *fig)
 		set_vector_value(split[1], &(fig->normal));
 	else if (!ft_strcmp(split[0], "color"))
 		fig->color = read_color(split[1]);
-	else if (!ft_strcmp(split[0], "specularity"))
-		fig->specularity = get_specularity(ft_atoi(split[1]));
+	else if (!ft_strcmp(split[0], "shine"))
+		fig->shine = read_shine(ft_atoi(split[1]));
 	else
 		exit(show_invalid_property_error());
 }

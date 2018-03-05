@@ -51,8 +51,8 @@ double	get_point_light(t_vector point, t_vector normal, t_light *light, t_fig *f
 		point_light = light->intensity * normal_dot_l;
 		if (point_light > light->intensity)
 			point_light = light->intensity;
-		if (fig->specularity != -1)
-			point_light += light->intensity * pow(get_shine(point, normal, l), fig->specularity);
+		if (fig->shine != -1)
+			point_light += light->intensity * pow(get_shine(point, normal, l), fig->shine);
 		return (point_light);
 	}
 	return (0.0);
@@ -75,8 +75,8 @@ double	get_dir_light(t_vector point, t_vector normal, t_light *light, t_fig *fig
 		dir_light = light->intensity * normal_dot_l;
 		if (dir_light > light->intensity)
 			dir_light = light->intensity;
-		if (fig->specularity != -1)
-			dir_light += light->intensity * pow(get_shine(point, normal, l), fig->specularity);
+		if (fig->shine != -1)
+			dir_light += light->intensity * pow(get_shine(point, normal, l), fig->shine);
 		return (dir_light);
 	}
 	return (0.0);

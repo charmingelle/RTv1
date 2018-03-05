@@ -5,21 +5,21 @@ fig {
     center -150,-100,850
     rad 100
     color 0x679327
-    specularity -1
+    shine -1
 }
 fig {
     type sphere 
     center 150,-100,950
     rad 150
     color 0xFFEF00
-    specularity -1
+    shine -1
 }
 fig {
     type sphere
     center 0,100,1300
     rad 150
     color 0x0B6623
-    specularity -1
+    shine -1
 }
 fig {
     type cylinder
@@ -27,7 +27,7 @@ fig {
     center2 -300,300,1300
     rad 50
     color 0xD8C077
-    specularity -1
+    shine -1
 }
 fig {
     type cylinder
@@ -35,7 +35,7 @@ fig {
     center2 300,0,1600
     rad 70
     color 0x3A1B0F
-    specularity -1
+    shine -1
 }
 fig {
     type cylinder
@@ -43,14 +43,14 @@ fig {
     center2 0,0,2200
     rad 50
     color 0xFFFCCC
-    specularity -1
+    shine -1
 }
 fig {
     type plane
     center 0,-200,700
     normal 0,5,-1
     color 0xAADA64
-    specularity -1
+    shine -1
 }
 light {
     type ambient

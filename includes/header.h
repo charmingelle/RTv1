@@ -49,7 +49,7 @@ typedef struct	s_fig
 	double			rad2;
 	t_vector		normal;
 	int				color;
-	int				specularity;
+	int				shine;
 	struct s_fig	*next;
 }				t_fig;
 
