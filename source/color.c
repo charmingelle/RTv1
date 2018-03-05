@@ -33,9 +33,15 @@ int			change_brightness(int color, double coef)
 	int		g;
 	int		b;
 
-	r = (int)(get_r(color) * coef) % 256;
-	g = (int)(get_g(color) * coef) % 256;
-	b = (int)(get_b(color) * coef) % 256;
+	r = get_r(color) * coef;
+	if (r > 0xFF)
+		r = 0xFF;
+	g = get_g(color) * coef;
+	if (g > 0xFF)
+		g = 0xFF;
+	b = get_b(color) * coef;
+	if (b > 0xFF)
+		b = 0xFF;
 	return (r * 0x10000 + g * 0x100 + b);
 }
 
@@ -57,15 +63,15 @@ int			get_fig_point_color(t_fig *fig, t_vector point, t_env *env)
 	if (ft_strcmp(fig->type, "sphere") == 0)
 	{
 		normal = get_ort(get_vect(point, fig->center));
-		return (change_brightness(fig->color, get_light(point, normal, env)));
+		return (change_brightness(fig->color, get_light(point, normal, fig, env)));
 	}
 	if (ft_strcmp(fig->type, "cylinder") == 0)
 	{
 		normal = get_cyl_normal(fig->center, fig->center2, point);
-		return (change_brightness(fig->color, get_light(point, normal, env)));
+		return (change_brightness(fig->color, get_light(point, normal, fig, env)));
 	}
 	if (ft_strcmp(fig->type, "plane") == 0)
 		return (change_brightness(fig->color, get_light(point,
-			get_num_prod(-1, fig->normal), env)));
+			get_num_prod(-1, fig->normal), fig, env)));
 	return (fig->color);
 }

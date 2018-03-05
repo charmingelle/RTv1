@@ -22,49 +22,67 @@ int		is_in_shadow(t_fig *fig, t_vector point, t_vector ray)
 	return (0);
 }
 
-double	get_point_light(t_vector point, t_vector normal, t_light *light, t_fig *fig)
+double	get_shine(t_vector point, t_vector normal, t_vector l)
 {
-	t_vector	ray;
-	double		scal_prod;
+	t_vector	r;
+	t_vector	v;
+	double		r_dot_v;
+
+	r = get_ort(get_diff(get_num_prod(2 * get_scal_prod(normal, l), normal), l));
+	v = get_ort(point);
+	r_dot_v = get_scal_prod(r, v);
+	if (r_dot_v > 0.0)
+		return(r_dot_v);
+	return (0.0);
+}
+
+double	get_point_light(t_vector point, t_vector normal, t_light *light, t_fig *fig, t_fig *fig_list)
+{
+	t_vector	l;
+	double		normal_dot_l;
 	double		point_light;
 
-	ray = get_ort(get_vect(light->pos, point));
-	if (is_in_shadow(fig, point, ray))
+	l = get_ort(get_vect(light->pos, point));
+	if (is_in_shadow(fig_list, point, l))
 		return (0.0);
-	scal_prod = get_scal_prod(normal, ray);
-	if (scal_prod > 0.0)
+	normal_dot_l = get_scal_prod(normal, l);
+	if (normal_dot_l > 0.0)
 	{
-		point_light = light->intensity * scal_prod;
+		point_light = light->intensity * normal_dot_l;
 		if (point_light > light->intensity)
-			return (light->intensity);
+			point_light = light->intensity;
+		if (fig->specularity != -1)
+			point_light += light->intensity * pow(get_shine(point, normal, l), fig->specularity);
 		return (point_light);
 	}
 	return (0.0);
 }
 
-double	get_dir_light(t_vector point, t_vector normal, t_light *light, t_fig *fig)
+double	get_dir_light(t_vector point, t_vector normal, t_light *light, t_fig *fig, t_fig *fig_list)
 {
-	t_vector	ray;
+	t_vector	l;
 	double		closest_t;
-	double		scal_prod;
+	double		normal_dot_l;
 	double		dir_light;
 
-	ray = get_ort(light->dir);
+	l = get_ort(light->dir);
 	closest_t = INFINITY;
-	if (is_in_shadow(fig, point, ray))
+	if (is_in_shadow(fig_list, point, l))
 		return (0.0);
-	scal_prod = get_scal_prod(normal, ray);
-	if (scal_prod > 0.0)
+	normal_dot_l = get_scal_prod(normal, l);
+	if (normal_dot_l > 0.0)
 	{
-		dir_light = light->intensity * scal_prod;
+		dir_light = light->intensity * normal_dot_l;
 		if (dir_light > light->intensity)
-			return (light->intensity);
+			dir_light = light->intensity;
+		if (fig->specularity != -1)
+			dir_light += light->intensity * pow(get_shine(point, normal, l), fig->specularity);
 		return (dir_light);
 	}
 	return (0.0);
 }
 
-double	get_light(t_vector point, t_vector normal, t_env *env)
+double	get_light(t_vector point, t_vector normal, t_fig *fig, t_env *env)
 {
 	double	total_light;
 	t_light	*light;
@@ -76,12 +94,10 @@ double	get_light(t_vector point, t_vector normal, t_env *env)
 		if (ft_strcmp(light->type, "ambient") == 0)
 			total_light += light->intensity;
 		else if (ft_strcmp(light->type, "point") == 0)
-			total_light += get_point_light(point, normal, light, env->fig);
+			total_light += get_point_light(point, normal, light, fig, env->fig);
 		else if (ft_strcmp(light->type, "dir") == 0)
-			total_light += get_dir_light(point, normal, light, env->fig);
+			total_light += get_dir_light(point, normal, light, fig, env->fig);
 		light = light->next;
 	}
-	if (total_light < 1.0)
-		return (total_light);
-	return (1.0);
+	return (total_light);
 }

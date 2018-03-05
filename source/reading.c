@@ -57,32 +57,41 @@ void	set_vector_value(char *source, t_vector *vector)
 	free_split(coords);
 }
 
-char	*get_fig_type(char *given_type)
+char	*get_fig_type(char *given)
 {
-	if (!ft_strcmp(given_type, "sphere")
-		|| !ft_strcmp(given_type, "plane")
-		|| !ft_strcmp(given_type, "cylinder")
-		|| !ft_strcmp(given_type, "cone"))
-	return (ft_strdup(given_type));
+	if (!ft_strcmp(given, "sphere")
+		|| !ft_strcmp(given, "plane")
+		|| !ft_strcmp(given, "cylinder")
+		|| !ft_strcmp(given, "cone"))
+	return (ft_strdup(given));
 	exit(show_invalid_fig_error());
+}
+
+int		get_specularity(int given)
+{
+	if (given < 0)
+		return (-1);
+	return (given);
 }
 
 void	add_prop_to_fig(char **split, t_fig *fig)
 {
-	if (ft_strcmp(split[0], "type") == 0)
+	if (!ft_strcmp(split[0], "type"))
 		fig->type = get_fig_type(split[1]);
-	else if (ft_strcmp(split[0], "center") == 0)
+	else if (!ft_strcmp(split[0], "center"))
 		set_vector_value(split[1], &(fig->center));
-	else if (ft_strcmp(split[0], "center2") == 0)
+	else if (!ft_strcmp(split[0], "center2"))
 		set_vector_value(split[1], &(fig->center2));
-	else if (ft_strcmp(split[0], "rad") == 0)
+	else if (!ft_strcmp(split[0], "rad"))
 		fig->rad = ft_atoi(split[1]);
-	else if (ft_strcmp(split[0], "rad2") == 0)
+	else if (!ft_strcmp(split[0], "rad2"))
 		fig->rad2 = ft_atoi(split[1]);
-	else if (ft_strcmp(split[0], "normal") == 0)
+	else if (!ft_strcmp(split[0], "normal"))
 		set_vector_value(split[1], &(fig->normal));
-	else if (ft_strcmp(split[0], "color") == 0)
+	else if (!ft_strcmp(split[0], "color"))
 		fig->color = read_color(split[1]);
+	else if (!ft_strcmp(split[0], "specularity"))
+		fig->specularity = get_specularity(ft_atoi(split[1]));
 	else
 		exit(show_invalid_property_error());
 }
@@ -119,13 +128,13 @@ char	*get_light_type(char *given_type)
 
 void	add_prop_to_light(char **split, t_light *light)
 {
-	if (ft_strcmp(split[0], "type") == 0)
+	if (!ft_strcmp(split[0], "type"))
 		light->type = get_light_type(split[1]);
-	else if (ft_strcmp(split[0], "intensity") == 0)
+	else if (!ft_strcmp(split[0], "intensity"))
 		light->intensity = ft_atoi(split[1]) / 100.0;
-	else if (ft_strcmp(split[0], "pos") == 0)
+	else if (!ft_strcmp(split[0], "pos"))
 		set_vector_value(split[1], &(light->pos));
-	else if (ft_strcmp(split[0], "dir") == 0)
+	else if (!ft_strcmp(split[0], "dir"))
 		set_vector_value(split[1], &(light->dir));
 	else
 		exit(show_invalid_property_error());
@@ -161,13 +170,13 @@ void	add_sizes_to_env(t_env *env, int size)
 
 void	add_prop_to_env(char **split, t_env *env, int fd)
 {
-	if (ft_strcmp(split[0], "size") == 0)
+	if (!ft_strcmp(split[0], "size"))
 		add_sizes_to_env(env, ft_atoi(split[1]));
-	else if (ft_strcmp(split[0], "camera") == 0)
+	else if (!ft_strcmp(split[0], "camera"))
 		set_vector_value(split[1], &(env->camera));
-	else if (ft_strcmp(split[0], "fig") == 0)
+	else if (!ft_strcmp(split[0], "fig"))
 		add_fig_to_env(env, fd);
-	else if (ft_strcmp(split[0], "light") == 0)
+	else if (!ft_strcmp(split[0], "light"))
 		add_light_to_env(env, fd);
 	else
 		exit(show_invalid_property_error());

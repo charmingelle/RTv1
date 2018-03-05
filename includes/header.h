@@ -49,6 +49,7 @@ typedef struct	s_fig
 	double			rad2;
 	t_vector		normal;
 	int				color;
+	int				specularity;
 	struct s_fig	*next;
 }				t_fig;
 
@@ -93,7 +94,7 @@ double		get_len(t_vector vector);
 
 t_vector	get_ort(t_vector vector);
 
-double		get_light(t_vector point, t_vector normal, t_env *env);
+double		get_light(t_vector point, t_vector normal, t_fig *fig, t_env *env);
 
 int			change_brightness(int color, double coef);
 
