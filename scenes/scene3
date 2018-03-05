@@ -33,8 +33,15 @@ fig {
     type sphere
     center -300,600,1300
     rad 250
-    color 0xFA8072
-    shine 50
+    color 0xC0A853
+    shine 3
+}
+fig {
+    type sphere
+    center -300,-550,1300
+    rad 250
+    color 0xC0A853
+    shine 1
 }
 fig {
     type plane
