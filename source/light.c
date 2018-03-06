@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 13:38:52 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/01 17:55:59 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/06 18:42:52 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ double	get_shine(t_vector point, t_vector normal, t_vector l)
 	t_vector	v;
 	double		r_dot_v;
 
-	r = get_ort(get_diff(get_num_prod(2 * get_scal_prod(normal, l), normal), l));
+	r = get_ort(get_refl_vect(l, normal));
 	v = get_ort(point);
 	r_dot_v = get_scal_prod(r, v);
 	if (r_dot_v > 0.0)

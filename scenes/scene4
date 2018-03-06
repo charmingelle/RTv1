@@ -5,24 +5,24 @@ fig {
     center -150,-100,850
     rad 100
     color 0x679327
-    shine -1
-    refl 0
+    shine 1
+    refl 80%
 }
 fig {
-    type sphere 
+    type sphere
     center 150,-100,950
     rad 150
     color 0xFFEF00
-    shine -1
-    refl 0
+    shine 100
+    refl 80%
 }
 fig {
     type sphere
     center 0,100,1300
     rad 150
     color 0x0B6623
-    shine -1
-    refl 0
+    shine 500
+    refl 80%
 }
 fig {
     type cylinder
@@ -30,7 +30,7 @@ fig {
     center2 -300,300,1300
     rad 50
     color 0xD8C077
-    shine -1
+    shine 500
     refl 0
 }
 fig {
@@ -39,7 +39,7 @@ fig {
     center2 300,0,1600
     rad 70
     color 0x3A1B0F
-    shine -1
+    shine 500
     refl 0
 }
 fig {
@@ -48,7 +48,7 @@ fig {
     center2 0,0,2200
     rad 50
     color 0xFFFCCC
-    shine -1
+    shine 500
     refl 0
 }
 fig {
@@ -56,7 +56,7 @@ fig {
     center 0,-200,700
     normal 0,5,-1
     color 0xAADA64
-    shine -1
+    shine 1
     refl 0
 }
 light {

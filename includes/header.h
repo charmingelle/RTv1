@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:05 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/06 18:11:45 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/06 19:55:40 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define GREEN 0x00FF00
 # define BLUE 0x0000FF
 # define YELLOW 0xFFFF00
+
+# define DEPTH 1
 
 typedef struct	s_t1t2
 {
@@ -50,6 +52,7 @@ typedef struct	s_fig
 	t_vector		normal;
 	int				color;
 	int				shine;
+	double			refl;
 	struct s_fig	*next;
 }				t_fig;
 
@@ -94,9 +97,13 @@ double		get_len(t_vector vector);
 
 t_vector	get_ort(t_vector vector);
 
+t_vector	get_refl_vect(t_vector vector, t_vector normal);
+
 double		get_light(t_vector point, t_vector normal, t_fig *fig, t_env *env);
 
 int			change_brightness(int color, double coef);
+
+int			get_color_sum(int c1, int c2);
 
 int			get_fig_point_color(t_fig *fig, t_vector point, t_vector normal, t_env *env);
 

@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/06 18:15:48 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/06 19:54:00 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_t1t2	*get_intersections(t_fig *fig, t_vector o, t_vector d)
 
 t_fig	*get_closest_fig(t_fig *fig, double *closest_t, t_vector o, t_vector d)
 {
-	t_t1t2	*intersections;	
+	t_t1t2	*intersections;
 	t_fig	*closest_fig;
 
 	closest_fig = NULL;
@@ -113,20 +113,32 @@ t_vector	get_normal(t_vector point, t_fig *fig)
 	return ((t_vector){0, 0, 0});
 }
 
-int		trace_ray(t_env *env, t_vector point)
+int		trace_ray(t_env *env, t_vector start, t_vector point, double min_t, double max_t, int depth)
 {
 	t_fig		*closest_fig;
 	double		closest_t;
 	t_vector	fig_point;
 	t_vector	normal;
+	int			local_color;
+	t_vector	refl_vect;
+	int			refl_color;
 
 	closest_t = INFINITY;
-	closest_fig = get_closest_fig(env->fig, &closest_t, env->camera, point);
-	if (closest_fig == NULL || closest_t < 1.0)
+	closest_fig = get_closest_fig(env->fig, &closest_t, start, point);
+	if (closest_fig == NULL || closest_t < min_t || closest_t > max_t)
 		return (env->color);
-	fig_point = get_sum(env->camera, get_num_prod(closest_t, point));
+	// if (depth == 2)
+	// 	printf("closest_fig = %p, closest_t = %f\n", closest_fig, closest_t);
+	fig_point = get_sum(start, get_num_prod(closest_t, point));
 	normal = get_normal(fig_point, closest_fig);
-	return (get_fig_point_color(closest_fig, fig_point, normal, env));
+	local_color = get_fig_point_color(closest_fig, fig_point, normal, env);
+	if (depth == 2)
+		printf("closest_fig->color = %X, fig_point = (%f, %f, %f), normal = (%f, %f, %f), local_color = %X\n", closest_fig->color, fig_point.x, fig_point.y, fig_point.z, normal.x, normal.y, normal.z, local_color);
+	if (DEPTH <= 0 || closest_fig->refl <= 0.0)
+		return (local_color);
+	refl_vect = get_refl_vect(get_num_prod(-1, point), normal);
+	refl_color = trace_ray(env, refl_vect, fig_point, 0.001, INFINITY, depth - 1);
+	return (get_color_sum(change_brightness(1.0 - closest_fig->refl, local_color), change_brightness(closest_fig->refl, refl_color)));
 }
 
 void	draw_scene(t_env *env)
@@ -143,7 +155,7 @@ void	draw_scene(t_env *env)
 		while (++y < env->height)
 		{
 			point = get_centered_coords(env, x, y);
-			color = trace_ray(env, point);
+			color = trace_ray(env, env->camera, point, 1.0, INFINITY, DEPTH);
 			mlx_pixel_put(env->mlx, env->window, x, y, color);
 		}
 	}

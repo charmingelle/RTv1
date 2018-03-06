@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   reading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/01 18:04:32 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/06 18:26:26 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	add_prop_to_fig(char **split, t_fig *fig)
 		fig->color = read_color(split[1]);
 	else if (!ft_strcmp(split[0], "shine"))
 		fig->shine = read_shine(ft_atoi(split[1]));
+	else if (!ft_strcmp(split[0], "refl"))
+		fig->refl = ft_atoi(split[1]) / 100.0;
 	else
 		exit(show_invalid_property_error());
 }

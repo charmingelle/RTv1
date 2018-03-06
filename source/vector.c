@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 18:24:54 by grevenko          #+#    #+#             */
-/*   Updated: 2018/02/24 20:32:45 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/06 18:40:06 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,17 @@ t_vector	get_num_prod(double num, t_vector v)
 	return (res);
 }
 
-double	get_scal_prod(t_vector v1, t_vector v2)
+double		get_scal_prod(t_vector v1, t_vector v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
-double	get_scal_square(t_vector vector)
+double		get_scal_square(t_vector vector)
 {
 	return (get_scal_prod(vector, vector));
 }
 
-double	get_len(t_vector vector)
+double		get_len(t_vector vector)
 {
 	return (sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z));
 }
@@ -77,4 +77,9 @@ t_vector	get_ort(t_vector vector)
 	res.y = vector.y / len;
 	res.z = vector.z / len;
 	return (res);
+}
+
+t_vector	get_refl_vect(t_vector vector, t_vector normal)
+{
+	return (get_diff(get_num_prod(2 * get_scal_prod(normal, vector), normal), vector));
 }
