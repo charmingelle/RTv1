@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/01 18:04:32 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/06 18:15:48 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,18 +91,42 @@ t_fig	*get_closest_fig(t_fig *fig, double *closest_t, t_vector o, t_vector d)
 	return (closest_fig);
 }
 
+t_vector	get_cyl_normal(t_vector c1, t_vector c2, t_vector p)
+{
+	t_vector	axis;
+	t_vector	c1_minus_p;
+
+	axis = get_vect(c1, c2);
+	c1_minus_p = get_diff(c1, p);
+	return (get_diff(c1_minus_p,
+		get_num_prod(get_scal_prod(c1_minus_p, axis) / get_scal_square(axis), axis)));
+}
+
+t_vector	get_normal(t_vector point, t_fig *fig)
+{
+	if (!ft_strcmp(fig->type, "sphere"))
+		return (get_ort(get_vect(point, fig->center)));
+	if (ft_strcmp(fig->type, "cylinder") == 0)
+		return (get_cyl_normal(fig->center, fig->center2, point));
+	if (ft_strcmp(fig->type, "plane") == 0)
+		return (get_num_prod(-1, fig->normal));
+	return ((t_vector){0, 0, 0});
+}
+
 int		trace_ray(t_env *env, t_vector point)
 {
 	t_fig		*closest_fig;
 	double		closest_t;
 	t_vector	fig_point;
+	t_vector	normal;
 
 	closest_t = INFINITY;
 	closest_fig = get_closest_fig(env->fig, &closest_t, env->camera, point);
 	if (closest_fig == NULL || closest_t < 1.0)
 		return (env->color);
 	fig_point = get_sum(env->camera, get_num_prod(closest_t, point));
-	return (get_fig_point_color(closest_fig, fig_point, env));
+	normal = get_normal(fig_point, closest_fig);
+	return (get_fig_point_color(closest_fig, fig_point, normal, env));
 }
 
 void	draw_scene(t_env *env)

@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:05 by grevenko          #+#    #+#             */
-/*   Updated: 2018/02/24 20:32:52 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/06 18:11:45 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ double		get_light(t_vector point, t_vector normal, t_fig *fig, t_env *env);
 
 int			change_brightness(int color, double coef);
 
-int			get_fig_point_color(t_fig *fig, t_vector point, t_env *env);
+int			get_fig_point_color(t_fig *fig, t_vector point, t_vector normal, t_env *env);
 
 t_t1t2		*get_quadratic_solution(double a, double b, double c);
 
