@@ -12,77 +12,79 @@
 
 #include "header.h"
 
-int		is_in_shadow(t_fig *fig, t_vector point, t_vector ray)
+int		is_in_shadow(t_vector P, t_vector L, t_fig *fig)
 {
 	double	closest_t;
 
 	closest_t = INFINITY;
-	if (get_closest_fig(fig, &closest_t, point, ray) != NULL && closest_t < -1.0)
+	// if (get_closest_fig(fig, &closest_t, P, L) != NULL && closest_t < -1.0)
+	// 	return (1);
+	if (get_closest_fig(fig, &closest_t, -INFINITY, -1.001, P, L) != NULL)
 		return (1);
 	return (0);
 }
 
-double	get_shine(t_vector point, t_vector normal, t_vector l)
+double	get_shine(t_vector P, t_vector N, t_vector L)
 {
-	t_vector	r;
-	t_vector	v;
-	double		r_dot_v;
+	t_vector	R;
+	t_vector	V;
+	double		R_scal_V;
 
-	r = get_ort(get_refl_vect(l, normal));
-	v = get_ort(point);
-	r_dot_v = get_scal_prod(r, v);
-	if (r_dot_v > 0.0)
-		return(r_dot_v);
+	R = vort(vrefl(L, N));
+	V = vort(P);
+	R_scal_V = vscal(R, V);
+	if (R_scal_V > 0.0)
+		return(R_scal_V);
 	return (0.0);
 }
 
-double	get_point_light(t_vector point, t_vector normal, t_light *light, t_fig *fig, t_fig *fig_list)
+double	get_point_light(t_vector P, t_vector N, t_light *light, t_fig *fig, t_fig *fig_list)
 {
-	t_vector	l;
-	double		normal_dot_l;
+	t_vector	L;
+	double		N_scal_L;
 	double		point_light;
 
-	l = get_ort(get_vect(light->pos, point));
-	if (is_in_shadow(fig_list, point, l))
+	L = vort(vdiff(P, light->pos));
+	if (is_in_shadow(P, L, fig_list))
 		return (0.0);
-	normal_dot_l = get_scal_prod(normal, l);
-	if (normal_dot_l > 0.0)
+	N_scal_L = vscal(N, L);
+	if (N_scal_L > 0.0)
 	{
-		point_light = light->intensity * normal_dot_l;
+		point_light = light->intensity * N_scal_L;
 		if (point_light > light->intensity)
 			point_light = light->intensity;
 		if (fig->shine != -1)
-			point_light += light->intensity * pow(get_shine(point, normal, l), fig->shine);
+			point_light += light->intensity * pow(get_shine(P, N, L), fig->shine);
 		return (point_light);
 	}
 	return (0.0);
 }
 
-double	get_dir_light(t_vector point, t_vector normal, t_light *light, t_fig *fig, t_fig *fig_list)
+double	get_dir_light(t_vector P, t_vector N, t_light *light, t_fig *fig, t_fig *fig_list)
 {
-	t_vector	l;
+	t_vector	L;
 	double		closest_t;
-	double		normal_dot_l;
+	double		N_scal_L;
 	double		dir_light;
 
-	l = get_ort(light->dir);
+	L = vort(light->dir);
 	closest_t = INFINITY;
-	if (is_in_shadow(fig_list, point, l))
+	if (is_in_shadow(P, L, fig_list))
 		return (0.0);
-	normal_dot_l = get_scal_prod(normal, l);
-	if (normal_dot_l > 0.0)
+	N_scal_L = vscal(N, L);
+	if (N_scal_L > 0.0)
 	{
-		dir_light = light->intensity * normal_dot_l;
+		dir_light = light->intensity * N_scal_L;
 		if (dir_light > light->intensity)
 			dir_light = light->intensity;
 		if (fig->shine != -1)
-			dir_light += light->intensity * pow(get_shine(point, normal, l), fig->shine);
+			dir_light += light->intensity * pow(get_shine(P, N, L), fig->shine);
 		return (dir_light);
 	}
 	return (0.0);
 }
 
-double	get_light(t_vector point, t_vector normal, t_fig *fig, t_env *env)
+double	get_light(t_vector P, t_vector N, t_fig *fig, t_env *env)
 {
 	double	total_light;
 	t_light	*light;
@@ -94,9 +96,9 @@ double	get_light(t_vector point, t_vector normal, t_fig *fig, t_env *env)
 		if (ft_strcmp(light->type, "ambient") == 0)
 			total_light += light->intensity;
 		else if (ft_strcmp(light->type, "point") == 0)
-			total_light += get_point_light(point, normal, light, fig, env->fig);
+			total_light += get_point_light(P, N, light, fig, env->fig);
 		else if (ft_strcmp(light->type, "dir") == 0)
-			total_light += get_dir_light(point, normal, light, fig, env->fig);
+			total_light += get_dir_light(P, N, light, fig, env->fig);
 		light = light->next;
 	}
 	return (total_light);

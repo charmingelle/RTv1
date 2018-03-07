@@ -72,7 +72,7 @@ light {
 light {
     type point
     intensity 50
-    pos -350,0,350
+    pos -350,350,700
 }
 light {
     type dir

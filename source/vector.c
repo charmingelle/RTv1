@@ -12,74 +12,64 @@
 
 #include "header.h"
 
-t_vector	get_vect(t_vector start, t_vector end)
+t_vector	vsum(t_vector A, t_vector B)
 {
-	t_vector	res;
+	t_vector	sum;
 
-	res.x = end.x - start.x;
-	res.y = end.y - start.y;
-	res.z = end.z - start.z;
-	return (res);
+	sum.x = A.x + B.x;
+	sum.y = A.y + B.y;
+	sum.z = A.z + B.z;
+	return (sum);
 }
 
-t_vector	get_sum(t_vector v1, t_vector v2)
+t_vector	vdiff(t_vector A, t_vector B)
 {
-	t_vector	res;
+	t_vector	diff;
 
-	res.x = v1.x + v2.x;
-	res.y = v1.y + v2.y;
-	res.z = v1.z + v2.z;
-	return (res);
+	diff.x = A.x - B.x;
+	diff.y = A.y - B.y;
+	diff.z = A.z - B.z;
+	return (diff);
 }
 
-t_vector	get_diff(t_vector v1, t_vector v2)
+t_vector	vmult(double num, t_vector A)
 {
-	t_vector	res;
+	t_vector	mult;
 
-	res.x = v1.x - v2.x;
-	res.y = v1.y - v2.y;
-	res.z = v1.z - v2.z;
-	return (res);
+	mult.x = num * A.x;
+	mult.y = num * A.y;
+	mult.z = num * A.z;
+	return (mult);
 }
 
-t_vector	get_num_prod(double num, t_vector v)
+double		vscal(t_vector A, t_vector B)
 {
-	t_vector	res;
-
-	res.x = num * v.x;
-	res.y = num * v.y;
-	res.z = num * v.z;
-	return (res);
+	return (A.x * B.x + A.y * B.y + A.z * B.z);
 }
 
-double		get_scal_prod(t_vector v1, t_vector v2)
+double		vsquare(t_vector A)
 {
-	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
+	return (vscal(A, A));
 }
 
-double		get_scal_square(t_vector vector)
+double		vlen(t_vector A)
 {
-	return (get_scal_prod(vector, vector));
+	return (sqrt(A.x * A.x + A.y * A.y + A.z * A.z));
 }
 
-double		get_len(t_vector vector)
+t_vector	vort(t_vector A)
 {
-	return (sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z));
+	t_vector	ort;
+	double		len;
+
+	len = vlen(A);
+	ort.x = A.x / len;
+	ort.y = A.y / len;
+	ort.z = A.z / len;
+	return (ort);
 }
 
-t_vector	get_ort(t_vector vector)
+t_vector	vrefl(t_vector L, t_vector N)
 {
-	t_vector	res;
-	double	len;
-
-	len = get_len(vector);
-	res.x = vector.x / len;
-	res.y = vector.y / len;
-	res.z = vector.z / len;
-	return (res);
-}
-
-t_vector	get_refl_vect(t_vector vector, t_vector normal)
-{
-	return (get_diff(get_num_prod(2 * get_scal_prod(normal, vector), normal), vector));
+	return (vdiff(vmult(2 * vscal(N, L), N), L));
 }

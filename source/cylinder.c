@@ -12,39 +12,39 @@
 
 #include "header.h"
 
-static double	get_cyl_a(t_vector point, double scal_prod_v_v_a, t_vector v_a)
+static double	get_a(t_vector D, double D_scal_va, t_vector va)
 {
-	return (get_scal_prod(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)),
-		get_diff(point, get_num_prod(scal_prod_v_v_a, v_a))));
+	return (vscal(vdiff(D, vmult(D_scal_va, va)),
+		vdiff(D, vmult(D_scal_va, va))));
 }
 
-static double	get_cyl_b(t_vector point, t_vector delta,
-	double scal_prod_v_v_a, t_vector v_a, double scal_prod_delta_v_a)
+static double	get_b(t_vector D, t_vector delta,
+	double D_scal_va, t_vector va, double delta_scal_va)
 {
-	return (2 * get_scal_prod(get_diff(point, get_num_prod(scal_prod_v_v_a, v_a)),
-		get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a))));
+	return (2 * vscal(vdiff(D, vmult(D_scal_va, va)),
+		vdiff(delta, vmult(delta_scal_va, va))));
 }
 
-static double	get_cyl_c(t_vector delta, double scal_prod_delta_v_a, t_vector v_a, double rad)
+static double	get_c(t_vector delta, double delta_scal_va, t_vector va, double rad)
 {
-	return (get_scal_prod(get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a)),
-		get_diff(delta, get_num_prod(scal_prod_delta_v_a, v_a))) - pow(rad, 2));
+	return (vscal(vdiff(delta, vmult(delta_scal_va, va)),
+		vdiff(delta, vmult(delta_scal_va, va))) - pow(rad, 2));
 }
 
-t_t1t2			*get_cyl_intersections(t_fig *fig, t_vector o, t_vector d)
+t_t1t2			*get_cyl_intersections(t_fig *fig, t_vector O, t_vector D)
 {
-	t_vector	p_a;
-	t_vector	v_a;
+	t_vector	pa;
+	t_vector	va;
 	t_vector	delta;
-	double		scal_prod_v_v_a;
-	double		scal_prod_delta_v_a;
+	double		D_scal_va;
+	double		delta_scal_va;
 
-	p_a = fig->center;
-	v_a = get_ort(get_vect(fig->center, fig->center2));
-	delta = get_diff(o, p_a);
-	scal_prod_v_v_a = get_scal_prod(d, v_a);
-	scal_prod_delta_v_a = get_scal_prod(delta, v_a);
-	return (get_quadratic_solution(get_cyl_a(d, scal_prod_v_v_a, v_a),
-		get_cyl_b(d, delta, scal_prod_v_v_a, v_a, scal_prod_delta_v_a),
-		get_cyl_c(delta, scal_prod_delta_v_a, v_a, fig->rad)));
+	pa = fig->center;
+	va = vort(vdiff(fig->center2, fig->center));
+	delta = vdiff(O, pa);
+	D_scal_va = vscal(D, va);
+	delta_scal_va = vscal(delta, va);
+	return (get_quadratic_solution(get_a(D, D_scal_va, va),
+		get_b(D, delta, D_scal_va, va, delta_scal_va),
+		get_c(delta, delta_scal_va, va, fig->rad)));
 }

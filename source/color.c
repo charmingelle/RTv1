@@ -63,7 +63,12 @@ int			get_color_sum(int c1, int c2)
 	return (r * 0x10000 + g * 0x100 + b);
 }
 
-int			get_fig_point_color(t_fig *fig, t_vector point, t_vector normal, t_env *env)
+int			get_fig_point_color(t_fig *fig, t_vector P, t_vector N, t_env *env)
 {
-	return (change_brightness(fig->color, get_light(point, normal, fig, env)));
+	if (!ft_strcmp(fig->type, "cone"))
+	{
+		printf("cone color\n");
+		return (fig->color);
+	}
+	return (change_brightness(fig->color, get_light(P, N, fig, env)));
 }

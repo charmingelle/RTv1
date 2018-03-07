@@ -12,58 +12,58 @@
 
 #include "header.h"
 
-t_vector	get_centered_coords(t_env *env, int x, int y)
+t_vector	get_canvas_vect(t_env *env, int x, int y)
 {
-	t_vector	c;
+	t_vector	D;
 
-	c.x = x - env->width / 2;
-	c.y = env->height / 2 - y;
-	c.z = env->distance;
-	return (c);
+	D.x = x - env->width / 2;
+	D.y = env->height / 2 - y;
+	D.z = env->distance;
+	return (D);
 }
 
-t_t1t2	*get_sphere_intersections(t_fig *fig, t_vector o, t_vector d)
+t_t1t2	*get_sphere_intersections(t_fig *fig, t_vector O, t_vector D)
 {
 	t_vector	vector;
 	double	a;
 	double	b;
 	double	c;
 
-	vector = get_vect(fig->center, o);
-	a = get_scal_prod(d, d);
-	b = 2 * get_scal_prod(vector, d);
-	c = get_scal_prod(vector, vector) - fig->rad * fig->rad;
+	vector = vdiff(O, fig->center);
+	a = vscal(D, D);
+	b = 2 * vscal(vector, D);
+	c = vscal(vector, vector) - fig->rad * fig->rad;
 	return (get_quadratic_solution(a, b, c));
 }
 
-t_t1t2	*get_plane_intersections(t_fig *fig, t_vector o, t_vector d)
+t_t1t2	*get_plane_intersections(t_fig *fig, t_vector O, t_vector D)
 {
 	double	denom;
 	t_t1t2	*intersections;
 
-	denom = get_scal_prod(fig->normal, d);
+	denom = vscal(fig->normal, D);
 	if (denom >= 0.0)
 		return (NULL);
 	intersections = (t_t1t2 *)malloc(sizeof(t_t1t2));
-	intersections->t1 = get_scal_prod(get_diff(fig->center, o), fig->normal) / denom;
+	intersections->t1 = vscal(vdiff(fig->center, O), fig->normal) / denom;
 	intersections->t2 = intersections->t1;
 	return (intersections);
 }
 
-t_t1t2	*get_intersections(t_fig *fig, t_vector o, t_vector d)
+t_t1t2	*get_intersections(t_fig *fig, t_vector O, t_vector D)
 {
 	if (ft_strcmp(fig->type, "sphere") == 0)
-		return (get_sphere_intersections(fig, o, d));
+		return (get_sphere_intersections(fig, O, D));
 	if (ft_strcmp(fig->type, "cylinder") == 0)
-		return (get_cyl_intersections(fig, o, d));
+		return (get_cyl_intersections(fig, O, D));
 	if (ft_strcmp(fig->type, "cone") == 0)
-		return (get_cone_intersections(fig, o, d));
+		return (get_cone_intersections(fig, O, D));
 	if (ft_strcmp(fig->type, "plane") == 0)
-		return (get_plane_intersections(fig, o, d));
+		return (get_plane_intersections(fig, O, D));
 	return (NULL);
 }
 
-t_fig	*get_closest_fig(t_fig *fig, double *closest_t, t_vector o, t_vector d)
+t_fig	*get_closest_fig(t_fig *fig, double *closest_t, double min_t, double max_t, t_vector O, t_vector D)
 {
 	t_t1t2	*intersections;
 	t_fig	*closest_fig;
@@ -71,18 +71,24 @@ t_fig	*get_closest_fig(t_fig *fig, double *closest_t, t_vector o, t_vector d)
 	closest_fig = NULL;
 	while (fig)
 	{
-		intersections = get_intersections(fig, o, d);
+		intersections = get_intersections(fig, O, D);
 		if (intersections)
 		{
-			if (intersections->t1 < *closest_t)
+			if (intersections->t1 >= min_t && intersections->t1 <= max_t && intersections->t1 < *closest_t)
 			{
 				*closest_t = intersections->t1;
 				closest_fig = fig;
 			}
-			if (intersections->t2 < *closest_t)
+			if (intersections->t2 >= min_t && intersections->t2 <= max_t && intersections->t2 < *closest_t)
 			{
 				*closest_t = intersections->t2;
 				closest_fig = fig;
+			}
+			if (!ft_strcmp(fig->type, "cone"))
+			{
+				printf("t1 = %f\n", intersections->t1);
+				printf("t2 = %f\n", intersections->t2);
+				printf("closest_t = %f\n", *closest_t);
 			}
 			free(intersections);
 		}
@@ -91,61 +97,75 @@ t_fig	*get_closest_fig(t_fig *fig, double *closest_t, t_vector o, t_vector d)
 	return (closest_fig);
 }
 
-t_vector	get_cyl_normal(t_vector c1, t_vector c2, t_vector p)
+t_vector	get_cyl_normal(t_vector C1, t_vector C2, t_vector P)
 {
 	t_vector	axis;
-	t_vector	c1_minus_p;
+	t_vector	C1_minus_P;
 
-	axis = get_vect(c1, c2);
-	c1_minus_p = get_diff(c1, p);
-	return (get_diff(c1_minus_p,
-		get_num_prod(get_scal_prod(c1_minus_p, axis) / get_scal_square(axis), axis)));
+	axis = vdiff(C2, C1);
+	C1_minus_P = vdiff(C1, P);
+	return (vdiff(C1_minus_P,
+		vmult(vscal(C1_minus_P, axis) / vsquare(axis), axis)));
 }
 
-t_vector	get_normal(t_vector point, t_fig *fig)
+t_vector	get_normal(t_vector P, t_fig *fig)
 {
 	if (!ft_strcmp(fig->type, "sphere"))
-		return (get_ort(get_vect(point, fig->center)));
-	if (ft_strcmp(fig->type, "cylinder") == 0)
-		return (get_cyl_normal(fig->center, fig->center2, point));
-	if (ft_strcmp(fig->type, "plane") == 0)
-		return (get_num_prod(-1, fig->normal));
+		return (vort(vdiff(fig->center, P)));
+	if (!ft_strcmp(fig->type, "cylinder"))
+		return (get_cyl_normal(fig->center, fig->center2, P));
+	// if (!ft_strcmp(fig->type, "cone"))
+	// 	return (get_cone_normal());
+	if (!ft_strcmp(fig->type, "plane"))
+		return (vmult(-1, fig->normal));
 	return ((t_vector){0, 0, 0});
 }
 
-int		trace_ray(t_env *env, t_vector start, t_vector point, double min_t, double max_t, int depth)
+int		trace_ray(t_env *env, t_vector O, t_vector D, double min_t, double max_t, int depth)
 {
 	t_fig		*closest_fig;
 	double		closest_t;
-	t_vector	fig_point;
-	t_vector	normal;
+	t_vector	P;
+	t_vector	N;
 	int			local_color;
-	t_vector	refl_vect;
-	int			refl_color;
+	// t_vector	R;
+	// int			refl_color;
 
 	closest_t = INFINITY;
-	closest_fig = get_closest_fig(env->fig, &closest_t, start, point);
-	if (closest_fig == NULL || closest_t < min_t || closest_t > max_t)
+	closest_fig = get_closest_fig(env->fig, &closest_t, min_t, max_t, O, D);
+	if (closest_fig == NULL)
 		return (env->color);
 	// if (depth == 2)
 	// 	printf("closest_fig = %p, closest_t = %f\n", closest_fig, closest_t);
-	fig_point = get_sum(start, get_num_prod(closest_t, point));
-	normal = get_normal(fig_point, closest_fig);
-	local_color = get_fig_point_color(closest_fig, fig_point, normal, env);
-	if (depth == 2)
-		printf("closest_fig->color = %X, fig_point = (%f, %f, %f), normal = (%f, %f, %f), local_color = %X\n", closest_fig->color, fig_point.x, fig_point.y, fig_point.z, normal.x, normal.y, normal.z, local_color);
-	if (DEPTH <= 0 || closest_fig->refl <= 0.0)
+	P = vsum(O, vmult(closest_t, D));
+	// if (!ft_strcmp(closest_fig->type, "cone"))
+	// {
+	// 	printf("closest_t = %f\n", closest_t);
+	// 	printf("P = (%f, %f, %f)\n", P.x, P.y, P.z);
+	// }
+	N = get_normal(P, closest_fig);
+	local_color = get_fig_point_color(closest_fig, P, N, env);
+	// if (depth == 2)
+	// 	printf("closest_fig->color = %X, P = (%f, %f, %f), N = (%f, %f, %f), local_color = %X\n",
+	// 		closest_fig->color, P.x, P.y, P.z, normal.x, normal.y, normal.z, local_color);
+	// if (depth <= 0 || closest_fig->refl <= 0.0)
 		return (local_color);
-	refl_vect = get_refl_vect(get_num_prod(-1, point), normal);
-	refl_color = trace_ray(env, refl_vect, fig_point, 0.001, INFINITY, depth - 1);
-	return (get_color_sum(change_brightness(1.0 - closest_fig->refl, local_color), change_brightness(closest_fig->refl, refl_color)));
+	// R = vrefl(vmult(-1, D), N);
+	// refl_color = trace_ray(env, P, R, 0.001, INFINITY, depth - 1);
+	// refl_color = trace_ray(env, P, vmult(-1, R), 0.001, INFINITY, depth - 1);
+	// refl_color = trace_ray(env, P, R, -INFINITY, -1.001, depth - 1);
+	// refl_color = trace_ray(env, P, vmult(-1, R), -INFINITY, -1.001, depth - 1);
+	// refl_color = trace_ray(env, vmult(-1, P), vmult(-1, R), -INFINITY, -1.001, depth - 1);
+	// refl_color = trace_ray(env, vmult(-1, P), vmult(-1, R), 0.001, INFINITY, depth - 1);
+	// return (get_color_sum(change_brightness(1.0 - closest_fig->refl, local_color),
+	// 	change_brightness(closest_fig->refl, refl_color)));
 }
 
 void	draw_scene(t_env *env)
 {
 	int			x;
 	int			y;
-	t_vector	point;
+	t_vector	D;
 	int			color;
 
 	x = -1;
@@ -154,8 +174,8 @@ void	draw_scene(t_env *env)
 		y = -1;
 		while (++y < env->height)
 		{
-			point = get_centered_coords(env, x, y);
-			color = trace_ray(env, env->camera, point, 1.0, INFINITY, DEPTH);
+			D = get_canvas_vect(env, x, y);
+			color = trace_ray(env, env->camera, D, 1.0, INFINITY, DEPTH);
 			mlx_pixel_put(env->mlx, env->window, x, y, color);
 		}
 	}
@@ -173,6 +193,15 @@ int	main(int amount, char **args)
 		exit(show_file_not_found_error());
 	env = get_env(fd);
 	draw_scene(env);
+	// while (env->fig)
+	// {
+	// 	if (!ft_strcmp(env->fig->type, "cone"))
+	// 		printf("cone.center = (%f, %f, %f), cone.center2 = (%f, %f, %f), code.rad = %f, cone.rad2 = %f\n",
+	// 			env->fig->center.x, env->fig->center.y, env->fig->center.z,
+	// 			env->fig->center2.x, env->fig->center2.y, env->fig->center2.z,
+	// 			env->fig->rad, env->fig->rad2);
+	// 	env->fig = env->fig->next;
+	// }
 	mlx_key_hook(env->window, &handle_keypress, env);
 	mlx_loop(env->mlx);
 	return (0);
