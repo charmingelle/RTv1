@@ -27,7 +27,7 @@
 # define BLUE 0x0000FF
 # define YELLOW 0xFFFF00
 
-# define DEPTH 2
+# define DEPTH 3
 
 typedef struct	s_t1t2
 {
@@ -94,6 +94,7 @@ double		get_light(t_vector P, t_vector N, t_fig *fig, t_env *env);
 
 int			change_brightness(int color, double coef);
 int			get_color_sum(int c1, int c2);
+int			get_middle_color(int c1, int c2);
 int			get_fig_point_color(t_fig *fig, t_vector P, t_vector N, t_env *env);
 
 t_fig		*get_closest_fig(t_fig *fig, double *closest_t, double min_t, double max_t, t_vector O, t_vector D);

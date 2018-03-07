@@ -104,20 +104,19 @@ t_vector	get_cyl_normal(t_vector C1, t_vector C2, t_vector P)
 
 	axis = vdiff(C2, C1);
 	C1_minus_P = vdiff(C1, P);
-	return (vdiff(C1_minus_P,
-		vmult(vscal(C1_minus_P, axis) / vsquare(axis), axis)));
+	return (vdiff(vmult(vscal(C1_minus_P, axis) / vsquare(axis), axis), C1_minus_P));
 }
 
 t_vector	get_normal(t_vector P, t_fig *fig)
 {
 	if (!ft_strcmp(fig->type, "sphere"))
-		return (vort(vdiff(fig->center, P)));
+		return (vort(vdiff(P, fig->center)));
 	if (!ft_strcmp(fig->type, "cylinder"))
 		return (get_cyl_normal(fig->center, fig->center2, P));
 	// if (!ft_strcmp(fig->type, "cone"))
 	// 	return (get_cone_normal());
 	if (!ft_strcmp(fig->type, "plane"))
-		return (vmult(-1, fig->normal));
+		return (fig->normal);
 	return ((t_vector){0, 0, 0});
 }
 
@@ -128,37 +127,26 @@ int		trace_ray(t_env *env, t_vector O, t_vector D, double min_t, double max_t, i
 	t_vector	P;
 	t_vector	N;
 	int			local_color;
-	// t_vector	R;
-	// int			refl_color;
+	t_vector	R;
+	int			refl_color;
 
 	closest_t = INFINITY;
 	closest_fig = get_closest_fig(env->fig, &closest_t, min_t, max_t, O, D);
 	if (closest_fig == NULL)
 		return (env->color);
-	// if (depth == 2)
-	// 	printf("closest_fig = %p, closest_t = %f\n", closest_fig, closest_t);
 	P = vsum(O, vmult(closest_t, D));
-	// if (!ft_strcmp(closest_fig->type, "cone"))
-	// {
-	// 	printf("closest_t = %f\n", closest_t);
-	// 	printf("P = (%f, %f, %f)\n", P.x, P.y, P.z);
-	// }
 	N = get_normal(P, closest_fig);
 	local_color = get_fig_point_color(closest_fig, P, N, env);
-	// if (depth == 2)
-	// 	printf("closest_fig->color = %X, P = (%f, %f, %f), N = (%f, %f, %f), local_color = %X\n",
-	// 		closest_fig->color, P.x, P.y, P.z, normal.x, normal.y, normal.z, local_color);
-	// if (depth <= 0 || closest_fig->refl <= 0.0)
+	if (depth <= 0 || closest_fig->refl <= 0.0)
 		return (local_color);
-	// R = vrefl(vmult(-1, D), N);
-	// refl_color = trace_ray(env, P, R, 0.001, INFINITY, depth - 1);
-	// refl_color = trace_ray(env, P, vmult(-1, R), 0.001, INFINITY, depth - 1);
-	// refl_color = trace_ray(env, P, R, -INFINITY, -1.001, depth - 1);
-	// refl_color = trace_ray(env, P, vmult(-1, R), -INFINITY, -1.001, depth - 1);
-	// refl_color = trace_ray(env, vmult(-1, P), vmult(-1, R), -INFINITY, -1.001, depth - 1);
-	// refl_color = trace_ray(env, vmult(-1, P), vmult(-1, R), 0.001, INFINITY, depth - 1);
-	// return (get_color_sum(change_brightness(1.0 - closest_fig->refl, local_color),
-	// 	change_brightness(closest_fig->refl, refl_color)));
+	R = vrefl(vmult(-1, D), N);
+	refl_color = trace_ray(env, P, R, 0.001, INFINITY, depth - 1);
+	// return (get_color_sum(change_brightness(local_color, 1.0 - closest_fig->refl),
+	// 	change_brightness(refl_color, closest_fig->refl)));
+	return (change_brightness(local_color, 1.0 - closest_fig->refl) +
+		change_brightness(refl_color, closest_fig->refl));
+	// return (get_middle_color(change_brightness(local_color, 1.0 - closest_fig->refl),
+	// 	change_brightness(refl_color, closest_fig->refl)));
 }
 
 void	draw_scene(t_env *env)
@@ -193,15 +181,6 @@ int	main(int amount, char **args)
 		exit(show_file_not_found_error());
 	env = get_env(fd);
 	draw_scene(env);
-	// while (env->fig)
-	// {
-	// 	if (!ft_strcmp(env->fig->type, "cone"))
-	// 		printf("cone.center = (%f, %f, %f), cone.center2 = (%f, %f, %f), code.rad = %f, cone.rad2 = %f\n",
-	// 			env->fig->center.x, env->fig->center.y, env->fig->center.z,
-	// 			env->fig->center2.x, env->fig->center2.y, env->fig->center2.z,
-	// 			env->fig->rad, env->fig->rad2);
-	// 	env->fig = env->fig->next;
-	// }
 	mlx_key_hook(env->window, &handle_keypress, env);
 	mlx_loop(env->mlx);
 	return (0);

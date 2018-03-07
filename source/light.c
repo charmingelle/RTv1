@@ -17,9 +17,7 @@ int		is_in_shadow(t_vector P, t_vector L, t_fig *fig)
 	double	closest_t;
 
 	closest_t = INFINITY;
-	// if (get_closest_fig(fig, &closest_t, P, L) != NULL && closest_t < -1.0)
-	// 	return (1);
-	if (get_closest_fig(fig, &closest_t, -INFINITY, -1.001, P, L) != NULL)
+	if (get_closest_fig(fig, &closest_t, 0.001, INFINITY, P, L) != NULL)
 		return (1);
 	return (0);
 }
@@ -31,7 +29,7 @@ double	get_shine(t_vector P, t_vector N, t_vector L)
 	double		R_scal_V;
 
 	R = vort(vrefl(L, N));
-	V = vort(P);
+	V = vort(vmult(-1, P));
 	R_scal_V = vscal(R, V);
 	if (R_scal_V > 0.0)
 		return(R_scal_V);
@@ -44,7 +42,7 @@ double	get_point_light(t_vector P, t_vector N, t_light *light, t_fig *fig, t_fig
 	double		N_scal_L;
 	double		point_light;
 
-	L = vort(vdiff(P, light->pos));
+	L = vort(vdiff(light->pos, P));
 	if (is_in_shadow(P, L, fig_list))
 		return (0.0);
 	N_scal_L = vscal(N, L);
@@ -67,7 +65,7 @@ double	get_dir_light(t_vector P, t_vector N, t_light *light, t_fig *fig, t_fig *
 	double		N_scal_L;
 	double		dir_light;
 
-	L = vort(light->dir);
+	L = vort(vmult(-1, light->dir));
 	closest_t = INFINITY;
 	if (is_in_shadow(P, L, fig_list))
 		return (0.0);

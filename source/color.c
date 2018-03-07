@@ -63,6 +63,24 @@ int			get_color_sum(int c1, int c2)
 	return (r * 0x10000 + g * 0x100 + b);
 }
 
+int			get_middle_color(int c1, int c2)
+{
+	int		r;
+	int		g;
+	int		b;
+
+	r = get_r(c1) + get_r(c2) / 0x2;
+	if (r > 0xFF)
+		r = 0xFF;
+	g = get_g(c1) + get_g(c2) / 0x2;
+	if (g > 0xFF)
+		g = 0xFF;
+	b = get_b(c1) + get_b(c2) / 0x2;
+	if (b > 0xFF)
+		b = 0xFF;
+	return (r * 0x10000 + g * 0x100 + b);
+}
+
 int			get_fig_point_color(t_fig *fig, t_vector P, t_vector N, t_env *env)
 {
 	if (!ft_strcmp(fig->type, "cone"))
