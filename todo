@@ -1,2 +1,3 @@
 - Validate percent values (light intensity)
 - Return flags to Makefile
+- Return only one t from the quadratic equation

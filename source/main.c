@@ -79,16 +79,10 @@ t_fig	*get_closest_fig(t_fig *fig, double *closest_t, double min_t, double max_t
 				*closest_t = intersections->t1;
 				closest_fig = fig;
 			}
-			if (intersections->t2 >= min_t && intersections->t2 <= max_t && intersections->t2 < *closest_t)
+			if (intersections->t2 >= min_t && intersections->t2 < max_t && intersections->t2 < *closest_t)
 			{
 				*closest_t = intersections->t2;
 				closest_fig = fig;
-			}
-			if (!ft_strcmp(fig->type, "cone"))
-			{
-				printf("t1 = %f\n", intersections->t1);
-				printf("t2 = %f\n", intersections->t2);
-				printf("closest_t = %f\n", *closest_t);
 			}
 			free(intersections);
 		}
