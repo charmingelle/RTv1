@@ -101,14 +101,28 @@ t_vector	get_cyl_normal(t_vector C1, t_vector C2, t_vector P)
 	return (vdiff(vmult(vscal(C1_minus_P, axis) / vsquare(axis), axis), C1_minus_P));
 }
 
+t_vector	get_cone_normal(t_vector C1, t_vector C2, double rad, double rad2, t_vector P)
+{
+	t_vector	G1;
+	t_vector	G2;
+	t_vector	gener;
+	t_vector	G1_minus_P;
+
+	G1 = vsum(C1, (t_vector){rad, 0.0, 0.0});
+	G2 = vsum(C2, (t_vector){rad2, 0.0, 0.0});
+	gener = vdiff(G2, G1);
+	G1_minus_P = vdiff(G1, P);
+	return (vdiff(vmult(vscal(G1_minus_P, gener) / vsquare(gener), gener), G1_minus_P));
+}
+
 t_vector	get_normal(t_vector P, t_fig *fig)
 {
 	if (!ft_strcmp(fig->type, "sphere"))
 		return (vort(vdiff(P, fig->center)));
 	if (!ft_strcmp(fig->type, "cylinder"))
 		return (get_cyl_normal(fig->center, fig->center2, P));
-	// if (!ft_strcmp(fig->type, "cone"))
-	// 	return (get_cone_normal());
+	if (!ft_strcmp(fig->type, "cone"))
+		return (get_cone_normal(fig->center, fig->center2, fig->rad, fig->rad2, P));
 	if (!ft_strcmp(fig->type, "plane"))
 		return (fig->normal);
 	return ((t_vector){0, 0, 0});
