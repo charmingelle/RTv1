@@ -73,3 +73,27 @@ t_vector	vrefl(t_vector L, t_vector N)
 {
 	return (vdiff(vmult(2 * vscal(N, L), N), L));
 }
+
+t_vector	vrotate(t_vector A, t_env *env)
+{
+	t_vector	B;
+	t_vector	C;
+	t_vector	D;
+
+	B.x = A.x;
+	B.y = A.y * cos(get_rad(env->ang_x))
+		+ A.z * sin(get_rad(env->ang_x));
+	B.z = A.z * cos(get_rad(env->ang_x))
+		- A.y * sin(get_rad(env->ang_x));
+	C.x = B.x * cos(get_rad(env->ang_y))
+		- B.z * sin(get_rad(env->ang_y));
+	C.y = B.y;
+	C.z = B.z * cos(get_rad(env->ang_y))
+		+ B.x * sin(get_rad(env->ang_y));
+	D.x = C.x * cos(get_rad(env->ang_z))
+		+ C.y * sin(get_rad(env->ang_z));
+	D.y = C.y * cos(get_rad(env->ang_z))
+		- C.x * sin(get_rad(env->ang_z));
+	D.z = C.z;
+	return (D);
+}

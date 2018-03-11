@@ -20,6 +20,18 @@
 # include <stdlib.h>
 
 # define ESC 53
+# define UP 126
+# define DOWN 125
+# define LEFT 123
+# define RIGHT 124
+# define PLUS 69
+# define MINUS 78
+# define WW 13
+# define AA 0
+# define SS 1
+# define DD 2
+# define QQ 12
+# define EE 14
 
 # define WHITE 0xFFFFFF
 # define RED 0xFF0000
@@ -76,14 +88,19 @@ typedef struct	s_env
 	void		*mlx;
 	void		*window;
 	t_vector	camera;
+	int			ang_x;
+	int			ang_y;
+	int			ang_z;
 	int			width;
 	int			height;
 	int			distance;
+	int			x;
 	int			color;
-	int			fig_amount;
 	t_fig		*fig;
 	t_light		*light;
 }				t_env;
+
+void		draw_scene(t_env *env);
 
 int			handle_keypress(int keycode, t_env *env);
 
@@ -95,6 +112,7 @@ double		vsquare(t_vector A);
 double		vlen(t_vector A);
 t_vector	vort(t_vector A);
 t_vector	vrefl(t_vector L, t_vector N);
+t_vector	vrotate(t_vector A, t_env *env);
 
 double		get_light(t_vector P, t_vector N, t_fig *fig, t_env *env);
 

@@ -210,6 +210,9 @@ t_env	*get_env(int fd)
 	env->light = NULL;
 	read_scene(env, fd);
 	env->window = mlx_new_window(env->mlx, env->width, env->height, "RTv1");
+	env->ang_x = 0;
+	env->ang_y = 0;
+	env->ang_z = 0;
 	env->color = 0;
 	return (env);
 }

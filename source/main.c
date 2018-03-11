@@ -158,7 +158,7 @@ void	draw_scene(t_env *env)
 		while (++y < env->height)
 		{
 			D = get_canvas_vect(env, x, y);
-			color = trace_ray(env, (t_ray){env->camera, D, 1.0, INFINITY}, DEPTH);
+			color = trace_ray(env, (t_ray){vrotate(env->camera, env), D, 1.0, INFINITY}, DEPTH);
 			mlx_pixel_put(env->mlx, env->window, x, y, color);
 		}
 	}
