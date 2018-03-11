@@ -140,12 +140,8 @@ int		trace_ray(t_env *env, t_ray ray, int depth)
 		return (local_color);
 	R = vrefl(vmult(-1, ray.D), N);
 	refl_color = trace_ray(env, (t_ray){P, R, 0.001, INFINITY}, depth - 1);
-	// return (get_color_sum(change_brightness(local_color, 1.0 - closest_fig->refl),
-	// 	change_brightness(refl_color, closest_fig->refl)));
 	return (change_brightness(local_color, 1.0 - closest_fig->refl) +
 		change_brightness(refl_color, closest_fig->refl));
-	// return (get_middle_color(change_brightness(local_color, 1.0 - closest_fig->refl),
-	// 	change_brightness(refl_color, closest_fig->refl)));
 }
 
 void	draw_scene(t_env *env)

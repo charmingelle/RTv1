@@ -1,3 +1,5 @@
 - Validate percent values (light intensity)
 - Return flags to Makefile
-- Return only one t from the quadratic equation
+- Check if cone normal is correct
+- Make camera move
+
