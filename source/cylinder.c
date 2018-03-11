@@ -31,7 +31,7 @@ static double	get_c(t_vector delta, double delta_scal_va, t_vector va, double ra
 		vdiff(delta, vmult(delta_scal_va, va))) - pow(rad, 2));
 }
 
-t_t1t2			*get_cyl_intersections(t_fig *fig, t_vector O, t_vector D)
+double			get_cyl_intersection(t_fig *fig, t_ray ray)
 {
 	t_vector	pa;
 	t_vector	va;
@@ -41,10 +41,10 @@ t_t1t2			*get_cyl_intersections(t_fig *fig, t_vector O, t_vector D)
 
 	pa = fig->center;
 	va = vort(vdiff(fig->center2, fig->center));
-	delta = vdiff(O, pa);
-	D_scal_va = vscal(D, va);
+	delta = vdiff(ray.O, pa);
+	D_scal_va = vscal(ray.D, va);
 	delta_scal_va = vscal(delta, va);
-	return (get_quadratic_solution(get_a(D, D_scal_va, va),
-		get_b(D, delta, D_scal_va, va, delta_scal_va),
-		get_c(delta, delta_scal_va, va, fig->rad)));
+	return (get_quadratic_solution(get_a(ray.D, D_scal_va, va),
+		get_b(ray.D, delta, D_scal_va, va, delta_scal_va),
+		get_c(delta, delta_scal_va, va, fig->rad), ray));
 }

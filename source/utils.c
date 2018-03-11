@@ -12,18 +12,35 @@
 
 #include "header.h"
 
-t_t1t2		*get_quadratic_solution(double a, double b, double c)
+int			in_range(double	value, double min, double max)
+{
+	return (value >= min && value <= max);
+}
+
+double		get_quadratic_solution(double a, double b, double c, t_ray ray)
 {
 	double	discrim;
-	t_t1t2	*intersections;
+	double	t1;
+	double	t2;
 
 	discrim = b * b - 4 * a * c;
 	if (discrim < 0)
-		return (NULL);
-	intersections = (t_t1t2 *)malloc(sizeof(t_t1t2));
-	intersections->t1 = (-b + sqrt(discrim)) / (2 * a);
-	intersections->t2 = (-b - sqrt(discrim)) / (2 * a);
-	return (intersections);
+		return (INFINITY);
+	t1 = (-b + sqrt(discrim)) / (2 * a);
+	t2 = (-b - sqrt(discrim)) / (2 * a);
+	if (IN_RANGE(t1, ray.t_min, ray.t_max) && IN_RANGE(t2, ray.t_min, ray.t_max))
+		return (MIN(t1, t2));
+	if (!IN_RANGE(t1, ray.t_min, ray.t_max))
+		return (t2);
+	if (!IN_RANGE(t2, ray.t_min, ray.t_max))
+		return (t1);
+	// if (in_range(t1, ray.t_min, ray.t_max) && in_range(t2, ray.t_min, ray.t_max))
+	// 	return (fmin(t1, t2));
+	// if (!in_range(t1, ray.t_min, ray.t_max))
+	// 	return (t2);
+	// if (!in_range(t2, ray.t_min, ray.t_max))
+	// 	return (t1);
+	return (INFINITY);
 }
 
 double		get_rad(int degree)

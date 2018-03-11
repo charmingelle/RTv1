@@ -29,18 +29,24 @@
 
 # define DEPTH 3
 
-typedef struct	s_t1t2
-{
-	double	t1;
-	double	t2;
-}				t_t1t2;
+# define MIN(X, Y) (X < Y ? X : Y)
 
-typedef struct	s_pount
+# define IN_RANGE(VALUE, MIN, MAX) (VALUE >= MIN && VALUE <= MAX ? 1 : 0)
+
+typedef struct	s_vector
 {
 	double	x;
 	double	y;
 	double	z;
 }				t_vector;
+
+typedef	struct	s_ray
+{
+	t_vector	O;
+	t_vector	D;
+	double		t_min;
+	double		t_max;
+}				t_ray;
 
 typedef struct	s_fig
 {
@@ -97,10 +103,10 @@ int			get_color_sum(int c1, int c2);
 int			get_middle_color(int c1, int c2);
 int			get_fig_point_color(t_fig *fig, t_vector P, t_vector N, t_env *env);
 
-t_fig		*get_closest_fig(t_fig *fig, double *closest_t, double min_t, double max_t, t_vector O, t_vector D);
+t_fig		*get_closest_fig(t_ray ray, t_fig *fig, double *closest_t);
 
-t_t1t2		*get_cyl_intersections(t_fig *fig, t_vector O, t_vector D);
-t_t1t2		*get_cone_intersections(t_fig *fig, t_vector O, t_vector D);
+double		get_cyl_intersection(t_fig *fig, t_ray ray);
+double		get_cone_intersection(t_fig *fig, t_ray ray);
 
 t_env		*get_env(int fd);
 
@@ -113,7 +119,7 @@ int			show_invalid_property_value_error();
 int			show_invalid_light_error();
 int			show_invalid_fig_error();
 
-t_t1t2		*get_quadratic_solution(double a, double b, double c);
+double		get_quadratic_solution(double a, double b, double c, t_ray ray);
 double		get_rad(int degree);
 int			read_color(char *s);
 int			count_elems(char **array);

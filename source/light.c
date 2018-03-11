@@ -17,7 +17,7 @@ int		is_in_shadow(t_vector P, t_vector L, t_fig *fig)
 	double	closest_t;
 
 	closest_t = INFINITY;
-	if (get_closest_fig(fig, &closest_t, 0.001, INFINITY, P, L) != NULL)
+	if (get_closest_fig((t_ray){P, L, 0.001, INFINITY}, fig, &closest_t) != NULL)
 		return (1);
 	return (0);
 }

@@ -83,10 +83,5 @@ int			get_middle_color(int c1, int c2)
 
 int			get_fig_point_color(t_fig *fig, t_vector P, t_vector N, t_env *env)
 {
-	// if (!ft_strcmp(fig->type, "cone"))
-	// {
-	// 	// printf("cone color\n");
-	// 	return (fig->color);
-	// }
 	return (change_brightness(fig->color, get_light(P, N, fig, env)));
 }
