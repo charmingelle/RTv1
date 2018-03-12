@@ -156,7 +156,12 @@ void	draw_scene(t_env *env)
 	int			y;
 	t_vector	D;
 	int			color;
+	t_vector	direction;
 
+	direction = vrotate((t_vector){0, 0, 1}, env);
+	env->camera.x = direction.x * env->camera.x;
+	env->camera.y = direction.y * env->camera.y;
+	env->camera.z = direction.z * env->camera.z;
 	x = -1;
 	while (++x < env->width)
 	{
@@ -164,7 +169,7 @@ void	draw_scene(t_env *env)
 		while (++y < env->height)
 		{
 			D = get_canvas_vect(env, x, y);
-			color = trace_ray(env, (t_ray){vrotate(env->camera, env), D, 1.0, INFINITY}, DEPTH);
+			color = trace_ray(env, (t_ray){env->camera, vsum(env->camera, vrotate(D, env)), 1.0, INFINITY}, DEPTH);
 			mlx_pixel_put(env->mlx, env->window, x, y, color);
 		}
 	}

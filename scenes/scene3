@@ -1,5 +1,6 @@
 size 700
-camera 0,0,0
+camera 0,0,1000
+angle 0,0,0
 fig {
     type sphere
     center -150,-250,850

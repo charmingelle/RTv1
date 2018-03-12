@@ -1,6 +1,5 @@
 - Return flags to Makefile
 - Check if cone normal is correct
-- Make camera move
 - Find out where the shadows visible when camera.z < 0 come from
-- Check what happens when figures have invalid (for example, negative) properties
 - Limit cylinder and cone
+- Complete rotation

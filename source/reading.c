@@ -186,6 +186,8 @@ void	add_prop_to_env(char **split, t_env *env, int fd)
 		add_sizes_to_env(env, get_non_negative(ft_atoi(split[1])));
 	else if (!ft_strcmp(split[0], "camera"))
 		set_vector_value(split[1], &(env->camera));
+	else if (!ft_strcmp(split[0], "angle"))
+		set_vector_value(split[1], &(env->angle));
 	else if (!ft_strcmp(split[0], "fig"))
 		add_fig_to_env(env, fd);
 	else if (!ft_strcmp(split[0], "light"))
@@ -217,9 +219,7 @@ t_env	*get_env(int fd)
 	env = (t_env *)malloc(sizeof(t_env));
 	env->mlx = mlx_init();
 	env->camera = (t_vector){0.0, 0.0, 0.0};
-	env->ang_x = 0;
-	env->ang_y = 0;
-	env->ang_z = 0;
+	env->angle = (t_vector){0.0, 0.0, 0.0};
 	add_sizes_to_env(env, 700);
 	env->color = 0;
 	env->fig = NULL;

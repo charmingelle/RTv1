@@ -69,10 +69,39 @@ t_vector	vort(t_vector A)
 	return (ort);
 }
 
+t_vector	vmid(t_vector A, t_vector B)
+{
+	return ((t_vector){(A.x + B.x) / 2, (A.y + B.y) / 2, (A.z + B.z) / 2});
+}
+
 t_vector	vrefl(t_vector L, t_vector N)
 {
 	return (vdiff(vmult(2 * vscal(N, L), N), L));
 }
+
+// t_vector	vrotate(t_vector A, t_env *env)
+// {
+// 	t_vector	B;
+// 	t_vector	C;
+// 	t_vector	D;
+
+// 	B.x = A.x;
+// 	B.y = A.y * cos(get_rad(env->angle.x))
+// 		+ A.z * sin(get_rad(env->angle.x));
+// 	B.z = A.z * cos(get_rad(env->angle.x))
+// 		- A.y * sin(get_rad(env->angle.x));
+// 	C.x = B.x * cos(get_rad(env->angle.y))
+// 		- B.z * sin(get_rad(env->angle.y));
+// 	C.y = B.y;
+// 	C.z = B.z * cos(get_rad(env->angle.y))
+// 		+ B.x * sin(get_rad(env->angle.y));
+// 	D.x = C.x * cos(get_rad(env->angle.z))
+// 		+ C.y * sin(get_rad(env->angle.z));
+// 	D.y = C.y * cos(get_rad(env->angle.z))
+// 		- C.x * sin(get_rad(env->angle.z));
+// 	D.z = C.z;
+// 	return (D);
+// }
 
 t_vector	vrotate(t_vector A, t_env *env)
 {
@@ -80,20 +109,17 @@ t_vector	vrotate(t_vector A, t_env *env)
 	t_vector	C;
 	t_vector	D;
 
-	B.x = A.x;
-	B.y = A.y * cos(get_rad(env->ang_x))
-		+ A.z * sin(get_rad(env->ang_x));
-	B.z = A.z * cos(get_rad(env->ang_x))
-		- A.y * sin(get_rad(env->ang_x));
-	C.x = B.x * cos(get_rad(env->ang_y))
-		- B.z * sin(get_rad(env->ang_y));
-	C.y = B.y;
-	C.z = B.z * cos(get_rad(env->ang_y))
-		+ B.x * sin(get_rad(env->ang_y));
-	D.x = C.x * cos(get_rad(env->ang_z))
-		+ C.y * sin(get_rad(env->ang_z));
-	D.y = C.y * cos(get_rad(env->ang_z))
-		- C.x * sin(get_rad(env->ang_z));
-	D.z = C.z;
+	B = (t_vector){
+			A.x,
+			A.y * cos(get_rad(env->angle.x)) + A.z * sin(get_rad(env->angle.x)),
+			A.z * cos(get_rad(env->angle.x)) - A.y * sin(get_rad(env->angle.x))};
+	C = (t_vector){
+			B.x * cos(get_rad(env->angle.y)) - B.z * sin(get_rad(env->angle.y)),
+			B.y,
+			B.z * cos(get_rad(env->angle.y)) + B.x * sin(get_rad(env->angle.y))};
+	D = (t_vector){
+			C.x * cos(get_rad(env->angle.z)) + C.y * sin(get_rad(env->angle.z)),
+			C.y * cos(get_rad(env->angle.z)) - C.x * sin(get_rad(env->angle.z)),
+			C.z};
 	return (D);
 }

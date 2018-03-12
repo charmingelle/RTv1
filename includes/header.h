@@ -87,12 +87,10 @@ typedef struct	s_env
 	void		*mlx;
 	void		*window;
 	t_vector	camera;
-	int			ang_x;
-	int			ang_y;
-	int			ang_z;
 	int			width;
 	int			height;
 	int			distance;
+	t_vector	angle;
 	int			color;
 	t_fig		*fig;
 	t_light		*light;
@@ -109,8 +107,10 @@ double		vscal(t_vector A, t_vector B);
 double		vsquare(t_vector A);
 double		vlen(t_vector A);
 t_vector	vort(t_vector A);
+t_vector	vmid(t_vector A, t_vector B);
 t_vector	vrefl(t_vector L, t_vector N);
 t_vector	vrotate(t_vector A, t_env *env);
+// t_vector	vrotate(t_vector A, t_vector shift, t_env *env);
 
 double		get_light(t_vector P, t_vector N, t_fig *fig, t_env *env);
 
