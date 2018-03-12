@@ -36,6 +36,12 @@ int	show_invalid_property_error()
 	return (1);
 }
 
+int	show_invalid_value_error()
+{
+	ft_putstr_fd("The scene contains an invalid value\n", 2);
+	return (1);
+}
+
 int	show_invalid_vector_error()
 {
 	ft_putstr_fd("The scene contains an invalid vector\n", 2);

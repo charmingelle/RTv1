@@ -12,6 +12,13 @@
 
 #include "header.h"
 
+int		get_non_negative(int n)
+{
+	if (n < 0)
+		exit(show_invalid_value_error());
+	return (n);
+}
+
 void	free_split(char **split)
 {
 	int	i;
@@ -67,13 +74,6 @@ char	*get_fig_type(char *given)
 	exit(show_invalid_fig_error());
 }
 
-int		read_shine(int given)
-{
-	if (given < 0)
-		return (-1);
-	return (given);
-}
-
 void	add_prop_to_fig(char **split, t_fig *fig)
 {
 	if (!ft_strcmp(split[0], "type"))
@@ -83,15 +83,15 @@ void	add_prop_to_fig(char **split, t_fig *fig)
 	else if (!ft_strcmp(split[0], "center2"))
 		set_vector_value(split[1], &(fig->center2));
 	else if (!ft_strcmp(split[0], "rad"))
-		fig->rad = ft_atoi(split[1]);
+		fig->rad = get_non_negative(ft_atoi(split[1]));
 	else if (!ft_strcmp(split[0], "rad2"))
-		fig->rad2 = ft_atoi(split[1]);
+		fig->rad2 = get_non_negative(ft_atoi(split[1]));
 	else if (!ft_strcmp(split[0], "color"))
 		fig->color = read_color(split[1]);
 	else if (!ft_strcmp(split[0], "shine"))
-		fig->shine = read_shine(ft_atoi(split[1]));
+		fig->shine = get_non_negative(ft_atoi(split[1]));
 	else if (!ft_strcmp(split[0], "refl"))
-		fig->refl = ft_atoi(split[1]) / 100.0;
+		fig->refl = get_non_negative(ft_atoi(split[1])) / 100.0;
 	else
 		exit(show_invalid_property_error());
 }
@@ -139,7 +139,7 @@ void	add_prop_to_light(char **split, t_light *light)
 	if (!ft_strcmp(split[0], "type"))
 		light->type = get_light_type(split[1]);
 	else if (!ft_strcmp(split[0], "intensity"))
-		light->intensity = ft_atoi(split[1]) / 100.0;
+		light->intensity = get_non_negative(ft_atoi(split[1])) / 100.0;
 	else if (!ft_strcmp(split[0], "pos"))
 		set_vector_value(split[1], &(light->pos));
 	else if (!ft_strcmp(split[0], "dir"))
@@ -156,7 +156,7 @@ void	add_light_to_env(t_env *env, int fd)
 
 	light = (t_light *)malloc(sizeof(t_light));
 	light->type = "ambient";
-	light->intensity = 0.0;
+	light->intensity = 1.0;
 	light->pos = (t_vector){0.0, 0.0, 0.0};
 	light->dir = (t_vector){0.0, 0.0, 0.0};
 	while (get_next_line(fd, &line) && ft_strcmp(line, "}"))
@@ -183,7 +183,7 @@ void	add_sizes_to_env(t_env *env, int size)
 void	add_prop_to_env(char **split, t_env *env, int fd)
 {
 	if (!ft_strcmp(split[0], "size"))
-		add_sizes_to_env(env, ft_atoi(split[1]));
+		add_sizes_to_env(env, get_non_negative(ft_atoi(split[1])));
 	else if (!ft_strcmp(split[0], "camera"))
 		set_vector_value(split[1], &(env->camera));
 	else if (!ft_strcmp(split[0], "fig"))

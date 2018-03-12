@@ -131,6 +131,7 @@ int			show_invalid_color_error();
 int			show_usage_error();
 int			show_file_not_found_error();
 int			show_invalid_property_error();
+int			show_invalid_value_error();
 int			show_invalid_vector_error();
 int			show_invalid_property_value_error();
 int			show_invalid_light_error();

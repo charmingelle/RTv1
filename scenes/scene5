@@ -1,14 +1,19 @@
 size 700
 camera 0,0,0
 fig {
-    type cone
-    center 0,0,1000
-    center2 0,100,1000
-    rad 100
-    rad2 50
-    color 0xFFFFFF
+    type plane
+    center 0,-350,0
+    center2 0,1,0
+    color 0xAADA64
     shine 1
-    refl 0
+    refl 80%
+}
+fig {
+    type sphere
+    center 0,-250,1500
+    rad 100
+    color 0x679327
+    shine 500
 }
 light {
     type ambient

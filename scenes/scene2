@@ -6,7 +6,6 @@ fig {
     rad 100
     color 0x679327
     shine 1
-    refl 0
 }
 fig {
     type sphere
@@ -14,7 +13,6 @@ fig {
     rad 150
     color 0xFFEF00
     shine 100
-    refl 0
 }
 fig {
     type sphere
@@ -22,7 +20,6 @@ fig {
     rad 150
     color 0x0B6623
     shine 500
-    refl 0
 }
 fig {
     type cylinder
@@ -31,7 +28,6 @@ fig {
     rad 50
     color 0xD8C077
     shine 500
-    refl 0
 }
 fig {
     type cylinder
@@ -40,7 +36,6 @@ fig {
     rad 70
     color 0x3A1B0F
     shine 500
-    refl 0
 }
 fig {
     type cylinder
@@ -49,7 +44,6 @@ fig {
     rad 50
     color 0xFFFCCC
     shine 500
-    refl 0
 }
 fig {
     type plane
@@ -57,7 +51,6 @@ fig {
     center2 0,5,-1
     color 0xAADA64
     shine 1
-    refl 0
 }
 light {
     type ambient

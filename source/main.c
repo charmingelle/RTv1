@@ -136,7 +136,7 @@ int		trace_ray(t_env *env, t_ray ray, int depth)
 	P = vsum(ray.O, vmult(closest_t, ray.D));
 	N = get_normal(P, closest_fig);
 	local_color = get_fig_point_color(closest_fig, P, N, env);
-	if (depth <= 0 || closest_fig->refl <= 0.0)
+	if (depth <= 0 || closest_fig->refl == 0.0)
 		return (local_color);
 	R = vrefl(vmult(-1, ray.D), N);
 	refl_color = trace_ray(env, (t_ray){P, R, 0.001, INFINITY}, depth - 1);
