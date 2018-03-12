@@ -51,7 +51,7 @@ double	get_point_light(t_vector P, t_vector N, t_light *light, t_fig *fig, t_fig
 		point_light = light->intensity * N_scal_L;
 		if (point_light > light->intensity)
 			point_light = light->intensity;
-		if (fig->shine != -1)
+		if (fig->shine > 0)
 			point_light += light->intensity * pow(get_shine(P, N, L), fig->shine);
 		return (point_light);
 	}
@@ -75,7 +75,7 @@ double	get_dir_light(t_vector P, t_vector N, t_light *light, t_fig *fig, t_fig *
 		dir_light = light->intensity * N_scal_L;
 		if (dir_light > light->intensity)
 			dir_light = light->intensity;
-		if (fig->shine != -1)
+		if (fig->shine > 0)
 			dir_light += light->intensity * pow(get_shine(P, N, L), fig->shine);
 		return (dir_light);
 	}

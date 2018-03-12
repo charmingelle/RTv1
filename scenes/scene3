@@ -5,7 +5,7 @@ fig {
     center -150,-250,850
     rad 100
     color 0xB80F0A
-    shine 1
+    shine 10
     refl 0
 }
 fig {
@@ -13,7 +13,7 @@ fig {
     center 150,-200,950
     rad 150
     color 0xD21F3C
-    shine 5
+    shine 10
     refl 0
 }
 fig {
@@ -52,7 +52,7 @@ fig {
 fig {
     type plane
     center 0,-350,0
-    normal 0,1,0
+    center2 0,1,0
     color 0xAADA64
     shine 10
     refl 0
@@ -60,7 +60,7 @@ fig {
 fig {
     type plane
     center 0,0,3000
-    normal 0,0,-1
+    center2 0,0,-1
     color 0xAADA64
     shine 1
     refl 0

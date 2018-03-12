@@ -86,8 +86,6 @@ void	add_prop_to_fig(char **split, t_fig *fig)
 		fig->rad = ft_atoi(split[1]);
 	else if (!ft_strcmp(split[0], "rad2"))
 		fig->rad2 = ft_atoi(split[1]);
-	else if (!ft_strcmp(split[0], "normal"))
-		set_vector_value(split[1], &(fig->normal));
 	else if (!ft_strcmp(split[0], "color"))
 		fig->color = read_color(split[1]);
 	else if (!ft_strcmp(split[0], "shine"))
@@ -105,6 +103,14 @@ void	add_fig_to_env(t_env *env, int fd)
 	t_fig	*fig;
 
 	fig = (t_fig *)malloc(sizeof(t_fig));
+	fig->type = "sphere";
+	fig->center = (t_vector){0.0, 0.0, 800.0};
+	fig->center2 = (t_vector){0.0, 200.0, 800.0};
+	fig->rad = 100.0;
+	fig->rad2 = 50.0;
+	fig->color = 0xFFFFFF;
+	fig->shine = 0;
+	fig->refl = 0.0;
 	while (get_next_line(fd, &line) && ft_strcmp(line, "}"))
 	{
 		split = ft_strsplit(line, ' ');
@@ -149,6 +155,10 @@ void	add_light_to_env(t_env *env, int fd)
 	t_light	*light;
 
 	light = (t_light *)malloc(sizeof(t_light));
+	light->type = "ambient";
+	light->intensity = 0.0;
+	light->pos = (t_vector){0.0, 0.0, 0.0};
+	light->dir = (t_vector){0.0, 0.0, 0.0};
 	while (get_next_line(fd, &line) && ft_strcmp(line, "}"))
 	{
 		split = ft_strsplit(line, ' ');
@@ -206,13 +216,15 @@ t_env	*get_env(int fd)
 
 	env = (t_env *)malloc(sizeof(t_env));
 	env->mlx = mlx_init();
+	env->camera = (t_vector){0.0, 0.0, 0.0};
+	env->ang_x = 0;
+	env->ang_y = 0;
+	env->ang_z = 0;
+	add_sizes_to_env(env, 700);
+	env->color = 0;
 	env->fig = NULL;
 	env->light = NULL;
 	read_scene(env, fd);
 	env->window = mlx_new_window(env->mlx, env->width, env->height, "RTv1");
-	env->ang_x = 0;
-	env->ang_y = 0;
-	env->ang_z = 0;
-	env->color = 0;
 	return (env);
 }

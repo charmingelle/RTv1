@@ -67,7 +67,6 @@ typedef struct	s_fig
 	t_vector		center2;
 	double			rad;
 	double			rad2;
-	t_vector		normal;
 	int				color;
 	int				shine;
 	double			refl;
@@ -94,7 +93,6 @@ typedef struct	s_env
 	int			width;
 	int			height;
 	int			distance;
-	int			x;
 	int			color;
 	t_fig		*fig;
 	t_light		*light;
@@ -127,6 +125,7 @@ double		get_cyl_intersection(t_fig *fig, t_ray ray);
 double		get_cone_intersection(t_fig *fig, t_ray ray);
 
 t_env		*get_env(int fd);
+void		redraw_scene(t_env *env);
 
 int			show_invalid_color_error();
 int			show_usage_error();

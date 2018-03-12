@@ -1,28 +1,26 @@
-size 700
-camera 0,0,0
 fig {
     type sphere
     center -150,-100,850
     rad 100
     color 0x679327
-    shine -1
-    refl 0
+    shine 0
+    refl 0%
 }
 fig {
-    type sphere 
+    type sphere
     center 150,-100,950
     rad 150
     color 0xFFEF00
-    shine -1
-    refl 0
+    shine 0
+    refl 0%
 }
 fig {
     type sphere
     center 0,100,1300
     rad 150
     color 0x0B6623
-    shine -1
-    refl 0
+    shine 0
+    refl 0%
 }
 fig {
     type cylinder
@@ -31,7 +29,7 @@ fig {
     rad 50
     color 0xD8C077
     shine -1
-    refl 0
+    refl 0%
 }
 fig {
     type cylinder
@@ -40,7 +38,7 @@ fig {
     rad 70
     color 0x3A1B0F
     shine -1
-    refl 0
+    refl 0%
 }
 fig {
     type cylinder
@@ -49,27 +47,27 @@ fig {
     rad 50
     color 0xFFFCCC
     shine -1
-    refl 0
+    refl 0%
 }
 fig {
     type plane
     center 0,-200,700
-    normal 0,5,-1
+    center2 0,5,-1
     color 0xAADA64
     shine -1
-    refl 0
+    refl 0%
 }
 light {
     type ambient
-    intensity 20
+    intensity 20%
 }
 light {
     type point
-    intensity 50
+    intensity 50%
     pos -350,350,700
 }
 light {
     type dir
-    intensity 30
+    intensity 30%
     dir -1,-2,0
 }

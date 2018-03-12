@@ -41,10 +41,10 @@ double		get_plane_intersection(t_fig *fig, t_ray ray)
 	double	denom;
 	double	t;
 
-	denom = vscal(fig->normal, ray.D);
+	denom = vscal(fig->center2, ray.D);
 	if (denom >= 0.0)
 		return (INFINITY);
-	t = vscal(vdiff(fig->center, ray.O), fig->normal) / denom;
+	t = vscal(vdiff(fig->center, ray.O), fig->center2) / denom;
 	if (t >= ray.t_min && t <= ray.t_max)
 		return (t);
 	return (INFINITY);
@@ -115,7 +115,7 @@ t_vector	get_normal(t_vector P, t_fig *fig)
 	if (!ft_strcmp(fig->type, "cone"))
 		return (get_cone_normal(fig->center, fig->center2, fig->rad, fig->rad2, P));
 	if (!ft_strcmp(fig->type, "plane"))
-		return (fig->normal);
+		return (fig->center2);
 	return ((t_vector){0, 0, 0});
 }
 
@@ -142,6 +142,12 @@ int		trace_ray(t_env *env, t_ray ray, int depth)
 	refl_color = trace_ray(env, (t_ray){P, R, 0.001, INFINITY}, depth - 1);
 	return (change_brightness(local_color, 1.0 - closest_fig->refl) +
 		change_brightness(refl_color, closest_fig->refl));
+}
+
+void	redraw_scene(t_env *env)
+{
+	mlx_clear_window(env->mlx, env->window);
+	draw_scene(env);
 }
 
 void	draw_scene(t_env *env)

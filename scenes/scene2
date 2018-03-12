@@ -54,7 +54,7 @@ fig {
 fig {
     type plane
     center 0,-200,700
-    normal 0,5,-1
+    center2 0,5,-1
     color 0xAADA64
     shine 1
     refl 0
