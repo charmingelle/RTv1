@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 18:24:54 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/13 13:31:07 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/13 13:49:07 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,17 @@
 
 t_vector	vsum(t_vector A, t_vector B)
 {
-	t_vector	sum;
-
-	sum.x = A.x + B.x;
-	sum.y = A.y + B.y;
-	sum.z = A.z + B.z;
-	return (sum);
+	return ((t_vector){A.x + B.x, A.y + B.y, A.z + B.z});
 }
 
 t_vector	vdiff(t_vector A, t_vector B)
 {
-	t_vector	diff;
-
-	diff.x = A.x - B.x;
-	diff.y = A.y - B.y;
-	diff.z = A.z - B.z;
-	return (diff);
+	return ((t_vector){A.x - B.x, A.y - B.y, A.z - B.z});
 }
 
 t_vector	vmult(double num, t_vector A)
 {
-	t_vector	mult;
-
-	mult.x = num * A.x;
-	mult.y = num * A.y;
-	mult.z = num * A.z;
-	return (mult);
+	return ((t_vector){num * A.x, num * A.y, num * A.z});
 }
 
 double		vscal(t_vector A, t_vector B)
@@ -59,14 +44,10 @@ double		vlen(t_vector A)
 
 t_vector	vort(t_vector A)
 {
-	t_vector	ort;
 	double		len;
 
 	len = vlen(A);
-	ort.x = A.x / len;
-	ort.y = A.y / len;
-	ort.z = A.z / len;
-	return (ort);
+	return ((t_vector){A.x / len, A.y / len, A.z / len});
 }
 
 t_vector	vmid(t_vector A, t_vector B)
@@ -79,7 +60,7 @@ t_vector	vrefl(t_vector L, t_vector N)
 	return (vdiff(vmult(2 * vscal(N, L), N), L));
 }
 
-t_vector	vrotate(t_vector A, t_env *env)
+t_vector	vrot(t_vector A, t_env *env)
 {
 	t_vector	B;
 	t_vector	C;

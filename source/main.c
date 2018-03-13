@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/13 13:37:00 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/13 13:49:07 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,7 @@
 
 t_vector	get_canvas_vect(t_env *env, int x, int y)
 {
-	t_vector	D;
-
-	D.x = x - env->width / 2;
-	D.y = env->height / 2 - y;
-	D.z = env->distance;
-	return (D);
+	return (vrot((t_vector){x - env->width / 2, env->height / 2 - y, env->distance}, env));
 }
 
 double		get_sphere_intersection(t_fig *fig, t_ray ray)
@@ -156,7 +151,6 @@ void	draw_scene(t_env *env)
 	int			y;
 	int			color;
 	t_vector	D;
-	t_vector	rot_D;
 
 	x = -1;
 	while (++x < env->width)
@@ -165,8 +159,7 @@ void	draw_scene(t_env *env)
 		while (++y < env->height)
 		{
 			D = get_canvas_vect(env, x, y);
-			rot_D = vrotate(D, env);
-			color = trace_ray(env, (t_ray){env->camera, rot_D, 1.0, INFINITY}, DEPTH);
+			color = trace_ray(env, (t_ray){env->camera, D, 1.0, INFINITY}, DEPTH);
 			mlx_pixel_put(env->mlx, env->window, x, y, color);
 		}
 	}
