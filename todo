@@ -1,4 +1,3 @@
 - Return flags to Makefile
 - Check if cone normal is correct
 - Find out where the shadows visible when camera.z < 0 come from
-- Limit cylinder and cone

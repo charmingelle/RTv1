@@ -14,10 +14,10 @@ fig {
 }
 fig {
     type cone
-    center 200,0,1000
-    center2 200,200,1000
+    center 200,-350,1000
+    center2 200,350,1000
     rad 100
-    rad2 50
+    rad2 0
     color 0x00FF00
 }
 light {

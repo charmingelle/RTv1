@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:05 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/13 13:49:07 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/13 16:06:08 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int			show_invalid_light_error();
 int			show_invalid_fig_error();
 
 double		get_quadratic_solution(double a, double b, double c, t_ray ray);
+double		get_lim_solution(double t, t_ray ray, t_fig *fig, t_vector va);
 double		get_rad(int degree);
 int			read_color(char *s);
 int			count_elems(char **array);

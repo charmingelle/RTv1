@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cone.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/02/24 20:33:11 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/13 16:06:20 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,39 @@ static double	get_c(double angle, t_vector delta, double delta_scal_va, t_vector
 		- pow(sin(angle), 2) * pow(delta_scal_va, 2));
 }
 
+double			get_cone_intersection(t_fig *fig, t_ray ray)
+{
+	t_vector	pa;
+	t_vector	va;
+	double		angle;
+	t_vector	delta;
+	double		V_scal_va;
+	double		delta_scal_va;
+
+	pa = vsum(fig->center,
+			vmult(fig->rad / (fig->rad - fig->rad2),
+				vdiff(fig->center2, fig->center)));
+	va = vort(vdiff(fig->center2, fig->center));
+	angle = atan((fig->rad - fig->rad2) / (vlen(vdiff(fig->center2, fig->center))));
+	delta = vdiff(ray.O, pa);
+	V_scal_va = vscal(ray.D, va);
+	delta_scal_va = vscal(delta, va);
+	return (get_lim_solution(
+				get_quadratic_solution(
+					get_a(angle, ray.D, V_scal_va, va),
+					get_b(angle, ray.D, V_scal_va, va, delta, delta_scal_va),
+					get_c(angle, delta, delta_scal_va, va),
+					ray
+				),
+				ray,
+				fig,
+				va
+			));
+	// return (get_quadratic_solution(get_a(angle, ray.D, V_scal_va, va),
+	// 	get_b(angle, ray.D, V_scal_va, va, delta, delta_scal_va),
+	// 	get_c(angle, delta, delta_scal_va, va), ray));
+}
+
 // t_t1t2			*get_cone_intersections(t_fig *fig, t_vector O, t_vector D)
 // {
 // 	t_vector	pa;
@@ -51,28 +84,6 @@ static double	get_c(double angle, t_vector delta, double delta_scal_va, t_vector
 // 		get_b(angle, D, V_scal_va, va, delta, delta_scal_va),
 // 		get_c(angle, delta, delta_scal_va, va)));
 // }
-
-double			get_cone_intersection(t_fig *fig, t_ray ray)
-{
-	t_vector	pa;
-	t_vector	va;
-	double		angle;
-	t_vector	delta;
-	double		V_scal_va;
-	double		delta_scal_va;
-
-	pa = vsum(fig->center,
-			vmult(fig->rad / (fig->rad - fig->rad2),
-				vdiff(fig->center2, fig->center)));
-	va = vort(vdiff(fig->center2, fig->center));
-	angle = atan((fig->rad - fig->rad2) / (vlen(vdiff(fig->center2, fig->center))));
-	delta = vdiff(ray.O, pa);
-	V_scal_va = vscal(ray.D, va);
-	delta_scal_va = vscal(delta, va);
-	return (get_quadratic_solution(get_a(angle, ray.D, V_scal_va, va),
-		get_b(angle, ray.D, V_scal_va, va, delta, delta_scal_va),
-		get_c(angle, delta, delta_scal_va, va), ray));
-}
 
 // t_t1t2			*filter_solutions(t_t1t2 *sol, t_vector va, t_vector P, t_vector V, t_fig *fig)
 // {

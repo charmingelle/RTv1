@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/13 15:38:56 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/13 16:05:33 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,6 @@ static double	get_c(t_vector delta, double delta_scal_va, t_vector va, double ra
 {
 	return (vscal(vdiff(delta, vmult(delta_scal_va, va)),
 		vdiff(delta, vmult(delta_scal_va, va))) - pow(rad, 2));
-}
-
-double			get_lim_solution(double t, t_ray ray, t_fig *fig, t_vector va)
-{
-	t_vector	Q;
-
-	if (t == INFINITY)
-		return (INFINITY);
-	Q = vsum(ray.O, vmult(t, ray.D));
-	if (vscal(va, vdiff(Q, fig->center)) > 0.0 && vscal(va, vdiff(Q, fig->center2)) < 0.0)
-		return (t);
-	return (INFINITY);
 }
 
 double			get_cyl_intersection(t_fig *fig, t_ray ray)
