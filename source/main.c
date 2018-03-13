@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/13 15:27:36 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/13 20:44:01 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,21 +84,19 @@ t_vector	get_cyl_normal(t_vector C1, t_vector C2, t_vector P)
 
 	axis = vdiff(C2, C1);
 	C1_minus_P = vdiff(C1, P);
-	return (vdiff(vmult(vscal(C1_minus_P, axis) / vsquare(axis), axis), C1_minus_P));
+	return (vort(vdiff(vmult(vscal(C1_minus_P, axis) / vsquare(axis), axis), C1_minus_P)));
 }
 
 t_vector	get_cone_normal(t_vector C1, t_vector C2, double rad, double rad2, t_vector P)
 {
+	t_vector	cyl_normal;
 	t_vector	G1;
 	t_vector	G2;
-	t_vector	gener;
-	t_vector	G1_minus_P;
 
-	G1 = vsum(C1, (t_vector){rad, 0.0, 0.0});
-	G2 = vsum(C2, (t_vector){rad2, 0.0, 0.0});
-	gener = vdiff(G2, G1);
-	G1_minus_P = vdiff(G1, P);
-	return (vdiff(vmult(vscal(G1_minus_P, gener) / vsquare(gener), gener), G1_minus_P));
+	cyl_normal = get_cyl_normal(C1, C2, P);
+	G1 = vsum(C1, vmult(rad, cyl_normal));
+	G2 = vsum(C2, vmult(rad2, cyl_normal));
+	return (get_cyl_normal(G1, G2, P));
 }
 
 t_vector	get_normal(t_vector P, t_fig *fig)
@@ -110,7 +108,7 @@ t_vector	get_normal(t_vector P, t_fig *fig)
 	if (!ft_strcmp(fig->type, "cone"))
 		return (get_cone_normal(fig->center, fig->center2, fig->rad, fig->rad2, P));
 	if (!ft_strcmp(fig->type, "plane"))
-		return (fig->center2);
+		return (vort(fig->center2));
 	return ((t_vector){0, 0, 0});
 }
 

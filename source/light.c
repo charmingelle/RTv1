@@ -6,13 +6,13 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 13:38:52 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/13 17:59:31 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/13 18:05:04 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int		is_in_point_shadow(t_vector P, t_vector L, t_fig *fig)
+static int		is_in_point_shadow(t_vector P, t_vector L, t_fig *fig)
 {
 	double	closest_t;
 
@@ -22,7 +22,7 @@ int		is_in_point_shadow(t_vector P, t_vector L, t_fig *fig)
 	return (0);
 }
 
-int		is_in_dir_shadow(t_vector P, t_vector L, t_fig *fig)
+static int		is_in_dir_shadow(t_vector P, t_vector L, t_fig *fig)
 {
 	double	closest_t;
 
@@ -32,7 +32,7 @@ int		is_in_dir_shadow(t_vector P, t_vector L, t_fig *fig)
 	return (0);
 }
 
-double	get_shine(t_vector P, t_vector N, t_vector L)
+static double	get_shine(t_vector P, t_vector N, t_vector L)
 {
 	t_vector	R;
 	t_vector	V;
@@ -46,7 +46,7 @@ double	get_shine(t_vector P, t_vector N, t_vector L)
 	return (0.0);
 }
 
-double	get_point_light(t_vector P, t_vector N, t_light *light, t_fig *fig, t_fig *fig_list)
+static double	get_point_light(t_vector P, t_vector N, t_light *light, t_fig *fig, t_fig *fig_list)
 {
 	t_vector	L;
 	double		N_scal_L;
@@ -68,7 +68,7 @@ double	get_point_light(t_vector P, t_vector N, t_light *light, t_fig *fig, t_fig
 	return (0.0);
 }
 
-double	get_dir_light(t_vector P, t_vector N, t_light *light, t_fig *fig, t_fig *fig_list)
+static double	get_dir_light(t_vector P, t_vector N, t_light *light, t_fig *fig, t_fig *fig_list)
 {
 	t_vector	L;
 	double		closest_t;
@@ -92,7 +92,7 @@ double	get_dir_light(t_vector P, t_vector N, t_light *light, t_fig *fig, t_fig *
 	return (0.0);
 }
 
-double	get_light(t_vector P, t_vector N, t_fig *fig, t_env *env)
+double			get_light(t_vector P, t_vector N, t_fig *fig, t_env *env)
 {
 	double	total_light;
 	t_light	*light;

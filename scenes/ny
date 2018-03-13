@@ -25,7 +25,7 @@ fig {
 fig {
     type cylinder
     center -300,-350,1300
-    center2 -300,350,1300
+    center2 -300,355,1300
     rad 20
     color 0xC0A853
     shine 1
