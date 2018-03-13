@@ -6,13 +6,23 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 13:38:52 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/06 18:42:52 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/13 17:59:31 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int		is_in_shadow(t_vector P, t_vector L, t_fig *fig)
+int		is_in_point_shadow(t_vector P, t_vector L, t_fig *fig)
+{
+	double	closest_t;
+
+	closest_t = INFINITY;
+	if (get_closest_fig((t_ray){P, L, 0.001, 1.0}, fig, &closest_t) != NULL)
+		return (1);
+	return (0);
+}
+
+int		is_in_dir_shadow(t_vector P, t_vector L, t_fig *fig)
 {
 	double	closest_t;
 
@@ -43,7 +53,7 @@ double	get_point_light(t_vector P, t_vector N, t_light *light, t_fig *fig, t_fig
 	double		point_light;
 
 	L = vort(vdiff(light->pos, P));
-	if (is_in_shadow(P, L, fig_list))
+	if (is_in_point_shadow(P, vdiff(light->pos, P), fig_list))
 		return (0.0);
 	N_scal_L = vscal(N, L);
 	if (N_scal_L > 0.0)
@@ -67,7 +77,7 @@ double	get_dir_light(t_vector P, t_vector N, t_light *light, t_fig *fig, t_fig *
 
 	L = vort(vmult(-1, light->dir));
 	closest_t = INFINITY;
-	if (is_in_shadow(P, L, fig_list))
+	if (is_in_dir_shadow(P, L, fig_list))
 		return (0.0);
 	N_scal_L = vscal(N, L);
 	if (N_scal_L > 0.0)

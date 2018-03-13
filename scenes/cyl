@@ -5,24 +5,24 @@ fig {
     color 0xFFFFFF
 }
 fig {
-    type cone
+    type cylinder
     center 0,-350,1000
     center2 0,350,1000
     rad 100
-    rad2 0
-    color 0x00FF00
+    rad2 100
+    color 0xFF0000
 }
 light {
     type ambient
     intensity 20
 }
 light {
-    type point
-    intensity 50
-    pos -350,350,800
-}
-light {
     type dir
     intensity 30
     dir 1,-1,0
+}
+light {
+    type point
+    intensity 50
+    pos -350,350,800
 }
