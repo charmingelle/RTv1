@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 18:24:54 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/06 18:40:06 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/13 13:31:07 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,30 +78,6 @@ t_vector	vrefl(t_vector L, t_vector N)
 {
 	return (vdiff(vmult(2 * vscal(N, L), N), L));
 }
-
-// t_vector	vrotate(t_vector A, t_env *env)
-// {
-// 	t_vector	B;
-// 	t_vector	C;
-// 	t_vector	D;
-
-// 	B.x = A.x;
-// 	B.y = A.y * cos(get_rad(env->angle.x))
-// 		+ A.z * sin(get_rad(env->angle.x));
-// 	B.z = A.z * cos(get_rad(env->angle.x))
-// 		- A.y * sin(get_rad(env->angle.x));
-// 	C.x = B.x * cos(get_rad(env->angle.y))
-// 		- B.z * sin(get_rad(env->angle.y));
-// 	C.y = B.y;
-// 	C.z = B.z * cos(get_rad(env->angle.y))
-// 		+ B.x * sin(get_rad(env->angle.y));
-// 	D.x = C.x * cos(get_rad(env->angle.z))
-// 		+ C.y * sin(get_rad(env->angle.z));
-// 	D.y = C.y * cos(get_rad(env->angle.z))
-// 		- C.x * sin(get_rad(env->angle.z));
-// 	D.z = C.z;
-// 	return (D);
-// }
 
 t_vector	vrotate(t_vector A, t_env *env)
 {

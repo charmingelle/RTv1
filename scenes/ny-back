@@ -1,0 +1,74 @@
+size 700
+camera 0,0,2500
+angle 0,180,0
+fig {
+    type sphere
+    center -150,-250,850
+    rad 100
+    color 0xB80F0A
+    shine 10
+}
+fig {
+    type sphere
+    center 150,-200,950
+    rad 150
+    color 0xD21F3C
+    shine 10
+}
+fig {
+    type sphere
+    center 0,-200,1300
+    rad 150
+    color 0xB22222
+    shine 10
+}
+fig {
+    type cylinder
+    center -300,0,1300
+    center2 -300,300,1300
+    rad 20
+    color 0xC0A853
+    shine 1
+}
+fig {
+    type sphere
+    center -300,600,1300
+    rad 250
+    color 0xC0A853
+    shine 3
+}
+fig {
+    type sphere
+    center -300,-550,1300
+    rad 250
+    color 0xC0A853
+    shine 1
+}
+fig {
+    type plane
+    center 0,-350,0
+    center2 0,1,0
+    color 0xAADA64
+    shine 10
+}
+fig {
+    type plane
+    center 0,0,3000
+    center2 0,0,-1
+    color 0xAADA64
+    shine 1
+}
+light {
+    type ambient
+    intensity 20
+}
+light {
+    type point
+    intensity 50
+    pos -350,350,700
+}
+light {
+    type dir
+    intensity 30
+    dir -1,-2,0
+}

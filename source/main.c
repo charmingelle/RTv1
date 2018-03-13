@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/06 19:54:00 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/13 13:37:00 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,14 +154,10 @@ void	draw_scene(t_env *env)
 {
 	int			x;
 	int			y;
-	t_vector	D;
 	int			color;
-	t_vector	direction;
+	t_vector	D;
+	t_vector	rot_D;
 
-	direction = vrotate((t_vector){0, 0, 1}, env);
-	env->camera.x = direction.x * env->camera.x;
-	env->camera.y = direction.y * env->camera.y;
-	env->camera.z = direction.z * env->camera.z;
 	x = -1;
 	while (++x < env->width)
 	{
@@ -169,7 +165,8 @@ void	draw_scene(t_env *env)
 		while (++y < env->height)
 		{
 			D = get_canvas_vect(env, x, y);
-			color = trace_ray(env, (t_ray){env->camera, vsum(env->camera, vrotate(D, env)), 1.0, INFINITY}, DEPTH);
+			rot_D = vrotate(D, env);
+			color = trace_ray(env, (t_ray){env->camera, rot_D, 1.0, INFINITY}, DEPTH);
 			mlx_pixel_put(env->mlx, env->window, x, y, color);
 		}
 	}
