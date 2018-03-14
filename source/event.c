@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 15:06:53 by grevenko          #+#    #+#             */
-/*   Updated: 2018/02/07 15:21:16 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/14 16:56:45 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ int	handle_keypress(int keycode, t_env *env)
 		mlx_destroy_window(env->mlx, env->window);
 		exit(0);
 	}
-	redraw = 1;
-	keycode == UP && (redraw = 1) ? env->camera.y += 10.0 : 0;
-	keycode == DOWN && (redraw = 1) ? env->camera.y -= 10.0 : 0;
-	keycode == LEFT && (redraw = 1) ? env->camera.x -= 10.0 : 0;
-	keycode == RIGHT && (redraw = 1) ? env->camera.x += 10.0 : 0;
-	keycode == PLUS && (redraw = 1) ? env->camera.z += 10.0 : 0;
-	keycode == MINUS && (redraw = 1) ? env->camera.z -= 10.0 : 0;
-	keycode == SS && (redraw = 1) ? env->angle.x = ((int)env->angle.x - 5) % 360 : 0;
-	keycode == WW && (redraw = 1) ? env->angle.x = ((int)env->angle.x + 5) % 360 : 0;
-	keycode == AA && (redraw = 1) ? env->angle.y = ((int)env->angle.y + 5) % 360 : 0;
-	keycode == DD && (redraw = 1) ? env->angle.y = ((int)env->angle.y - 5) % 360 : 0;
-	keycode == QQ && (redraw = 1) ? env->angle.z = ((int)env->angle.z - 5) % 360 : 0;
-	keycode == EE && (redraw = 1) ? env->angle.z = ((int)env->angle.z + 5) % 360 : 0;
+	redraw = 0;
+	keycode == UP && ++redraw ? env->camera.y += 10.0 : 0;
+	keycode == DOWN && ++redraw ? env->camera.y -= 10.0 : 0;
+	keycode == LEFT && ++redraw ? env->camera.x -= 10.0 : 0;
+	keycode == RIGHT && ++redraw ? env->camera.x += 10.0 : 0;
+	keycode == PLUS && ++redraw ? env->camera.z += 10.0 : 0;
+	keycode == MINUS && ++redraw ? env->camera.z -= 10.0 : 0;
+	keycode == S && ++redraw ? env->angle.x = ((int)env->angle.x - 5) % 360 : 0;
+	keycode == W && ++redraw ? env->angle.x = ((int)env->angle.x + 5) % 360 : 0;
+	keycode == A && ++redraw ? env->angle.y = ((int)env->angle.y + 5) % 360 : 0;
+	keycode == D && ++redraw ? env->angle.y = ((int)env->angle.y - 5) % 360 : 0;
+	keycode == Q && ++redraw ? env->angle.z = ((int)env->angle.z - 5) % 360 : 0;
+	keycode == E && ++redraw ? env->angle.z = ((int)env->angle.z + 5) % 360 : 0;
 	redraw ? redraw_scene(env) : 0;
 	return (0);
 }

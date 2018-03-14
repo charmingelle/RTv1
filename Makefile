@@ -6,7 +6,7 @@
 #    By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/01 19:56:59 by grevenko          #+#    #+#              #
-#    Updated: 2018/03/06 18:22:05 by grevenko         ###   ########.fr        #
+#    Updated: 2018/03/14 18:00:43 by grevenko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCDIR		=	source
 
 INCDIR		=	includes
 
-SRC			=	color.c cone.c cylinder.c error.c event.c light.c main.c reading.c utils.c vector.c
+SRC			=	color.c cone.c cylinder.c error.c error2.c event.c light.c main.c plane.c ray_tracing.c read_fig.c read_light.c read_utils.c read.c sphere.c utils.c vector.c vector2.c
 
 HEADERS		=	$(addprefix $(INCDIR)/, header.h)
 
