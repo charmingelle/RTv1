@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/14 17:20:23 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/14 19:06:47 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ int				trace_ray(t_env *env, t_ray ray, int depth)
 {
 	t_fig		*closest_fig;
 	double		closest_t;
-	t_vector	p;
-	t_vector	n;
 	int			local_color;
 	t_vector	r;
 	int			refl_color;
@@ -74,13 +72,13 @@ int				trace_ray(t_env *env, t_ray ray, int depth)
 	closest_fig = get_closest_fig(ray, env->fig, &closest_t);
 	if (closest_fig == NULL)
 		return (env->color);
-	p = vsum(ray.o, vmult(closest_t, ray.d));
-	n = get_normal(p, closest_fig);
-	local_color = get_fig_point_color(closest_fig, p, n, env);
+	ray.p = vsum(ray.o, vmult(closest_t, ray.d));
+	ray.n = get_normal(ray.p, closest_fig);
+	local_color = get_fig_point_color(closest_fig, ray, env);
 	if (depth <= 0 || closest_fig->refl == 0.0)
 		return (local_color);
-	r = vrefl(vmult(-1, ray.d), n);
-	refl_color = trace_ray(env, (t_ray){p, r, 0.001, INFINITY}, depth - 1);
+	r = vrefl(vmult(-1, ray.d), ray.n);
+	refl_color = trace_ray(env, (t_ray){ray.p, r, (t_vector){0.0, 0.0, 0.0}, (t_vector){0.0, 0.0, 0.0}, 0.001, INFINITY}, depth - 1);
 	return (change_brightness(local_color, 1.0 - closest_fig->refl) +
 			change_brightness(refl_color, closest_fig->refl));
 }

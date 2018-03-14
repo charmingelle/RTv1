@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:05 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/14 18:43:27 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/14 19:03:02 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef	struct	s_ray
 {
 	t_vector	o;
 	t_vector	d;
+	t_vector	p;
+	t_vector	n;
 	double		t_min;
 	double		t_max;
 }				t_ray;
@@ -110,11 +112,10 @@ t_vector		vmid(t_vector a, t_vector b);
 t_vector		vrefl(t_vector l, t_vector n);
 t_vector		vrot(t_vector a, t_env *env);
 
-double			get_light(t_vector p, t_vector n, t_fig *fig, t_env *env);
+double			get_light(t_ray ray, t_fig *fig, t_env *env);
 
 int				change_brightness(int color, double coef);
-int				get_fig_point_color(t_fig *fig, t_vector p, t_vector n,
-	t_env *env);
+int				get_fig_point_color(t_fig *fig, t_ray ray, t_env *env);
 
 t_fig			*get_closest_fig(t_ray ray, t_fig *fig, double *closest_t);
 int				trace_ray(t_env *env, t_ray ray, int depth);

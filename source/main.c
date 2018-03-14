@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/14 16:58:51 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/14 19:03:46 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void		draw_scene(t_env *env)
 	int			x;
 	int			y;
 	int			color;
-	t_vector	d;
+	t_ray		ray;
 
 	x = -1;
 	while (++x < env->size)
@@ -31,9 +31,13 @@ static void		draw_scene(t_env *env)
 		y = -1;
 		while (++y < env->size)
 		{
-			d = get_canvas_vect(env, x, y);
-			color = trace_ray(env, (t_ray){env->camera, d, 0.0, INFINITY},
-				DEPTH);
+			ray.o = env->camera;
+			ray.d = get_canvas_vect(env, x, y);
+			ray.p = (t_vector){0.0, 0.0, 0.0};
+			ray.n = (t_vector){0.0, 0.0, 0.0};
+			ray.t_min = 0.0;
+			ray.t_max = INFINITY;
+			color = trace_ray(env, ray, DEPTH);
 			mlx_pixel_put(env->mlx, env->window, x, y, color);
 		}
 	}
