@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 18:24:54 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/14 16:22:02 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/15 14:15:11 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ double		vscal(t_vector a, t_vector b)
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }
 
-double		vsquare(t_vector a)
+double		vsq(t_vector a)
 {
 	return (vscal(a, a));
 }

@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:05 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/14 19:03:02 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/15 14:15:11 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ t_vector		vsum(t_vector a, t_vector b);
 t_vector		vdiff(t_vector a, t_vector b);
 t_vector		vmult(double num, t_vector a);
 double			vscal(t_vector a, t_vector b);
-double			vsquare(t_vector a);
+double			vsq(t_vector a);
 double			vlen(t_vector a);
 t_vector		vort(t_vector a);
 t_vector		vmid(t_vector a, t_vector b);
@@ -125,8 +125,7 @@ double			get_sphere_intersection(t_fig *fig, t_ray ray);
 double			get_cyl_intersection(t_fig *fig, t_ray ray);
 double			get_cone_intersection(t_fig *fig, t_ray ray);
 t_vector		get_cyl_normal(t_vector c1, t_vector c2, t_vector p);
-t_vector		get_cone_normal(t_vector c1, t_vector c2,
-	double rad, double rad2, t_vector p);
+t_vector		get_cone_normal(t_fig *fig, t_vector p);
 
 void			redraw_scene(t_env *env);
 

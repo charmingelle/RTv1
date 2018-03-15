@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 13:38:52 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/14 19:48:41 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/15 13:52:55 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ static int		is_in_shadow(t_vector p, t_vector l, t_fig *fig, double limit)
 	double	closest_t;
 
 	closest_t = INFINITY;
-	if (get_closest_fig((t_ray){p, l, (t_vector){0.0, 0.0, 0.0}, (t_vector){0.0, 0.0, 0.0}, 0.001, limit}, fig, &closest_t) != NULL)
+	if (get_closest_fig((t_ray){p, l, (t_vector){0.0, 0.0, 0.0},
+		(t_vector){0.0, 0.0, 0.0}, 0.001, limit}, fig, &closest_t) != NULL)
 		return (1);
 	return (0);
 }
@@ -36,7 +37,8 @@ static double	get_shine(t_vector p, t_vector n, t_vector l)
 	return (0.0);
 }
 
-static double	get_point_light(t_ray ray, t_light *light, t_fig *fig, t_fig *fig_list)
+static double	get_point_light(t_ray ray, t_light *light,
+	t_fig *fig, t_fig *fig_list)
 {
 	t_vector	l;
 	double		n_scal_minus_d;
@@ -61,7 +63,8 @@ static double	get_point_light(t_ray ray, t_light *light, t_fig *fig, t_fig *fig_
 	return (0.0);
 }
 
-static double	get_dir_light(t_ray ray, t_light *light, t_fig *fig, t_fig *fig_list)
+static double	get_dir_light(t_ray ray, t_light *light,
+	t_fig *fig, t_fig *fig_list)
 {
 	t_vector	l;
 	double		n_scal_minus_d;
@@ -79,7 +82,8 @@ static double	get_dir_light(t_ray ray, t_light *light, t_fig *fig, t_fig *fig_li
 		if (dir_light > light->intensity)
 			dir_light = light->intensity;
 		if (fig->shine > 0)
-			dir_light += light->intensity * pow(get_shine(ray.p, ray.n, l), fig->shine);
+			dir_light += light->intensity
+				* pow(get_shine(ray.p, ray.n, l), fig->shine);
 		return (dir_light);
 	}
 	return (0.0);

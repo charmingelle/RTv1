@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/14 19:06:47 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/15 14:07:10 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ static t_vector	get_normal(t_vector p, t_fig *fig)
 	if (!ft_strcmp(fig->type, "cylinder"))
 		return (get_cyl_normal(fig->center, fig->center2, p));
 	if (!ft_strcmp(fig->type, "cone"))
-	{
-		return (get_cone_normal(fig->center, fig->center2,
-			fig->rad, fig->rad2, p));
-	}
+		return (get_cone_normal(fig, p));
 	if (!ft_strcmp(fig->type, "plane"))
 		return (vort(fig->center2));
 	return ((t_vector){0, 0, 0});
@@ -78,7 +75,9 @@ int				trace_ray(t_env *env, t_ray ray, int depth)
 	if (depth <= 0 || closest_fig->refl == 0.0)
 		return (local_color);
 	r = vrefl(vmult(-1, ray.d), ray.n);
-	refl_color = trace_ray(env, (t_ray){ray.p, r, (t_vector){0.0, 0.0, 0.0}, (t_vector){0.0, 0.0, 0.0}, 0.001, INFINITY}, depth - 1);
+	refl_color = trace_ray(env,
+		(t_ray){ray.p, r, (t_vector){0.0, 0.0, 0.0},
+		(t_vector){0.0, 0.0, 0.0}, 0.001, INFINITY}, depth - 1);
 	return (change_brightness(local_color, 1.0 - closest_fig->refl) +
 			change_brightness(refl_color, closest_fig->refl));
 }
