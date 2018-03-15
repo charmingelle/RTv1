@@ -1,0 +1,45 @@
+fig {
+    type sphere
+    center -300,-180,1100
+    rad 170
+    color 0x679327
+    shine 1
+}
+fig {
+    type cylinder
+    center 0,-350,1500
+    center2 0,350,1500
+    rad 150
+    color 0xD8C077
+    shine 10
+}
+fig {
+    type cone
+    center 300,-350,1100
+    center2 300,350,1100
+    rad 150
+    rad2 0
+    color 0x00FF00
+    shine 100
+}
+fig {
+    type plane
+    center 0,-350,0
+    center2 0,1,0
+    color 0xAADA64
+    shine 1000
+}
+light {
+    type ambient
+    intensity 20%
+}
+light {
+    type point
+    intensity 50%
+    pos -350,350,700
+}
+light {
+    type dir
+    intensity 30%
+    dir -1,-2,1
+}

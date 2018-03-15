@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/15 14:24:00 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/15 20:03:24 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ double		get_cone_intersection(t_fig *fig, t_ray ray)
 	delta = vdiff(ray.o,
 		vsum(fig->center, vmult(fig->rad / (fig->rad - fig->rad2),
 			vdiff(fig->center2, fig->center))));
+	delta = vdiff(ray.o, fig->center2);
 	v_va = vscal(ray.d, va);
 	delta_va = vscal(delta, va);
 	return (get_lim_solution(
@@ -43,14 +44,15 @@ double		get_cone_intersection(t_fig *fig, t_ray ray)
 
 t_vector	get_cone_normal(t_fig *fig, t_vector p)
 {
-	t_vector	cyl_normal;
-	t_vector	g1;
-	t_vector	g2;
+	// t_vector	cyl_normal;
+	// t_vector	g1;
+	// t_vector	g2;
 
-	cyl_normal = get_cyl_normal(fig->center, fig->center2, p);
-	g1 = vsum(fig->center, vmult(fig->rad, cyl_normal));
-	g2 = vsum(fig->center2, vmult(fig->rad2, cyl_normal));
-	return (get_cyl_normal(g1, g2, p));
+	// cyl_normal = get_cyl_normal(fig->center, fig->center2, p);
+	// g1 = vsum(fig->center, vmult(fig->rad, cyl_normal));
+	// g2 = vsum(fig->center2, vmult(fig->rad2, cyl_normal));
+	// return (get_cyl_normal(g1, g2, p));
+	return (get_cyl_normal(fig->center, fig->center2, p));
 }
 
 /*

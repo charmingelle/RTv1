@@ -1,0 +1,9 @@
+fig {
+    type cylinder
+    center 0,-200,0
+    center2 0,100,0
+    rad 150
+    color 0xD8C077
+}
+light {
+}
