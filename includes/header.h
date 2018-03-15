@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:05 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/15 14:15:11 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/15 15:22:05 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "mlx.h"
 # include <math.h>
 # include <stdio.h>
-# include <stdlib.h>
 
 # define ESC 53
 # define UP 126
@@ -32,6 +31,8 @@
 # define D 2
 # define Q 12
 # define E 14
+
+# define WINDOW_CLOSING_EVENT 17
 
 # define DEPTH 3
 

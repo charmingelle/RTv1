@@ -3,4 +3,4 @@
 - Replace figure types with numbers
 - Norminette the code
 - Create beautiful scenes
-- Implement click window closing
+- Remove stdio from header

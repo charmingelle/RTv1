@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 15:06:53 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/14 16:56:45 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/15 15:15:54 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,7 @@ int	handle_keypress(int keycode, t_env *env)
 {
 	int	redraw;
 
-	if (keycode == ESC)
-	{
-		mlx_destroy_window(env->mlx, env->window);
-		exit(0);
-	}
+	keycode == ESC ? exit(0) : 0;
 	redraw = 0;
 	keycode == UP && ++redraw ? env->camera.y += 10.0 : 0;
 	keycode == DOWN && ++redraw ? env->camera.y -= 10.0 : 0;

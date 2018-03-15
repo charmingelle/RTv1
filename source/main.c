@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/14 19:03:46 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/15 15:22:11 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int				main(int amount, char **args)
 		exit(show_file_not_found_error());
 	env = get_env(fd);
 	draw_scene(env);
-	mlx_key_hook(env->window, &handle_keypress, env);
+	mlx_hook(env->window, WINDOW_CLOSING_EVENT, 0, (int (*)())exit, env);
+	mlx_key_hook(env->window, handle_keypress, env);
 	mlx_loop(env->mlx);
 	return (0);
 }
