@@ -1,9 +1,21 @@
 fig {
+    type sphere
+    center -350,350,700
+    rad 100
+    color 0xD8C077
+}
+fig {
     type cylinder
-    center 0,-200,0
-    center2 0,100,0
+    center 0,-200,600
+    center2 0,100,600
     rad 150
     color 0xD8C077
 }
 light {
+    intensity 20
+}
+light {
+    type point
+    intensity 80
+    pos -350,250,700
 }

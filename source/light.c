@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 13:38:52 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/16 16:50:45 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/16 19:39:12 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static double	get_point_light(t_ray ray, t_light *light,
 	if (n_scal_minus_d > 0.0 && n_scal_l > 0.0)
 	if (n_scal_l > 0.0)
 	{
-		if (is_in_shadow(ray.p, vdiff(light->pos, ray.p), fig_list, 1.0))
+		if (is_in_shadow(ray.p, vdiff(light->pos, ray.p), fig_list, 0.99))
 			return (0.0);
 		point_light = light->intensity * n_scal_l;
 		if (point_light > light->intensity)
