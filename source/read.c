@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/14 16:11:45 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/16 20:39:50 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ void		free_split(char **split)
 
 static void	add_prop_to_env(char **split, t_env *env, int fd)
 {
-	if (!ft_strcmp(split[0], "size"))
-		env->size = get_non_negative(ft_atoi(split[1]));
+	if (!ft_strcmp(split[0], "width"))
+		env->width = get_non_negative(ft_atoi(split[1]));
+	else if (!ft_strcmp(split[0], "height"))
+		env->height = get_non_negative(ft_atoi(split[1]));
 	else if (!ft_strcmp(split[0], "camera"))
 		set_vector_value(split[1], &(env->camera));
 	else if (!ft_strcmp(split[0], "angle"))
@@ -61,12 +63,13 @@ t_env		*get_env(int fd)
 	env = (t_env *)malloc(sizeof(t_env));
 	env->mlx = mlx_init();
 	env->camera = (t_vector){0.0, 0.0, 0.0};
-	env->size = 700;
+	env->width = 700;
+	env->height = 700;
 	env->angle = (t_vector){0.0, 0.0, 0.0};
 	env->color = 0;
 	env->fig = NULL;
 	env->light = NULL;
 	read_scene(env, fd);
-	env->window = mlx_new_window(env->mlx, env->size, env->size, "RTv1");
+	env->window = mlx_new_window(env->mlx, env->width, env->height, "RTv1");
 	return (env);
 }

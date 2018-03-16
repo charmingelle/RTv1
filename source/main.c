@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/15 20:38:34 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/16 20:49:41 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 static t_vector	get_canvas_vect(t_env *env, int x, int y)
 {
-	return (vrot((t_vector){x - env->size / 2, env->size / 2 - y, env->size},
+	return (vrot((t_vector){
+			((double)env->width / env->height) * (double)(x - env->width / 2) / env->width,
+			(double)(env->height / 2 - y) / env->height,
+			1},
 		env));
 }
 
@@ -26,16 +29,16 @@ static void		draw_scene(t_env *env)
 	t_ray		ray;
 
 	x = -1;
-	while (++x < env->size)
+	while (++x < env->width)
 	{
 		y = -1;
-		while (++y < env->size)
+		while (++y < env->height)
 		{
 			ray.o = env->camera;
 			ray.d = get_canvas_vect(env, x, y);
 			ray.p = (t_vector){0.0, 0.0, 0.0};
 			ray.n = (t_vector){0.0, 0.0, 0.0};
-			ray.t_min = 0.0;
+			ray.t_min = 1.0;
 			ray.t_max = INFINITY;
 			color = trace_ray(env, ray, DEPTH);
 			mlx_pixel_put(env->mlx, env->window, x, y, color);

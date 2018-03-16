@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:05 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/16 16:36:19 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/16 20:36:48 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ typedef struct	s_env
 	void		*mlx;
 	void		*window;
 	t_vector	camera;
-	int			size;
+	int			width;
+	int			height;
 	t_vector	angle;
 	int			color;
 	t_fig		*fig;
