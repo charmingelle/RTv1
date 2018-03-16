@@ -11,6 +11,7 @@ fig {
     rad 100
     rad2 0
     color 0x00FF00
+    shine 80
 }
 light {
     type ambient

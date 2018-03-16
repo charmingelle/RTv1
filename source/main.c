@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/16 20:49:41 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/16 22:04:56 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 static t_vector	get_canvas_vect(t_env *env, int x, int y)
 {
 	return (vrot((t_vector){
-			((double)env->width / env->height) * (double)(x - env->width / 2) / env->width,
+			((double)env->width / env->height) * (double)(x - env->width / 2)\
+				/ env->width,
 			(double)(env->height / 2 - y) / env->height,
 			1},
 		env));

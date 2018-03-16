@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/16 16:32:54 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/16 22:05:09 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ t_fig			*get_closest_fig(t_ray ray, t_fig *fig, double *closest_t)
 	t_fig	*closest_fig;
 
 	closest_fig = NULL;
-
 	while (fig)
 	{
 		sol = get_intersection(fig, ray);
