@@ -6,13 +6,13 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/15 20:40:40 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/16 16:24:43 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-double		get_cyl_intersection(t_fig *fig, t_ray ray)
+t_sol		get_cyl_intersection(t_fig *fig, t_ray ray)
 {
 	t_vector	va;
 	t_vector	delta;
@@ -30,8 +30,7 @@ double		get_cyl_intersection(t_fig *fig, t_ray ray)
 					2 * vscal(vdiff(ray.d, vmult(d_va, va)),
 						vdiff(delta, vmult(delta_va, va))),
 					vscal(vdiff(delta, vmult(delta_va, va)),
-						vdiff(delta, vmult(delta_va, va))) - pow(fig->rad, 2),
-					ray),
+						vdiff(delta, vmult(delta_va, va))) - pow(fig->rad, 2)),
 				ray, fig, va));
 }
 

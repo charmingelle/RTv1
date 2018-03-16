@@ -6,13 +6,13 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/15 20:03:24 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/16 16:24:35 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-double		get_cone_intersection(t_fig *fig, t_ray ray)
+t_sol		get_cone_intersection(t_fig *fig, t_ray ray)
 {
 	t_vector	va;
 	double		ang;
@@ -37,8 +37,7 @@ double		get_cone_intersection(t_fig *fig, t_ray ray)
 						vdiff(delta, vmult(delta_va, va)))
 						- 2 * pow(sin(ang), 2) * v_va * delta_va,
 					pow(cos(ang), 2) * vsq(vdiff(delta, vmult(delta_va, va)))
-						- pow(sin(ang), 2) * pow(delta_va, 2),
-					ray),
+						- pow(sin(ang), 2) * pow(delta_va, 2)),
 				ray, fig, va));
 }
 

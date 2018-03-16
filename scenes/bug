@@ -1,14 +1,14 @@
 fig {
     type cylinder
-    center -100,-200,1100
-    center2 -300,-280,3000
+    center -300,-200,1100
+    center2 -300,-200,3000
     rad 150
     color 0xD8C077
 }
 fig {
     type cone
-    center 250,0,1100
-    center2 250,0,3000
+    center 270,0,1100
+    center2 270,0,3000
     rad 150
     rad2 0
     color 0x00FF00
@@ -20,4 +20,11 @@ fig {
     color 0xAADA64
 }
 light {
+    type ambient
+    intensity 20
+}
+light {
+    type point
+    intensity 50
+    pos -350,350,700
 }

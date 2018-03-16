@@ -6,7 +6,7 @@
 #    By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/01 19:56:59 by grevenko          #+#    #+#              #
-#    Updated: 2018/03/14 18:00:43 by grevenko         ###   ########.fr        #
+#    Updated: 2018/03/16 16:53:14 by grevenko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME		=	RTv1
 
 CC			=	gcc
 
-CFLAGS		=	
+CFLAGS		=	-Wall -Wextra -Werror
 
 INCFLAGS	=	$(addprefix -I, includes libft minilibx_macos)
 

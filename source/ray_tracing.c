@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/15 14:07:10 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/16 16:32:54 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_vector	get_normal(t_vector p, t_fig *fig)
 	return ((t_vector){0, 0, 0});
 }
 
-static double	get_intersection(t_fig *fig, t_ray ray)
+static t_sol	get_intersection(t_fig *fig, t_ray ray)
 {
 	if (ft_strcmp(fig->type, "sphere") == 0)
 		return (get_sphere_intersection(fig, ray));
@@ -35,21 +35,27 @@ static double	get_intersection(t_fig *fig, t_ray ray)
 		return (get_cone_intersection(fig, ray));
 	if (ft_strcmp(fig->type, "plane") == 0)
 		return (get_plane_intersection(fig, ray));
-	return (INFINITY);
+	return ((t_sol){INFINITY, INFINITY});
 }
 
 t_fig			*get_closest_fig(t_ray ray, t_fig *fig, double *closest_t)
 {
-	double	t;
+	t_sol	sol;
 	t_fig	*closest_fig;
 
 	closest_fig = NULL;
+
 	while (fig)
 	{
-		t = get_intersection(fig, ray);
-		if (t < *closest_t)
+		sol = get_intersection(fig, ray);
+		if (IN_RANGE(sol.t1, ray.t_min, ray.t_max) && sol.t1 < *closest_t)
 		{
-			*closest_t = t;
+			*closest_t = sol.t1;
+			closest_fig = fig;
+		}
+		if (IN_RANGE(sol.t2, ray.t_min, ray.t_max) && sol.t2 < *closest_t)
+		{
+			*closest_t = sol.t2;
 			closest_fig = fig;
 		}
 		fig = fig->next;

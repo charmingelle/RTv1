@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 13:38:52 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/15 13:52:55 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/16 16:50:45 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static double	get_point_light(t_ray ray, t_light *light,
 	n_scal_minus_d = vscal(ray.n, vmult(-1, ray.d));
 	n_scal_l = vscal(ray.n, l);
 	if (n_scal_minus_d > 0.0 && n_scal_l > 0.0)
+	if (n_scal_l > 0.0)
 	{
 		if (is_in_shadow(ray.p, vdiff(light->pos, ray.p), fig_list, 1.0))
 			return (0.0);
@@ -75,6 +76,7 @@ static double	get_dir_light(t_ray ray, t_light *light,
 	n_scal_minus_d = vscal(ray.n, vmult(-1, ray.d));
 	n_scal_l = vscal(ray.n, l);
 	if (n_scal_minus_d > 0.0 && n_scal_l > 0.0)
+	if (n_scal_l > 0.0)
 	{
 		if (is_in_shadow(ray.p, l, fig_list, INFINITY))
 			return (0.0);

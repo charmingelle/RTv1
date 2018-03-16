@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:05 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/15 15:22:05 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/16 16:36:19 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@
 # define MIN(X, Y) (X < Y ? X : Y)
 
 # define IN_RANGE(VALUE, MIN, MAX) (VALUE >= MIN && VALUE <= MAX ? 1 : 0)
+
+typedef struct	s_sol
+{
+	double	t1;
+	double	t2;
+}				t_sol;
 
 typedef struct	s_vector
 {
@@ -121,10 +127,10 @@ int				get_fig_point_color(t_fig *fig, t_ray ray, t_env *env);
 t_fig			*get_closest_fig(t_ray ray, t_fig *fig, double *closest_t);
 int				trace_ray(t_env *env, t_ray ray, int depth);
 
-double			get_plane_intersection(t_fig *fig, t_ray ray);
-double			get_sphere_intersection(t_fig *fig, t_ray ray);
-double			get_cyl_intersection(t_fig *fig, t_ray ray);
-double			get_cone_intersection(t_fig *fig, t_ray ray);
+t_sol			get_plane_intersection(t_fig *fig, t_ray ray);
+t_sol			get_sphere_intersection(t_fig *fig, t_ray ray);
+t_sol			get_cyl_intersection(t_fig *fig, t_ray ray);
+t_sol			get_cone_intersection(t_fig *fig, t_ray ray);
 t_vector		get_cyl_normal(t_vector c1, t_vector c2, t_vector p);
 t_vector		get_cone_normal(t_fig *fig, t_vector p);
 
@@ -140,8 +146,8 @@ int				show_invalid_property_value_error(void);
 int				show_invalid_light_error(void);
 int				show_invalid_fig_error(void);
 
-double			get_quadratic_solution(double a, double b, double c, t_ray ray);
-double			get_lim_solution(double t, t_ray ray, t_fig *fig, t_vector va);
+t_sol			get_quadratic_solution(double a, double b, double c);
+t_sol			get_lim_solution(t_sol sol, t_ray ray, t_fig *fig, t_vector va);
 double			get_rad(int degree);
 
 #endif
