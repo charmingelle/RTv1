@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/16 20:39:50 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/19 15:13:21 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static void	add_prop_to_env(char **split, t_env *env, int fd)
 		set_vector_value(split[1], &(env->camera));
 	else if (!ft_strcmp(split[0], "angle"))
 		set_vector_value(split[1], &(env->angle));
+	else if (!ft_strcmp(split[0], "color"))
+		env->color = read_color(split[1]);
 	else if (!ft_strcmp(split[0], "fig"))
 		add_fig_to_env(env, fd);
 	else if (!ft_strcmp(split[0], "light"))

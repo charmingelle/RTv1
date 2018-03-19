@@ -3,7 +3,7 @@ fig {
     center -300,-180,1100
     rad 170
     color 0x679327
-    refl 10
+    shine 10
 }
 fig {
     type cylinder
@@ -11,7 +11,7 @@ fig {
     center2 0,350,1500
     rad 150
     color 0xD8C077
-    refl 20
+    shine 100
 }
 fig {
     type cone
@@ -20,14 +20,14 @@ fig {
     rad 150
     rad2 0
     color 0x00FF00
-    refl 30
+    shine 100
 }
 fig {
     type plane
     center 0,-350,0
     center2 0,1,0
     color 0xAADA64
-    refl 40
+    shine 100
 }
 light {
     type ambient

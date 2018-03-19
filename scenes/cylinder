@@ -8,8 +8,7 @@ fig {
     type cylinder
     center 0,-350,1000
     center2 0,350,1000
-    rad 100
-    rad2 100
+    rad 200
     color 0xFF0000
 }
 light {

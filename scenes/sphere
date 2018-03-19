@@ -6,8 +6,8 @@ fig {
 }
 fig {
     type sphere
-    center 0,-250,1000
-    rad 100
+    center 0,-150,1000
+    rad 200
     color 0xFF0000
 }
 light {

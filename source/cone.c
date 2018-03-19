@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/16 22:02:12 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/19 15:40:19 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,13 @@ t_sol		get_cone_intersection(t_fig *fig, t_ray ray)
 
 t_vector	get_cone_normal(t_fig *fig, t_vector p)
 {
-	t_vector	c2;
+	t_vector	pa;
 	t_vector	n;
 	t_vector	t;
 
-	c2 = vsum(fig->center, vmult(fig->rad / (fig->rad - fig->rad2),
+	pa = vsum(fig->center, vmult(fig->rad / (fig->rad - fig->rad2),
 			vdiff(fig->center2, fig->center)));
 	n = vdiff(p, fig->center);
-	t = vmult(1.0 / vlen(vdiff(c2, p)), vdiff(c2, p));
-	n = vdiff(n, vmult(vscal(n, t), t));
-	return (vort(n));
+	t = vmult(1.0 / vlen(vdiff(pa, p)), vdiff(pa, p));
+	return (vort(vdiff(n, vmult(vscal(n, t), t))));
 }
