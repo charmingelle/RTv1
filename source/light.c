@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 13:38:52 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/16 22:04:23 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/19 20:36:33 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 static int		is_in_shadow(t_vector p, t_vector l, t_fig *fig, double limit)
 {
-	double	closest_t;
-
-	closest_t = INFINITY;
-	if (get_closest_fig((t_ray){p, l, (t_vector){0.0, 0.0, 0.0},
-		(t_vector){0.0, 0.0, 0.0}, 0.001, limit}, fig, &closest_t) != NULL)
+	if (get_closest_fig(&(t_ray){p, l, (t_vector){0.0, 0.0, 0.0},
+		(t_vector){0.0, 0.0, 0.0}, 0.001, limit}, fig, NULL) != NULL)
 		return (1);
 	return (0);
 }

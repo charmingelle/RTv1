@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:05 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/16 20:36:48 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/19 20:34:43 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct	s_sol
 {
 	double	t1;
 	double	t2;
+	int		inner_coef;
 }				t_sol;
 
 typedef struct	s_vector
@@ -125,7 +126,7 @@ double			get_light(t_ray ray, t_fig *fig, t_env *env);
 int				change_brightness(int color, double coef);
 int				get_fig_point_color(t_fig *fig, t_ray ray, t_env *env);
 
-t_fig			*get_closest_fig(t_ray ray, t_fig *fig, double *closest_t);
+t_fig			*get_closest_fig(t_ray *ray, t_fig *fig, int *inner);
 int				trace_ray(t_env *env, t_ray ray, int depth);
 
 t_sol			get_plane_intersection(t_fig *fig, t_ray ray);
@@ -135,6 +136,7 @@ t_sol			get_cone_intersection(t_fig *fig, t_ray ray);
 t_vector		get_cyl_normal(t_vector c1, t_vector c2, t_vector p);
 t_vector		get_cone_normal(t_fig *fig, t_vector p);
 
+t_vector		get_normal(t_vector p, t_fig *fig);
 void			redraw_scene(t_env *env);
 
 int				show_invalid_color_error(void);

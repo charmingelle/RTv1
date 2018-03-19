@@ -1,0 +1,31 @@
+fig {
+    type plane
+    center 0,-350,0
+    center2 0,1,0
+    color 0xFFFFFF
+}
+fig {
+    type cylinder
+    center 200,-200,700
+    center2 200,330,700
+    rad 30
+    color 0xFF0000
+}
+fig {
+    type cylinder
+    center -200,-200,700
+    center2 -200,250,700
+    rad 30
+    color 0xFF0000
+}
+fig {
+    type cylinder
+    center -350,-320,700
+    center2 300,-320,1200
+    rad 30
+    color 0xFF0000
+}
+light {
+    type ambient
+    intensity 50
+}
