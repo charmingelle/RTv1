@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:05 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/19 20:34:43 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/19 21:55:43 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ double			get_light(t_ray ray, t_fig *fig, t_env *env);
 int				change_brightness(int color, double coef);
 int				get_fig_point_color(t_fig *fig, t_ray ray, t_env *env);
 
-t_fig			*get_closest_fig(t_ray *ray, t_fig *fig, int *inner);
+t_fig			*get_closest_fig(t_ray *ray, t_fig *fig, double *closest_t, int *inner);
 int				trace_ray(t_env *env, t_ray ray, int depth);
 
 t_sol			get_plane_intersection(t_fig *fig, t_ray ray);
