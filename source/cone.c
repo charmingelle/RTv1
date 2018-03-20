@@ -26,7 +26,6 @@ t_sol		get_cone_intersection(t_fig *fig, t_ray ray)
 	delta = vdiff(ray.o,
 		vsum(fig->center, vmult(fig->rad / (fig->rad - fig->rad2),
 			vdiff(fig->center2, fig->center))));
-	delta = vdiff(ray.o, fig->center2);
 	v_va = vscal(ray.d, va);
 	delta_va = vscal(delta, va);
 	return (get_lim_solution(

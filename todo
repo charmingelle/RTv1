@@ -5,5 +5,3 @@
 - Create beautiful scenes
 - Remove stdio from header
 - Check memory leaks
-- Check cone bug with order of parameters
-
