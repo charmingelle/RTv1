@@ -64,10 +64,10 @@ void		add_fig_to_env(t_env *env, int fd)
 
 	fig = (t_fig *)malloc(sizeof(t_fig));
 	fig->type = "sphere";
-	fig->center = (t_vector){0.0, 0.0, 800.0};
-	fig->center2 = (t_vector){0.0, 200.0, 800.0};
-	fig->rad = 100.0;
-	fig->rad2 = 50.0;
+	fig->center = (t_vector){0.0, 0.0, 700.0};
+	fig->center2 = (t_vector){fig->center.x, fig->center.y + 100.0, fig->center.z};
+	fig->rad = 50.0;
+	fig->rad2 = 0.0;
 	fig->color = 0xFFFFFF;
 	fig->shine = 0;
 	fig->refl = 0.0;

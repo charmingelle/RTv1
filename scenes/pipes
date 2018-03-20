@@ -5,51 +5,46 @@ fig {
     color 0xFFFFFF
 }
 fig {
-    type cone
+    type cylinder
     center 0,-300,800
     center2 100,-300,1100
     rad 50
-    rad2 0
     color 0xFF000
     refl 50%
     shine 100
 }
 fig {
-    type cone
+    type cylinder
     center 0,-200,800
     center2 100,-200,1100
     rad 50
-    rad2 0
     color 0xFF000
     refl 50%
     shine 100
 }
 fig {
-    type cone
+    type cylinder
     center 0,-100,800
     center2 100,-100,1100
     rad 50
-    rad2 0
     color 0xFF000
     refl 50%
     shine 100
 }
 fig {
-    type cone
+    type cylinder
     center 0,0,800
     center2 100,0,1100
     rad 50
-    rad2 0
     color 0xFF000
     refl 50%
     shine 100
 }
 fig {
-    type cone
+    type cylinder
     center 0,100,800
     center2 100,100,1100
     rad 50
-    rad2 0
     color 0xFF000
     refl 50%
     shine 100

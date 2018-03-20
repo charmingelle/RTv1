@@ -2,6 +2,7 @@
 - Check if cone normal is correct
 - Replace figure types with numbers
 - Norminette the code
-- Create beautiful scenes
 - Remove stdio from header
 - Check memory leaks
+- Check, which default values are the best
+- Check correction form cases

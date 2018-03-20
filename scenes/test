@@ -1,0 +1,5 @@
+fig {
+    type plane
+}
+light {
+}
