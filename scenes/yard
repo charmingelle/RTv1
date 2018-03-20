@@ -1,0 +1,121 @@
+color 0xCCEDFD
+fig {
+    type cylinder
+    center -250,350,800
+    center2 -250,-350,800
+    rad 10
+    color 0xFF00FF
+}
+fig {
+    type cylinder
+    center 250,350,800
+    center2 250,-350,800
+    rad 10
+    color 0xFF00FF
+}
+fig {
+    type cylinder
+    center -250,300,800
+    center2 250,300,800
+    rad 5
+    color 0xFF00FF
+}
+fig {
+    type cylinder
+    center -250,200,800
+    center2 250,200,800
+    rad 5
+    color 0xFF00FF
+}
+fig {
+    type cylinder
+    center -250,100,800
+    center2 250,100,800
+    rad 5
+    color 0xFF00FF
+}
+fig {
+    type cylinder
+    center -250,0,800
+    center2 250,0,800
+    rad 5
+    color 0xFF00FF
+}
+fig {
+    type cylinder
+    center -250,-100,800
+    center2 250,-100,800
+    rad 5
+    color 0xFF00FF
+}
+fig {
+    type cylinder
+    center -250,-200,800
+    center2 250,-200,800
+    rad 5
+    color 0xFF00FF
+}
+fig {
+    type cylinder
+    center -250,-300,800
+    center2 250,-300,800
+    rad 5
+    color 0xFF00FF
+}
+fig {
+    type cylinder
+    center 700,-350,2000
+    center2 700,350,2000
+    rad 10
+    color 0x5AAB26
+}
+fig {
+    type cylinder
+    center 700,-350,1500
+    center2 700,350,1500
+    rad 10
+    color 0x5AAB26
+}
+fig {
+    type cylinder
+    center 700,300,2000
+    center2 700,300,1500
+    rad 5
+    color 0x5AAB26
+}
+fig {
+    type plane
+    center 0,-350,0
+    center2 0,1,0
+    color 0xFFFCBC
+}
+fig {
+    type cylinder
+    center -100,-350,1500
+    center2 -100,250,1500
+    rad 15
+    color 0xF2C507
+}
+fig {
+    type cone
+    center -100,100,1500
+    center2 -100,265,1500
+    rad 250
+    rad2 0
+    color 0xD8842F
+}
+fig {
+    type sphere
+    center 200,-300,1600
+    rad 50
+    color 0xFF0000
+}
+light {
+    type ambient
+    intensity 20
+}
+light {
+    type dir
+    dir -1,-1,1
+    intensity 80
+}

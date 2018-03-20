@@ -5,4 +5,5 @@
 - Create beautiful scenes
 - Remove stdio from header
 - Check memory leaks
-- Fix the bug with half cylinder and cone
+- Check cone bug with order of parameters
+
