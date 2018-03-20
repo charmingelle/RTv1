@@ -1,0 +1,8 @@
+light {
+    type ambient
+    power 20
+}
+light {
+    type point
+    power 80
+}

@@ -56,10 +56,10 @@ fig {
 }
 light {
     type ambient
-    intensity 20
+    power 20
 }
 light {
     type point
-    pos 0,0,600
-    intensity 80
+    vector 350,350,0
+    power 80
 }

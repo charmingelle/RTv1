@@ -37,12 +37,10 @@ static void	add_prop_to_light(char **split, t_light *light)
 {
 	if (!ft_strcmp(split[0], "type"))
 		light->type = get_light_type(split[1]);
-	else if (!ft_strcmp(split[0], "intensity"))
-		light->intensity = get_non_negative(ft_atoi(split[1])) / 100.0;
-	else if (!ft_strcmp(split[0], "pos"))
-		set_vector_value(split[1], &(light->pos));
-	else if (!ft_strcmp(split[0], "dir"))
-		set_vector_value(split[1], &(light->dir));
+	else if (!ft_strcmp(split[0], "power"))
+		light->power = get_non_negative(ft_atoi(split[1])) / 100.0;
+	else if (!ft_strcmp(split[0], "vector"))
+		set_vector_value(split[1], &(light->vector));
 	else
 		exit(show_invalid_property_error());
 }
@@ -55,9 +53,8 @@ void		add_light_to_env(t_env *env, int fd)
 
 	light = (t_light *)malloc(sizeof(t_light));
 	light->type = "ambient";
-	light->intensity = 1.0;
-	light->pos = (t_vector){0.0, 0.0, 0.0};
-	light->dir = (t_vector){0.0, 0.0, 0.0};
+	light->power = 1.0;
+	light->vector = (t_vector){0.0, 0.0, 0.0};
 	while (get_next_line(fd, &line) && ft_strcmp(line, "}"))
 	{
 		split = ft_strsplit(line, ' ');

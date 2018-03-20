@@ -27,15 +27,15 @@ fig {
 }
 light {
     type ambient
-    intensity 20%
+    power 20%
 }
 light {
     type point
-    intensity 50%
-    pos -350,350,700
+    power 50%
+    vector -350,350,700
 }
 light {
     type dir
-    intensity 30%
-    dir -1,-2,1
+    power 30%
+    vector -1,-2,1
 }

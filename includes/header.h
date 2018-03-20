@@ -80,9 +80,8 @@ typedef struct	s_fig
 typedef struct	s_light
 {
 	char			*type;
-	double			intensity;
-	t_vector		pos;
-	t_vector		dir;
+	double			power;
+	t_vector		vector;
 	struct s_light	*next;
 }				t_light;
 

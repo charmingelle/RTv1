@@ -45,18 +45,18 @@ static double	get_point_light(t_ray ray, t_light *light,
 	double		n_scal_l;
 	double		point_light;
 
-	l = vort(vdiff(light->pos, ray.p));
+	l = vort(vdiff(light->vector, ray.p));
 	n_scal_minus_d = vscal(ray.n, vmult(-1, ray.d));
 	n_scal_l = vscal(ray.n, l);
 	if (n_scal_minus_d > 0.0 && n_scal_l > 0.0)
 	{
-		if (is_in_shadow(ray.p, vdiff(light->pos, ray.p), fig_list, 0.99))
+		if (is_in_shadow(ray.p, vdiff(light->vector, ray.p), fig_list, 0.99))
 			return (0.0);
-		point_light = light->intensity * n_scal_l;
-		if (point_light > light->intensity)
-			point_light = light->intensity;
+		point_light = light->power * n_scal_l;
+		if (point_light > light->power)
+			point_light = light->power;
 		if (fig->shine > 0)
-			point_light += light->intensity
+			point_light += light->power
 				* pow(get_shine(ray.p, ray.n, l), fig->shine);
 		return (point_light);
 	}
@@ -71,18 +71,18 @@ static double	get_dir_light(t_ray ray, t_light *light,
 	double		n_scal_l;
 	double		dir_light;
 
-	l = vort(vmult(-1, light->dir));
+	l = vort(vmult(-1, light->vector));
 	n_scal_minus_d = vscal(ray.n, vmult(-1, ray.d));
 	n_scal_l = vscal(ray.n, l);
 	if (n_scal_minus_d > 0.0 && n_scal_l > 0.0)
 	{
 		if (is_in_shadow(ray.p, l, fig_list, INFINITY))
 			return (0.0);
-		dir_light = light->intensity * n_scal_l;
-		if (dir_light > light->intensity)
-			dir_light = light->intensity;
+		dir_light = light->power * n_scal_l;
+		if (dir_light > light->power)
+			dir_light = light->power;
 		if (fig->shine > 0)
-			dir_light += light->intensity
+			dir_light += light->power
 				* pow(get_shine(ray.p, ray.n, l), fig->shine);
 		return (dir_light);
 	}
@@ -99,7 +99,7 @@ double			get_light(t_ray ray, t_fig *fig, t_env *env)
 	while (light)
 	{
 		if (ft_strcmp(light->type, "ambient") == 0)
-			total_light += light->intensity;
+			total_light += light->power;
 		else if (ft_strcmp(light->type, "point") == 0)
 			total_light += get_point_light(ray, light, fig, env->fig);
 		else if (ft_strcmp(light->type, "dir") == 0)
