@@ -16,12 +16,12 @@ light {
     power 20
 }
 light {
+    type point
+    power 50
+    vector -350,350,700
+}
+light {
     type dir
     power 30
     vector 1,-1,0
-}
-light {
-    type point
-    power 50
-    vector -350,350,800
 }

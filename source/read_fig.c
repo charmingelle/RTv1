@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/14 16:38:34 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/21 14:19:06 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void		add_fig_to_env(t_env *env, int fd)
 
 	fig = (t_fig *)malloc(sizeof(t_fig));
 	fig->type = "sphere";
-	fig->center = (t_vector){0.0, 0.0, 700.0};
-	fig->center2 = (t_vector){fig->center.x, fig->center.y + 100.0, fig->center.z};
-	fig->rad = 50.0;
+	fig->center = (t_vector){0.0, 0.0, 100.0};
+	fig->center2 = (t_vector){fig->center.x, fig->center.y + 10, fig->center.z};
+	fig->rad = 10.0;
 	fig->rad2 = 0.0;
 	fig->color = 0xFFFFFF;
 	fig->shine = 0;

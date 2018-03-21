@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 14:32:20 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/14 17:04:06 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/21 13:24:58 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	show_file_not_found_error(void)
 
 int	show_invalid_color_error(void)
 {
-	ft_putstr_fd("Invalid color in the scene\n", 2);
+	ft_putstr_fd("The scene contains an invalid color\n", 2);
 	return (1);
 }
 

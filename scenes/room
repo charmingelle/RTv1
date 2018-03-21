@@ -3,48 +3,43 @@ fig {
     center 0,-400,0
     center2 0,1,0
     color 0xE6FFFF
-    refl 30
 }
 fig {
     type plane
     center 0,400,0
     center2 0,-1,0
     color 0xE6FFFF
-    refl 30
 }
 fig {
     type plane
     center 0,0,1500
     center2 0,0,-1
     color 0xE6FFFF
-    refl 30
 }
 fig {
     type plane
     center 0,0,-1500
     center2 0,0,1
     color 0xE6FFFF
-    refl 30
 }
 fig {
     type plane
     center -400,0,0
     center2 1,0,0
     color 0xE6FFFF
-    refl 30
 }
 fig {
     type plane
     center 400,0,0
     center2 -1,0,0
     color 0xE6FFFF
-    refl 30
 }
 fig {
     type sphere
     center -300,-325,900
     rad 75
     color 0x0000FF
+    refl 50
 }
 fig {
     type cylinder
@@ -52,14 +47,16 @@ fig {
     center2 100,-350,900
     rad 50
     color 0x00FF00
+    refl 50
 }
 fig {
     type cone
-    center -50,-300,1000
-    center2 -350,-400,1400
+    center -200,-300,1200
+    center2 50,-400,900
     rad 100
     rad2 0
     color 0xFF0000
+    refl 50
 }
 light {
     type ambient
@@ -68,10 +65,10 @@ light {
 light {
     type point
     power 40
-    vector 0,400,0
+    vector -400,0,0
 }
 light {
     type point
-    power 50
-    vector -400,-400,0
+    power 40
+    vector 400,0,0
 }

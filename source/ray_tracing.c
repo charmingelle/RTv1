@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/19 22:04:01 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/21 13:14:27 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_fig			*get_closest_fig(t_ray *ray, t_fig *fig, double *closest_t,
 {
 	t_sol	sol;
 	t_fig	*closest_fig;
-	double	t1;
+	double	temp_t1;
 
 	closest_fig = NULL;
 	while (fig)
@@ -53,17 +53,17 @@ t_fig			*get_closest_fig(t_ray *ray, t_fig *fig, double *closest_t,
 		{
 			closest_fig = fig;
 			*closest_t = sol.t1;
-			t1 = sol.t1;
+			temp_t1 = sol.t1;
 		}
 		if (IN_RANGE(sol.t2, ray->t_min, ray->t_max) && sol.t2 < *closest_t)
 		{
 			closest_fig = fig;
 			*closest_t = sol.t2;
-			t1 = sol.t1;
+			temp_t1 = sol.t1;
 		}
 		fig = fig->next;
 	}
-	(inner_coef != NULL && t1 == INFINITY) ? (*inner_coef = -1) : 0;
+	(inner_coef != NULL && temp_t1 == INFINITY) ? (*inner_coef = -1) : 0;
 	return (closest_fig);
 }
 

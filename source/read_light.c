@@ -6,7 +6,7 @@
 /*   By: grevenko <grevenko@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 13:08:14 by grevenko          #+#    #+#             */
-/*   Updated: 2018/03/14 16:39:08 by grevenko         ###   ########.fr       */
+/*   Updated: 2018/03/21 13:28:57 by grevenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void		add_light_to_env(t_env *env, int fd)
 	light = (t_light *)malloc(sizeof(t_light));
 	light->type = "ambient";
 	light->power = 1.0;
-	light->vector = (t_vector){0.0, 0.0, 0.0};
+	light->vector = (t_vector){0.0, 0.0, 1.0};
 	while (get_next_line(fd, &line) && ft_strcmp(line, "}"))
 	{
 		split = ft_strsplit(line, ' ');

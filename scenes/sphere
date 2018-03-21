@@ -17,7 +17,7 @@ light {
 light {
     type point
     power 50
-    vector -350,350,800
+    vector -350,350,700
 }
 light {
     type dir
